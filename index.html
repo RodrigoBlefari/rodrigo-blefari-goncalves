@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rodrigo Blefari Gonçalves - Currículo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #2563eb;
+        --secondary-color: #1d4ed8;
+        --accent-color: #3b82f6;
+        --text-dark: #1f2937;
+        --text-light: #6b7280;
+        --bg-light: #f8fafc;
+        --bg-white: #ffffff;
+        --border-color: #e5e7eb;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
+        );
+        min-height: 100vh;
+        padding: 20px;
+        transition: all 0.4s ease;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: var(--bg-white);
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, var(--text-dark) 0%, #374151 100%);
+        color: white;
+        padding: 50px 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 1px,
+          transparent 1px
+        );
+        background-size: 30px 30px;
+        animation: float 20s infinite linear;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .profile-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .profile-img {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 56px;
+        font-weight: bold;
+        color: white;
+        border: 6px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .profile-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .profile-img .initials {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+
+      .profile-info h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, #ffffff, #e5e7eb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .profile-info .title {
+        font-size: 1.4rem;
+        opacity: 0.9;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .profile-info .location {
+        opacity: 0.8;
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+      }
+
+      .header-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .theme-selector {
+        position: relative;
+      }
+
+      .theme-selector select {
+        appearance: none;
+        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 12px 40px 12px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .theme-selector select:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .theme-selector::after {
+        content: "\f107";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        pointer-events: none;
+      }
+
+      .theme-selector option {
+        background: var(--text-dark);
+        color: white;
+        padding: 10px;
+      }
+
+      .download-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .download-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(37, 99, 235, 0.6);
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        min-height: 800px;
+      }
+
+      .sidebar {
+        background: var(--bg-light);
+        padding: 40px 30px;
+        border-right: 1px solid var(--border-color);
+      }
+
+      .content {
+        padding: 40px;
+        background: var(--bg-white);
+      }
+
+      .section {
+        margin-bottom: 40px;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+        border-bottom: 3px solid var(--primary-color);
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-title i {
+        color: var(--primary-color);
+        font-size: 1.2rem;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--accent-color);
+        border-radius: 2px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+        padding: 15px;
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+      }
+
+      .contact-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+      }
+
+      .contact-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: white;
+        font-size: 18px;
+      }
+
+      .contact-text {
+        flex: 1;
+        font-size: 0.9rem;
+        color: var(--text-dark);
+        font-weight: 500;
+      }
+
+      .contact-text a {
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .contact-text a:hover {
+        color: var(--primary-color);
+        text-decoration: underline;
+      }
+
+      .skill-category {
+        margin-bottom: 30px;
+      }
+
+      .skill-category h4 {
+        color: var(--text-dark);
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .skill-category h4 i {
+        color: var(--primary-color);
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .skill-tag {
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-tag:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.1);
+      }
+
+      /* Technology Colors */
+      .skill-tag[data-tech="javascript"] {
+        background: linear-gradient(135deg, #f7df1e, #f0db4f);
+        color: #323330;
+      }
+      .skill-tag[data-tech="typescript"] {
+        background: linear-gradient(135deg, #3178c6, #235a97);
+      }
+      .skill-tag[data-tech="php"] {
+        background: linear-gradient(135deg, #777bb4, #8892bf);
+      }
+      .skill-tag[data-tech="csharp"] {
+        background: linear-gradient(135deg, #239120, #68217a);
+      }
+      .skill-tag[data-tech="html5"] {
+        background: linear-gradient(135deg, #e34f26, #f06529);
+      }
+      .skill-tag[data-tech="css3"] {
+        background: linear-gradient(135deg, #1572b6, #33a9dc);
+      }
+
+      .skill-tag[data-tech="react"] {
+        background: linear-gradient(135deg, #61dafb, #21d4fd);
+        color: #20232a;
+      }
+      .skill-tag[data-tech="react-native"] {
+        background: linear-gradient(135deg, #61dafb, #0088cc);
+        color: #20232a;
+      }
+      .skill-tag[data-tech="angular"] {
+        background: linear-gradient(135deg, #dd0031, #c3002f);
+      }
+      .skill-tag[data-tech="nodejs"] {
+        background: linear-gradient(135deg, #339933, #68cc68);
+      }
+      .skill-tag[data-tech="laravel"] {
+        background: linear-gradient(135deg, #ff2d20, #ff6b6b);
+      }
+      .skill-tag[data-tech="wordpress"] {
+        background: linear-gradient(135deg, #21759b, #0073aa);
+      }
+
+      .skill-tag[data-tech="mysql"] {
+        background: linear-gradient(135deg, #4479a1, #00758f);
+      }
+      .skill-tag[data-tech="postgresql"] {
+        background: linear-gradient(135deg, #336791, #4169e1);
+      }
+
+      .skill-tag[data-tech="github"] {
+        background: linear-gradient(135deg, #333, #24292e);
+      }
+      .skill-tag[data-tech="gitlab"] {
+        background: linear-gradient(135deg, #fc6d26, #e24329);
+      }
+      .skill-tag[data-tech="jira"] {
+        background: linear-gradient(135deg, #0052cc, #2684ff);
+      }
+      .skill-tag[data-tech="trello"] {
+        background: linear-gradient(135deg, #0079bf, #026aa7);
+      }
+
+      .skill-tag[data-tech="datadog"] {
+        background: linear-gradient(135deg, #632ca6, #9d4edd);
+      }
+      .skill-tag[data-tech="cypress"] {
+        background: linear-gradient(135deg, #17202c, #69d3a7);
+      }
+      .skill-tag[data-tech="ga4"] {
+        background: linear-gradient(135deg, #e37400, #ff9500);
+      }
+
+      .experience-item {
+        background: var(--bg-light);
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        border-left: 5px solid var(--primary-color);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .experience-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .experience-item::before {
+        content: "";
+        position: absolute;
+        left: -10px;
+        top: 30px;
+        width: 16px;
+        height: 16px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        border: 4px solid var(--bg-white);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .job-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .job-title i {
+        color: var(--primary-color);
+      }
+
+      .company {
+        font-size: 1.1rem;
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .period {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .period i {
+        color: var(--text-light);
+      }
+
+      .description {
+        color: var(--text-dark);
+        line-height: 1.7;
+        font-size: 0.95rem;
+      }
+
+      .description strong {
+        color: var(--text-dark);
+        font-weight: 600;
+      }
+
+      .companies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 15px;
+      }
+
+      .company-item {
+        padding: 20px 15px;
+        border-radius: 12px;
+        text-align: center;
+        font-weight: 600;
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .company-item:hover {
+        transform: translateY(-5px);
+        filter: brightness(1.1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+      }
+
+      /* Company Colors */
+      .company-item[data-company="itau"] {
+        background: linear-gradient(135deg, #ec7000, #ff8c00);
+      }
+      .company-item[data-company="flytour"] {
+        background: linear-gradient(135deg, #0066cc, #004499);
+      }
+      .company-item[data-company="duosystem"] {
+        background: linear-gradient(135deg, #00a651, #00d084);
+      }
+      .company-item[data-company="itws"] {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+      }
+      .company-item[data-company="gt40"] {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+      }
+      .company-item[data-company="dominic"] {
+        background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      }
+      .company-item[data-company="amb"] {
+        background: linear-gradient(135deg, #27ae60, #2ecc71);
+      }
+      .company-item[data-company="trevisan"] {
+        background: linear-gradient(135deg, #f39c12, #e67e22);
+      }
+      .company-item[data-company="d360"] {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+      }
+      .company-item[data-company="quidde"] {
+        background: linear-gradient(135deg, #1abc9c, #16a085);
+      }
+      .company-item[data-company="vivo"] {
+        background: linear-gradient(135deg, #660099, #9933cc);
+      }
+      .company-item[data-company="opentravel"] {
+        background: linear-gradient(135deg, #34495e, #2c3e50);
+      }
+
+      .education-item {
+        background: var(--bg-white);
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border: 2px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      .education-item:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 5px 20px rgba(37, 99, 235, 0.1);
+      }
+
+      .education-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 5px;
+      }
+
+      .education-institution {
+        color: var(--primary-color);
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+
+      .education-period {
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 1024px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          border-right: none;
+          border-bottom: 1px solid var(--border-color);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .profile-section {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .profile-info h1 {
+          font-size: 2.2rem;
+        }
+
+        .header {
+          padding: 40px 20px;
+        }
+
+        .sidebar,
+        .content {
+          padding: 30px 20px;
+        }
+
+        .header-controls {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+
+      /* Print Styles - Layout otimizado para impressão */
+      @media print {
+        * {
+          -webkit-print-color-adjust: exact !important;
+          color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        @page {
+          size: A4;
+          margin: 0.3in 0.2in;
+          color: inherit;
+        }
+
+        body {
+          background: white !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+
+        .container {
+          max-width: 100% !important;
+          margin: 0 !important;
+          background: white !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          overflow: visible !important;
+        }
+
+        .header {
+          background: linear-gradient(
+            135deg,
+            #1f2937 0%,
+            #374151 100%
+          ) !important;
+          color: white !important;
+          padding: 20px 15px !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        .header::before {
+          display: none !important;
+        }
+
+        .download-btn,
+        .theme-selector {
+          display: none !important;
+        }
+
+        .profile-section {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 20px !important;
+          margin-bottom: 15px !important;
+        }
+
+        .profile-img {
+          width: 100px !important;
+          height: 100px !important;
+          background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        .profile-info h1 {
+          font-size: 2.2rem !important;
+          color: white !important;
+          -webkit-text-fill-color: white !important;
+          background: none !important;
+          text-shadow: none !important;
+          margin-bottom: 5px !important;
+        }
+
+        .profile-info .title {
+          font-size: 1.1rem !important;
+          color: white !important;
+          opacity: 0.95 !important;
+          margin-bottom: 5px !important;
+        }
+
+        .profile-info .location {
+          font-size: 0.9rem !important;
+          color: white !important;
+          opacity: 0.9 !important;
+          margin-bottom: 10px !important;
+        }
+
+        .main-content {
+          display: grid !important;
+          grid-template-columns: 280px 1fr !important;
+          min-height: auto !important;
+          gap: 0 !important;
+        }
+
+        .sidebar {
+          background: #f8fafc !important;
+          padding: 20px 15px !important;
+          border-right: 1px solid #e5e7eb !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        .content {
+          padding: 20px 15px !important;
+          background: white !important;
+        }
+
+        .section {
+          margin-bottom: 25px !important;
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        .section-title {
+          font-size: 1.1rem !important;
+          margin-bottom: 15px !important;
+          padding-bottom: 8px !important;
+          page-break-after: avoid !important;
+          break-after: avoid !important;
+        }
+
+        .experience-item {
+          background: #f8fafc !important;
+          padding: 20px !important;
+          margin-bottom: 20px !important;
+          border-left: 4px solid #2563eb !important;
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        .experience-item::before {
+          width: 12px !important;
+          height: 12px !important;
+          left: -8px !important;
+          top: 20px !important;
+          background: #2563eb !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+
+        .job-title {
+          font-size: 1.1rem !important;
+          margin-bottom: 5px !important;
+          page-break-after: avoid !important;
+          break-after: avoid !important;
+        }
+
+        .company {
+          font-size: 1rem !important;
+          color: #2563eb !important;
+          margin-bottom: 5px !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+
+        .period {
+          font-size: 0.8rem !important;
+          margin-bottom: 12px !important;
+        }
+
+        .description {
+          font-size: 0.85rem !important;
+          line-height: 1.5 !important;
+          orphans: 3 !important;
+          widows: 3 !important;
+        }
+
+        .contact-item {
+          margin-bottom: 12px !important;
+          padding: 10px !important;
+          background: white !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+
+        .contact-icon {
+          width: 35px !important;
+          height: 35px !important;
+          background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+          color: white !important;
+          font-size: 14px !important;
+          margin-right: 10px !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        .contact-text {
+          font-size: 0.8rem !important;
+        }
+
+        .contact-text a {
+          color: #1f2937 !important;
+          text-decoration: none !important;
+        }
+
+        .skill-category {
+          margin-bottom: 20px !important;
+        }
+
+        .skill-category h4 {
+          font-size: 0.9rem !important;
+          margin-bottom: 10px !important;
+        }
+
+        .skill-tag {
+          font-size: 0.75rem !important;
+          padding: 6px 12px !important;
+          margin-bottom: 6px !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color: white !important;
+        }
+
+        .companies-grid {
+          grid-template-columns: repeat(
+            auto-fit,
+            minmax(120px, 1fr)
+          ) !important;
+          gap: 10px !important;
+        }
+
+        .company-item {
+          padding: 15px 10px !important;
+          font-size: 0.8rem !important;
+          color: white !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        .education-item {
+          background: white !important;
+          padding: 15px !important;
+          margin-bottom: 15px !important;
+          border: 1px solid #e5e7eb !important;
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        .education-title {
+          font-size: 0.9rem !important;
+        }
+
+        .education-institution {
+          color: #2563eb !important;
+          font-size: 0.85rem !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+
+        .education-period {
+          font-size: 0.8rem !important;
+        }
+
+        /* Quebras de página inteligentes */
+        .section:not(:last-child) {
+          page-break-after: auto !important;
+          break-after: auto !important;
+        }
+
+        h2,
+        h3,
+        h4 {
+          page-break-after: avoid !important;
+          break-after: avoid !important;
+          orphans: 3 !important;
+          widows: 3 !important;
+        }
+
+        p,
+        .description {
+          orphans: 2 !important;
+          widows: 2 !important;
+        }
+      }
+
+      /* Estilos específicos para garantir cores na impressão */
+      .print-colors {
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      /* Theme variations */
+      .theme-purple {
+        --primary-color: #8b5cf6;
+        --secondary-color: #7c3aed;
+        --accent-color: #a855f7;
+      }
+
+      .theme-green {
+        --primary-color: #10b981;
+        --secondary-color: #059669;
+        --accent-color: #34d399;
+      }
+
+      .theme-orange {
+        --primary-color: #f59e0b;
+        --secondary-color: #d97706;
+        --accent-color: #fbbf24;
+      }
+
+      .theme-red {
+        --primary-color: #ef4444;
+        --secondary-color: #dc2626;
+        --accent-color: #f87171;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="resume">
+      <header class="header">
+        <div class="header-content">
+          <div class="profile-section">
+            <div class="profile-img">
+              <img
+                src="perfil.png"
+                alt="Rodrigo Blefari Gonçalves"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+              />
+              <div class="initials" style="display: none">RB</div>
+            </div>
+            <div class="profile-info">
+              <h1>Rodrigo Blefari Gonçalves</h1>
+              <p class="title">Senior Front-end Developer | Angular | React</p>
+              <p class="location">
+                <i class="fas fa-map-marker-alt"></i> São Paulo, Brasil
+              </p>
+            </div>
+          </div>
+
+          <div class="header-controls">
+            <div class="theme-selector">
+              <select id="themeSelector" onchange="changeTheme()">
+                <option value="blue">🔵 Azul Profissional</option>
+                <option value="purple">🟣 Roxo Moderno</option>
+                <option value="green">🟢 Verde Tech</option>
+                <option value="orange">🟠 Laranja Criativo</option>
+                <option value="red">🔴 Vermelho Dinâmico</option>
+              </select>
+            </div>
+            <!-- <button class="download-btn" onclick="downloadPDF()">
+              <i class="fas fa-download"></i>
+              Baixar PDF
+            </button> -->
+            <button
+              class="download-btn"
+              onclick="printResume()"
+              style="background: linear-gradient(135deg, #059669, #10b981)"
+            >
+              <i class="fas fa-print"></i>
+              Imprimir
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <aside class="sidebar">
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-address-book"></i>
+              Contato
+            </h2>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-text">
+                <a
+                  href="https://maps.google.com/?q=Zona+Leste+São+Paulo+SP"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Zona Leste - SP</a
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-text">
+                <a href="tel:+5511948205237">+55 (11) 94820-5237</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-text">
+                <a href="mailto:rodrigo.blefari@gmail.com"
+                  >rodrigo.blefari@gmail.com</a
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-linkedin"></i>
+              </div>
+              <div class="contact-text">
+                <a
+                  href="https://linkedin.com/in/rodrigo-blefari-gonçalves-847ab63a"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >LinkedIn Profile</a
+                >
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-star"></i>
+              Principais Competências
+            </h2>
+            <div class="skill-tags">
+              <span class="skill-tag" data-tech="datadog">Datadog</span>
+              <span class="skill-tag" data-tech="cypress">Cypress</span>
+              <span class="skill-tag" data-tech="ga4">GA4</span>
+              <span class="skill-tag" data-tech="javascript">JavaScript</span>
+              <span class="skill-tag" data-tech="react">React</span>
+              <span class="skill-tag" data-tech="angular">Angular</span>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-code"></i>
+              Habilidades Técnicas
+            </h2>
+
+            <div class="skill-category">
+              <h4><i class="fas fa-laptop-code"></i> Linguagens</h4>
+              <div class="skill-tags">
+                <span class="skill-tag" data-tech="javascript">JavaScript</span>
+                <span class="skill-tag" data-tech="typescript">TypeScript</span>
+                <span class="skill-tag" data-tech="php">PHP</span>
+                <span class="skill-tag" data-tech="csharp">C#</span>
+                <span class="skill-tag" data-tech="html5">HTML5</span>
+                <span class="skill-tag" data-tech="css3">CSS3</span>
+              </div>
+            </div>
+
+            <div class="skill-category">
+              <h4><i class="fas fa-layer-group"></i> Frameworks</h4>
+              <div class="skill-tags">
+                <span class="skill-tag" data-tech="react">React</span>
+                <span class="skill-tag" data-tech="react-native"
+                  >React Native</span
+                >
+                <span class="skill-tag" data-tech="angular">Angular</span>
+                <span class="skill-tag" data-tech="nodejs">Node.js</span>
+                <span class="skill-tag" data-tech="laravel">Laravel</span>
+                <span class="skill-tag" data-tech="wordpress">WordPress</span>
+              </div>
+            </div>
+
+            <div class="skill-category">
+              <h4><i class="fas fa-database"></i> Banco de Dados</h4>
+              <div class="skill-tags">
+                <span class="skill-tag" data-tech="mysql">MySQL</span>
+                <span class="skill-tag" data-tech="postgresql">PostgreSQL</span>
+              </div>
+            </div>
+
+            <div class="skill-category">
+              <h4><i class="fas fa-tools"></i> Ferramentas</h4>
+              <div class="skill-tags">
+                <span class="skill-tag" data-tech="github">GitHub</span>
+                <span class="skill-tag" data-tech="gitlab">GitLab</span>
+                <span class="skill-tag" data-tech="jira">Jira</span>
+                <span class="skill-tag" data-tech="trello">Trello</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-graduation-cap"></i>
+              Formação Acadêmica
+            </h2>
+
+            <div class="education-item">
+              <div class="education-title">
+                Associate's Degree - Programação de Computadores
+              </div>
+              <div class="education-institution">UNINOVE</div>
+              <div class="education-period">2010 - 2013</div>
+            </div>
+
+            <div class="education-item">
+              <div class="education-title">
+                Cursos Online - Linguagens de Programação
+              </div>
+              <div class="education-institution">W3Schools</div>
+              <div class="education-period">2017 - 2018</div>
+            </div>
+
+            <div class="education-item">
+              <div class="education-title">Certificado - Banco de Dados</div>
+              <div class="education-institution">
+                Faculdade Impacta Tecnologia
+              </div>
+              <div class="education-period">2014</div>
+            </div>
+
+            <div class="education-item">
+              <div class="education-title">Certificado - Excel I e II</div>
+              <div class="education-institution">
+                Faculdade Impacta Tecnologia
+              </div>
+              <div class="education-period">2015 - 2016</div>
+            </div>
+          </section>
+        </aside>
+
+        <main class="content">
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-user"></i>
+              Resumo Profissional
+            </h2>
+            <p class="description">
+              Desenvolvedor Web apaixonado por tecnologia, com experiência
+              sólida em múltiplas stacks (Angular, React, Typescript, entre
+              outras). Atuei em projetos de diferentes portes e segmentos,
+              aplicando práticas de arquitetura de software, testes
+              automatizados (unitários e E2E), acessibilidade, observabilidade e segurança de
+              aplicações. Tenho experiência com metodologias ágeis
+              (Scrum/Kanban), micro frontends, design system e integração de
+              ferramentas de monitoramento. Além do desenvolvimento, já liderei
+              times, contratei e treinei profissionais, garantindo boas práticas
+              de engenharia e entregas de alto valor para o negócio. Também
+              possuo vivência em contato direto com clientes, refinando demandas
+              e documentando requisitos para geração de cases de sucesso.
+              Possuo experincia em trazer valor tanto para BackOffices quanto para produtos B2C pessoa fisica
+              participativo em extrair melhorias e discutir MVP. 
+            </p>
+            <br />
+            <p class="description">
+              Atuei como Desenvolvedor Full Stack ao longo da maior parte da
+              minha carreira, sendo responsável pelo desenvolvimento,
+              gerenciamento e implementação de projetos end-to-end (360º).
+              Possuo experiência em todo o ciclo de vida de aplicações, desde a
+              arquitetura e codificação até testes, deploy e manutenção. Minha
+              trajetória inclui participação em empresas de grande porte e
+              atuação em projetos freelancer para marcas de destaque, sempre
+              aplicando boas práticas de engenharia, escalabilidade e segurança.
+              Tenho perfil de liderança, adaptação rápida a novas tecnologias e
+              foco em entregar soluções eficientes e de alto impacto.
+            </p>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-briefcase"></i>
+              Experiência Profissional
+            </h2>
+
+            <div class="experience-item">
+              <h3 class="job-title">
+                <i class="fas fa-laptop-code"></i>
+                Analista de Engenharia TI PL (TM)
+              </h3>
+              <div class="company">Itaú Unibanco</div>
+              <div class="period">
+                <i class="fas fa-calendar-alt"></i>
+                Abril 2024 - Presente (1 ano 6 meses)
+              </div>
+              <p class="description">
+                Engenheiro de Software Frontend no desenvolvimento do App Itaú.
+                Minha trajetória iniciou na jornada de Portabilidade de Salário,
+                evoluindo de um formulário simples para uma solução robusta com
+                testes unitários e Design System moderno.
+              </p>
+              <br />
+              <p class="description">
+                <strong>Principais conquistas e responsabilidades:</strong
+                ><br />
+                • <strong>Reconhecimento:</strong> Participação na entrega da
+                jornada "One Click", que transformou a experiência do usuário ao
+                automatizar etapas e personalizar fluxos por perfil; a squad foi
+                premiada como Jornada do Ano<br />
+                • <strong>Análise de dados:</strong> Desenvolvimento de fluxos
+                orientados a métricas, documentação, cenários de testes e
+                fluxogramas completos<br />
+                • <strong>Arquitetura e desenvolvimento:</strong> Atuação com
+                WebView e Microfrontends (Angular/React), evoluindo soluções do
+                Voxel para o novo IDS (Itaú Design System)<br />
+                • <strong>Observabilidade:</strong> Implementação inédita de
+                monitoramento com Datadog, FullStory e GA4, criando dashboards,
+                métricas estratégicas e identificando problemas de forma
+                proativa<br />
+                • <strong>Qualidade e testes:</strong> Entregas com testes
+                unitários (Jest/Karma) de alta cobertura e testes E2E com
+                Cypress<br />
+                • <strong>Arquitetura de jornadas:</strong> Participação ativa
+                em reuniões estratégicas, contribuindo em todo o ciclo de valor
+              </p>
+            </div>
+
+            <div class="experience-item">
+              <h3 class="job-title">
+                <i class="fas fa-plane"></i>
+                Engenheiro de Desenvolvimento de Software Sênior
+              </h3>
+              <div class="company">Flytour Oficial</div>
+              <div class="period">
+                <i class="fas fa-calendar-alt"></i>
+                Março 2022 - Novembro 2023 (1 ano 9 meses)
+              </div>
+              <p class="description">
+                Atuação em todas as etapas de desenvolvimento dentro de uma
+                plataforma de viagens, aéreas e terrestres com agendamentos de
+                hotéis, voos, carros etc. Desenvolvimento focado em Angular 2+,
+                React e suporte eventual em banco de dados, back-end e outras
+                áreas do desenvolvimento, incluindo criação e edição de layouts
+                CSS, SCSS e mobile.
+              </p>
+            </div>
+
+            <div class="experience-item">
+              <h3 class="job-title">
+                <i class="fas fa-heartbeat"></i>
+                Analista Programador Sênior
+              </h3>
+              <div class="company">
+                Duosystem - Inteligência e Inovação em Saúde
+              </div>
+              <div class="period">
+                <i class="fas fa-calendar-alt"></i>
+                Março 2020 - Setembro 2021 (1 ano 7 meses)
+              </div>
+              <p class="description">
+                Responsável por Features, Hotfix e Bugs dentro de um sistema
+                Symfony e templates Twig, resolvendo problemas de front-end
+                Angular 2+ e React, CSS, JS, jQuery e backend (Node), SQL-PHP.
+                Participação em cursos Azure que possibilitaram crescimento
+                significativo na carreira.
+              </p>
+            </div>
+
+            <div class="experience-item">
+              <h3 class="job-title">
+                <i class="fas fa-globe"></i>
+                PHP Web Designer Programmer Full Stack Sênior
+              </h3>
+              <div class="company">ITWS - IT Web Solutions</div>
+              <div class="period">
+                <i class="fas fa-calendar-alt"></i>
+                Setembro 2018 - Março 2020 (1 ano 7 meses)
+              </div>
+              <p class="description">
+                Desenvolvimento web usando React, Angular 2+ e PHP, Yii2,
+                Laravel, JavaScript, jQuery, Bootstrap, CSS, HTML, Ajax, MySQL,
+                Apache, API e webservice. Foco em criar soluções específicas
+                para plataformas e-commerce, resolvendo problemas, atualizações
+                e melhorias de front-end, back-end e banco de dados.
+              </p>
+            </div>
+
+            <div class="experience-item">
+              <h3 class="job-title">
+                <i class="fas fa-car"></i>
+                Programador PHP
+              </h3>
+              <div class="company">GT40</div>
+              <div class="period">
+                <i class="fas fa-calendar-alt"></i>
+                Março 2018 - Agosto 2018 (6 meses)
+              </div>
+              <p class="description">
+                Manutenção e desenvolvimento de aplicações Front-end e Back-end
+                para sistemas GT40 e Flatout. Desenvolvimento de API/Webservice,
+                elaboração de layouts, construção HTML, CSS, JS/jQuery.
+                Construção do backend usando Ajax, PHP, MySQL, PostgreSQL.
+              </p>
+            </div>
+
+            <div class="experience-item">
+              <h3 class="job-title">
+                <i class="fas fa-graduation-cap"></i>
+                Desenvolvedor Web
+              </h3>
+              <div class="company">Dominic 360</div>
+              <div class="period">
+                <i class="fas fa-calendar-alt"></i>
+                Abril 2017 - Março 2018 (1 ano)
+              </div>
+              <p class="description">
+                Responsável pela criação de um E-Learning, sistema de videoaulas
+                online, sistema criado no WordPress com customizações
+                específicas, criação de plugins, edições de temas, tudo dentro
+                do backend. Criação diária de soluções em PHP, jQuery,
+                JavaScript, MySQL, CSS3 e HTML5.
+              </p>
+            </div>
+
+            <div class="experience-item">
+              <h3 class="job-title">
+                <i class="fas fa-user-tie"></i>
+                Gerente Administrativo
+              </h3>
+              <div class="company">Associação Médica Brasileira</div>
+              <div class="period">
+                <i class="fas fa-calendar-alt"></i>
+                Julho 2012 - Outubro 2017 (5 anos 4 meses)
+              </div>
+              <p class="description">
+                Responsável por gerenciar implementações de novos
+                projetos/sistemas levantando requisitos/necessidades
+                determinando novas tecnologias, geração de casos de testes e
+                usabilidade. Criação de relatórios e cálculos estatísticos
+                (Excel). Seleção, contratação e treinamento de novos
+                funcionários. Conversação em inglês com médicos estrangeiros.
+              </p>
+            </div>
+
+            <div class="experience-item">
+              <h3 class="job-title">
+                <i class="fas fa-bullhorn"></i>
+                Desenvolvedor Web
+              </h3>
+              <div class="company">Trevisan MKT</div>
+              <div class="period">
+                <i class="fas fa-calendar-alt"></i>
+                Janeiro 2016 - Fevereiro 2017 (1 ano 2 meses)
+              </div>
+              <p class="description">
+                Desenvolvia projetos e manutenção para empresa de marketing com
+                o objetivo de criar soluções específicas para sites de seus
+                clientes. Linguagens mais utilizadas: PHP, JavaScript, jQuery,
+                CSS, HTML5, PostgreSQL, MySQL.
+              </p>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-building"></i>
+              Empresas Anteriores
+            </h2>
+            <div class="companies-grid">
+              <div class="company-item" data-company="itau">Itaú Unibanco</div>
+              <div class="company-item" data-company="flytour">Flytour</div>
+              <div class="company-item" data-company="duosystem">Duosystem</div>
+              <div class="company-item" data-company="itws">ITWS Group</div>
+              <div class="company-item" data-company="gt40">GT40</div>
+              <div class="company-item" data-company="dominic">Dominic 360</div>
+              <div class="company-item" data-company="amb">AMB</div>
+              <div class="company-item" data-company="trevisan">
+                Trevisan MKT
+              </div>
+              <div class="company-item" data-company="d360">D360</div>
+              <div class="company-item" data-company="quidde">QUIDDE</div>
+              <div class="company-item" data-company="vivo">Vivo</div>
+              <div class="company-item" data-company="opentravel">
+                OpenTravel
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-target"></i>
+              Objetivo Profissional
+            </h2>
+            <p class="description">
+              Atualmente focado em aprimorar conhecimentos em JavaScript
+              Frameworks, destacando React Native, React e Node.js, enquanto
+              contribuo ocasionalmente em projetos PHP, C# e Banco de Dados.
+              Minha capacidade de atuar em qualquer linguagem rapidamente e meu
+              comprometimento com a excelência fazem de mim um profissional
+              versátil e adaptável a desafios dinâmicos.
+            </p>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      function changeTheme() {
+        const selectedTheme = document.getElementById("themeSelector").value;
+        const body = document.body;
+
+        // Remove all theme classes
+        body.classList.remove(
+          "theme-blue",
+          "theme-purple",
+          "theme-green",
+          "theme-orange",
+          "theme-red"
+        );
+
+        // Add selected theme class
+        if (selectedTheme !== "blue") {
+          body.classList.add(`theme-${selectedTheme}`);
+        }
+      }
+
+      function downloadPDF() {
+        const element = document.getElementById("resume");
+
+        // Configurações otimizadas para PDF com margens mínimas
+        const opt = {
+          margin: [0.1, 0.1, 0.1, 0.1],
+          filename: "Rodrigo_Blefari_Curriculo_Completo.pdf",
+          image: {
+            type: "jpeg",
+            quality: 0.98,
+            crossOrigin: "anonymous",
+          },
+          html2canvas: {
+            scale: 1.2,
+            useCORS: true,
+            allowTaint: true,
+            letterRendering: true,
+            logging: false,
+            backgroundColor: "#ffffff",
+            removeContainer: false,
+            imageTimeout: 10000,
+            height: element.scrollHeight,
+            width: element.scrollWidth,
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: 1200,
+            windowHeight: element.scrollHeight,
+            x: 0,
+            y: 0,
+          },
+          jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "portrait",
+            compress: false,
+          },
+          pagebreak: {
+            mode: ["avoid-all", "css", "legacy"],
+            before: ".section",
+            after: ".experience-item",
+            avoid: ["h1", "h2", "h3", ".job-title", ".section-title"],
+          },
+        };
+
+        // Esconder apenas os botões de controle
+        const controlElements = document.querySelectorAll(
+          ".download-btn, .theme-selector"
+        );
+        controlElements.forEach((el) => {
+          el.style.visibility = "hidden";
+        });
+
+        // Aguardar carregamento de imagens
+        const images = element.querySelectorAll("img");
+        const imagePromises = Array.from(images).map((img) => {
+          return new Promise((resolve) => {
+            if (img.complete) {
+              resolve();
+            } else {
+              img.onload = resolve;
+              img.onerror = resolve;
+              setTimeout(resolve, 2000);
+            }
+          });
+        });
+
+        Promise.all(imagePromises).then(() => {
+          // Pequeno delay para garantir renderização
+          setTimeout(() => {
+            html2pdf()
+              .set(opt)
+              .from(element)
+              .save()
+              .then(() => {
+                // Restaurar visibilidade dos controles
+                controlElements.forEach((el) => {
+                  el.style.visibility = "visible";
+                });
+              })
+              .catch((error) => {
+                console.error("Erro ao gerar PDF:", error);
+                controlElements.forEach((el) => {
+                  el.style.visibility = "visible";
+                });
+              });
+          }, 500);
+        });
+      }
+
+      function printResume() {
+        // Esconder apenas os controles para impressão
+        const controlElements = document.querySelectorAll(
+          ".download-btn, .theme-selector"
+        );
+        controlElements.forEach((el) => {
+          el.style.visibility = "hidden";
+        });
+
+        // Aguardar um momento e imprimir
+        setTimeout(() => {
+          window.print();
+
+          // Restaurar controles após impressão
+          setTimeout(() => {
+            controlElements.forEach((el) => {
+              el.style.visibility = "visible";
+            });
+          }, 1000);
+        }, 100);
+      }
+    </script>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'98390cd921474ee3',t:'MTc1ODYyMDEwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
