@@ -2098,8 +2098,10 @@
     </div>
 
     <script>
-      // Reading mode + CMS i18n
+      // Reading mode + I18N + Tech Colors
       let CMS = null;
+      let I18N = null;
+      let TECH_COLORS = null;
       let currentLang = localStorage.getItem("lang") || "pt";
 
       function applyReadingMode() {
@@ -2129,6 +2131,111 @@
           CMS = null;
         }
         return CMS;
+      }
+      
+      // Carrega I18N do idioma escolhido. Tenta arquivo local, cache localStorage e fallback com tradução automática mínima.
+      async function loadI18n(lang) {
+        if (I18N && I18N.__lang === lang) return I18N;
+        const cacheKey = `i18n_${lang}`;
+        // tenta arquivo local
+        try {
+          const res = await fetch(`i18n/${lang}.json`, { cache: "no-store" });
+          if (res.ok) {
+            I18N = await res.json();
+            I18N.__lang = lang;
+            localStorage.setItem(cacheKey, JSON.stringify(I18N));
+            return I18N;
+          }
+        } catch {}
+        // tenta cache
+        try {
+          const cached = localStorage.getItem(cacheKey);
+          if (cached) {
+            I18N = JSON.parse(cached);
+            I18N.__lang = lang;
+            return I18N;
+          }
+        } catch {}
+        // fallback: traduz rótulos essenciais a partir do EN (pode falhar por CORS, mantém EN)
+        try {
+          I18N = await autoTranslateI18n(lang);
+          I18N.__lang = lang;
+          localStorage.setItem(cacheKey, JSON.stringify(I18N));
+          return I18N;
+        } catch (e) {
+          console.warn("Auto-translate falhou, usando EN:", e);
+          const resEn = await fetch("i18n/en.json", { cache: "no-store" });
+          const en = await resEn.json();
+          en.__lang = "en";
+          I18N = en;
+          return I18N;
+        }
+      }
+      async function autoTranslateI18n(targetLang) {
+        const resEn = await fetch("i18n/en.json", { cache: "no-store" });
+        const en = await resEn.json();
+        const endpoint = "https://libretranslate.de/translate";
+        async function tr(text) {
+          if (!text) return text;
+          try {
+            const r = await fetch(endpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ q: text, source: "en", target: targetLang, format: "text" })
+            });
+            if (!r.ok) return text;
+            const j = await r.json();
+            return j.translatedText || text;
+          } catch {
+            return text;
+          }
+        }
+        const ui = { ...en.ui };
+        ui.readingModeLabel = await tr(en.ui.readingModeLabel);
+        ui.languageLabel = await tr(en.ui.languageLabel);
+        ui.print = await tr(en.ui.print);
+        const sections = { ...en.sections };
+        for (const k of Object.keys(sections)) sections[k] = await tr(sections[k]);
+        const categories = { ...en.categories };
+        for (const k of Object.keys(categories)) categories[k] = await tr(categories[k]);
+        return { ...en, ui, sections, categories };
+      }
+      async function loadTechColors() {
+        if (TECH_COLORS) return TECH_COLORS;
+        try {
+          const res = await fetch("tech-colors.json", { cache: "no-store" });
+          if (res.ok) TECH_COLORS = await res.json();
+        } catch (e) {
+          console.warn("Falha ao carregar tech-colors.json", e);
+          TECH_COLORS = null;
+        }
+        return TECH_COLORS;
+      }
+      function loadFontForLang(lang) {
+        const map = {
+          pt: { family: "Inter", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap", dir: "ltr" },
+          en: { family: "Inter", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap", dir: "ltr" },
+          es: { family: "Inter", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap", dir: "ltr" },
+          zh: { family: "Noto Sans SC", href: "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap", dir: "ltr" },
+          hi: { family: "Noto Sans Devanagari", href: "https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap", dir: "ltr" },
+          ar: { family: "Noto Naskh Arabic", href: "https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap", dir: "rtl" },
+          bn: { family: "Noto Sans Bengali", href: "https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap", dir: "ltr" },
+          ru: { family: "Noto Sans", href: "https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap", dir: "ltr" },
+          ja: { family: "Noto Sans JP", href: "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap", dir: "ltr" },
+          pa: { family: "Noto Sans Gurmukhi", href: "https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@400;700&display=swap", dir: "ltr" }
+        };
+        const cfg = map[lang] || map.en;
+        let link = document.getElementById("locale-font");
+        if (!link) {
+          link = document.createElement("link");
+          link.id = "locale-font";
+          link.rel = "stylesheet";
+          document.head.appendChild(link);
+        }
+        if (link.href !== cfg.href) link.href = cfg.href;
+        document.body.style.fontFamily = `"${cfg.family}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        document.documentElement.setAttribute("dir", cfg.dir || "ltr");
+        document.documentElement.setAttribute("lang", lang);
       }
 
       // ===== Helpers: Geração dinâmica de paleta por tecnologia (via CMS) =====
@@ -2381,24 +2488,27 @@
         const c = cms[currentLang] || cms["pt"];
         if (!c) return;
 
+        // Atualiza rótulos dos selects (será definido após carregar I18N)
+
+        const t = await loadI18n(currentLang);
+        await loadTechColors();
         // Atualiza rótulos dos selects (somente texto exibido no placeholder)
         const langSel = document.getElementById("languageSelector");
-        if (langSel) {
-          // mantém valores pt/en, apenas garante seleção atual
-          langSel.value = currentLang;
-        }
+        if (langSel) langSel.value = currentLang;
 
-        renderHeader(c);
-        renderSectionTitles(c);
-        renderEducation(c);
-        renderSummary(c);
+        // Render com textos do I18N e dados do CMS
+        renderHeader(t);
+        renderSectionTitles(t);
+        renderEducation(t);
+        renderSummary(t);
         renderExperience(c);
-        renderObjective(c);
-        // aplica paleta oficial por tecnologia vinda do CMS
+        renderObjective(t);
+
+        // aplica paleta oficial por tecnologia vinda do arquivo tech-colors
         try {
-          generateTechPalette(cms.techColors || c.techColors);
+          generateTechPalette(TECH_COLORS || {});
         } catch (e) {
-          console.warn("Falha ao aplicar paleta de tecnologias do CMS:", e);
+          console.warn("Falha ao aplicar paleta de tecnologias:", e);
         }
       }
 
@@ -2407,6 +2517,7 @@
         const lang = sel?.value || "pt";
         currentLang = lang;
         localStorage.setItem("lang", lang);
+        loadFontForLang(currentLang);
         // aguarda render e só então reaplica destaque (se ativo)
         const enabled = localStorage.getItem("highlightTech") === "1";
         await renderFromCMS();
@@ -2565,9 +2676,31 @@
         if (modeSel) modeSel.value = savedMode;
         applyReadingMode();
 
-        // init language
+        // init language + popular top-10 idiomas
         const langSel = document.getElementById("languageSelector");
-        if (langSel) langSel.value = currentLang;
+        if (langSel) {
+          const langs = [
+            { v: "pt", l: "Português" },
+            { v: "en", l: "English" },
+            { v: "es", l: "Español" },
+            { v: "zh", l: "中文(简体)" },
+            { v: "hi", l: "हिंदी" },
+            { v: "ar", l: "العربية" },
+            { v: "bn", l: "বাংলা" },
+            { v: "ru", l: "Русский" },
+            { v: "ja", l: "日本語" },
+            { v: "pa", l: "ਪੰਜਾਬੀ" }
+          ];
+          langSel.innerHTML = "";
+          langs.forEach(({ v, l }) => {
+            const opt = document.createElement("option");
+            opt.value = v;
+            opt.textContent = l;
+            langSel.appendChild(opt);
+          });
+          langSel.value = currentLang;
+        }
+        loadFontForLang(currentLang);
 
         // init destacar tecnologia
         const hlToggle = document.getElementById("highlightTech");

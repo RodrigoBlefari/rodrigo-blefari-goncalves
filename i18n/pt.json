@@ -1,0 +1,221 @@
+{
+  "ui": {
+    "readingModeLabel": "Modo de leitura",
+    "languageLabel": "Idioma",
+    "print": "Imprimir",
+    "modes": {
+      "light": "Claro",
+      "sepia": "Sépia",
+      "dark": "Escuro",
+      "contrast": "Alto contraste"
+    },
+    "languages": {
+      "pt": "Português",
+      "en": "English"
+    }
+  },
+  "header": {
+    "name": "Rodrigo Blefari Gonçalves",
+    "title": "Engenheiro de Software Front-end PL/SN | Angular | React",
+    "location": "São Paulo, Brasil",
+    "contactLocationLabel": "Zona Norte - SP",
+    "phone": "+55 (11) 94820-5237",
+    "email": "rodrigo.blefari@gmail.com",
+    "linkedinLabel": "LinkedIn Profile"
+  },
+  "sections": {
+    "contact": "Contato",
+    "keySkills": "Principais Competências",
+    "techSkills": "Habilidades Técnicas",
+    "techProficiency": "Tecnologias & Proficiência",
+    "education": "Formação Acadêmica",
+    "summary": "Resumo Profissional",
+    "experience": "Experiência Profissional",
+    "companies": "Empresas Anteriores",
+    "objective": "Objetivo Profissional"
+  },
+  "categories": {
+    "frontend": "Front-end",
+    "backend": "Back-end",
+    "db": "Banco de dados",
+    "devops": "DevOps",
+    "cicd": "CI/CD",
+    "tools": "Ferramentas",
+    "apis": "APIs",
+    "tests": "Testes"
+  },
+  "proficiencyCategoriesOrder": [
+    "frontend",
+    "backend",
+    "db",
+    "devops",
+    "cicd"
+  ],
+  "chipsCategoriesOrder": [
+    "frontend",
+    "tests",
+    "backend",
+    "db",
+    "devops",
+    "cicd",
+    "apis",
+    "tools"
+  ],
+  "summaryText": [
+    "Desenvolvedor Web apaixonado por tecnologia, com experiência sólida em múltiplas stacks (Angular, React, Typescript entre outras). Atuei em projetos de diferentes portes e segmentos, aplicando práticas de arquitetura de software, testes automatizados (unitários e E2E), acessibilidade, observabilidade e segurança de aplicações. Tenho experiência com metodologias ágeis (Scrum/Kanban), micro frontends, design system e integração de ferramentas de monitoramento. Além do desenvolvimento, já liderei times, contratei e treinei profissionais, garantindo boas práticas de engenharia e entregas de alto valor para o negócio. Também possuo vivência em contato direto com clientes, refinando demandas e documentando requisitos para geração de cases de sucesso. Possuo experincia em trazer valor tanto para BackOffices quanto para produtos B2C pessoa fisica participativo em extrair melhorias e discutir MVP.",
+    "Atuei como Desenvolvedor Full Stack ao longo da maior parte da minha carreira, sendo responsável pelo desenvolvimento, gerenciamento e implementação de projetos end-to-end (360º). Possuo experiência em todo o ciclo de vida de aplicações, desde a arquitetura e codificação até testes, deploy e manutenção. Minha trajetória inclui participação em empresas de grande porte e atuação em projetos freelancer para marcas de destaque, sempre aplicando boas práticas de engenharia, escalabilidade e segurança. Tenho perfil de liderança, adaptação rápida a novas tecnologias e foco em entregar soluções eficientes e de alto impacto."
+  ],
+  "objectiveText": "Atualmente focado em aprimorar conhecimentos em JavaScript Frameworks, destacando Angular, React, enquanto contribuo ocasionalmente em projetos Node, Java, Php, C# e Banco de Dados. Minha capacidade de atuar em qualquer linguagem rapidamente e meu comprometimento com a excelência fazem de mim um profissional versátil e adaptável a desafios dinâmicos.",
+  "education": [
+    {
+      "title": "Associate's Degree - Programação de Computadores",
+      "institution": "UNINOVE",
+      "period": "2010 - 2013"
+    },
+    {
+      "title": "Cursos Online - Linguagens de Programação",
+      "institution": "W3Schools",
+      "period": "2017 - 2018"
+    },
+    {
+      "title": "Certificado - Banco de Dados",
+      "institution": "Faculdade Impacta Tecnologia",
+      "period": "2014"
+    },
+    {
+      "title": "Certificado - Excel I e II",
+      "institution": "Faculdade Impacta Tecnologia",
+      "period": "2015 - 2016"
+    },
+    {
+      "title": "Treinamentos - Microsoft Azure (Fundamentals, Dev/Cloud)",
+      "institution": "Microsoft | Cursos Internos e Online",
+      "period": "2020 - 2021"
+    },
+    {
+      "title": "Treinamento - Security Engineer II",
+      "institution": "Itaú Unibanco",
+      "period": "01/2025 - 08/2025"
+    },
+    {
+      "title": "Treinamento - AWS Cloud Practitioner",
+      "institution": "Itaú Unibanco",
+      "period": "02/2025 - 08/2025"
+    }
+  ],
+  "experience": [
+    {
+      "icon": "fas fa-laptop-code",
+      "title": "Analista de Engenharia TI PL (TM)",
+      "company": "Itaú Unibanco",
+      "period": "Abril 2024 - 2025 (1 ano 6 meses)",
+      "intro": "Engenheiro de Software Frontend no desenvolvimento do App Itaú Pessoa Fisica milhões de acessos mensais. Minha trajetória iniciou na jornada de Portabilidade de Salário, responsavel por desenhar todo fluxo e melhorias das jornadas com base em métricas e dados, liderando refinamentos, documentações e desenvolvimento completo, evoluindo jornadas sempre pensando no cliente para uma solução robusta com testes unitários e Design System moderno.",
+      "highlightsTitle": "Principais conquistas e responsabilidades:",
+      "highlights": [
+        "Reconhecimento: Participação na entrega da jornada \"One Click\", automatizando etapas e personalizando fluxos por perfil; squad premiada como Jornada do Ano, melhorando em mais de 60% eficiencia da jornada refletindo em milhões de usuarios",
+        "Análise de dados: Desenvolvimento de fluxos orientados a métricas, documentação, cenários de testes e fluxogramas completos.",
+        "Arquitetura e desenvolvimento: Atuação com WebView e Microfrontends (Angular/React), evoluindo soluções do Voxel para o novo IDS (Itaú Design System).",
+        "Observabilidade: Implementação de Datadog, FullStory e GA4 com dashboards e métricas estratégicas.",
+        "Qualidade e testes: Cobertura alta com Jest/Karma e E2E com Cypress.",
+        "Arquitetura de jornadas: Participação ativa em reuniões estratégicas em todo o ciclo de valor."
+      ]
+    },
+    {
+      "icon": "fas fa-plane",
+      "title": "Engenheiro de Desenvolvimento de Software Sênior",
+      "company": "Flytour Oficial",
+      "period": "Março 2022 - Novembro 2023 (1 ano 9 meses)",
+      "intro": "Atuação em todas as etapas do ciclo de desenvolvimento de uma plataforma de viagens (aéreas e terrestres), incluindo agendamento de hotéis, voos, carros e demais serviços. Desenvolvimento com foco em Angular 2+ e React, garantindo interfaces escaláveis, responsivas e de alta performance. Responsável por implementar e manter componentes reutilizáveis, otimizar layouts em CSS/SCSS para desktop e mobile, além de dar suporte em integrações com banco de dados, back-end (APIs REST/GraphQL) e outras áreas críticas da aplicação. Participação ativa em revisões de código, definição de arquitetura front-end, aplicação de boas práticas de acessibilidade e segurança, além de colaboração em deploys, testes e monitoramento. Essa experiência proporcionou aprendizado sólido em metodologias ágeis, design system e integração de soluções complexas para alto volume de usuários. ",
+      "bullets": [
+        "Componentes reutilizáveis e otimização de layouts em CSS/SCSS (desktop e mobile).",
+        "Suporte a integrações com bancos de dados e back-end (APIs REST/GraphQL).",
+        "Revisões de código, decisões de arquitetura front-end, acessibilidade e segurança.",
+        "Colaboração em deploys, testes e monitoramento (metodologias ágeis, design system)."
+      ]
+    },
+    {
+      "icon": "fas fa-heartbeat",
+      "title": "Analista Programador Sênior",
+      "company": "Duosystem - Inteligência e Inovação em Saúde",
+      "period": "Março 2020 - Setembro 2021 (1 ano 7 meses)",
+      "intro": "Empresa de tecnologia com foco em soluções para o SUS, desenvolvendo sistemas altamente confiáveis, auditáveis e com forte ênfase na segurança do usuário final. Responsável pela implementação de features, correção de hotfixes e resolução de bugs em um sistema baseado em Symfony e Twig templates, além de atuar no front-end com Angular 2+, React, CSS, JavaScript e jQuery, e no back-end com Node.js e PHP/SQL. Atuação em todo o ciclo de desenvolvimento, desde análise e diagnóstico até entrega de soluções em produção, garantindo qualidade, performance e conformidade com requisitos críticos. Participação em cursos e treinamentos em Microsoft Azure, que possibilitaram crescimento técnico significativo e maior preparo para soluções em nuvem. ",
+      "bullets": [
+        "Features, hotfixes e correções em sistema Symfony/Twig.",
+        "Front-end com Angular 2+, React, CSS, JS/jQuery; back-end com Node.js e PHP/SQL.",
+        "Atuação ponta a ponta: análise, diagnóstico e entrega em produção.",
+        "Cursos e treinamentos em Microsoft Azure (crescimento técnico e preparo para nuvem)."
+      ]
+    },
+    {
+      "icon": "fas fa-globe",
+      "title": "PHP Web Designer Programmer Full Stack Sênior",
+      "company": "ITWS - IT Web Solutions",
+      "period": "Setembro 2018 - Março 2020 (1 ano 7 meses)",
+      "intro": "Desenvolvimento web utilizando React, Angular 2+, PHP (Yii2, Laravel), JavaScript, jQuery, Bootstrap, CSS, HTML, Ajax, MySQL, Apache, além de integrações com APIs e webservices. Foco em soluções customizadas para plataformas de e-commerce, atuando em correções, atualizações e melhorias de front-end, back-end e banco de dados. Experiência sólida em contato direto com clientes para levantamento de requisitos, análise de concorrência e proposição de melhorias estratégicas. Também responsável por treinamento de terceiros, garantindo transferência de conhecimento e manutenção contínua das soluções entregues. ",
+      "bullets": [
+        "Stack: React, Angular 2+, PHP (Yii2, Laravel), JavaScript, jQuery, Bootstrap, CSS, HTML, Ajax, MySQL, Apache.",
+        "Soluções sob medida para e-commerce: correções, atualizações e melhorias em front-end, back-end e banco.",
+        "Contato direto com clientes (requisitos, análise de concorrência, melhorias) e treinamento de terceiros."
+      ]
+    },
+    {
+      "icon": "fas fa-car",
+      "title": "Programador PHP",
+      "company": "GT40",
+      "period": "Março 2018 - Agosto 2018 (6 meses)",
+      "intro": "Onde eu aprendi programação de verdade, cresci muito pois não usavamos framework e fazia o papel full stack > Manutenção e desenvolvimento de aplicações Front-end, Back-end e Banco para sistemas GT40 e Flatout (Empresa de Classificados de CARROS). Desenvolvimento de API/Webservice, elaboração de layouts, construção HTML, CSS, JS/jQuery. Construção do backend usando Ajax, PHP, MySQL, PostgreSQL. ",
+      "bullets": [
+        "Manutenção e desenvolvimento para GT40 e Flatout (Front-end e Back-end).",
+        "API/Webservice, HTML/CSS/JS/jQuery, Ajax, PHP, MySQL, PostgreSQL."
+      ]
+    },
+    {
+      "icon": "fas fa-graduation-cap",
+      "title": "Desenvolvedor Web",
+      "company": "Dominic 360",
+      "period": "Abril 2017 - Março 2018 (1 ano)",
+      "intro": "Freelancer de site de E-Learning",
+      "bullets": [
+        "Criação de E-Learning em WordPress com customizações, plugins e temas.",
+        "Soluções diárias em PHP, jQuery, JavaScript, MySQL, CSS3, HTML5."
+      ]
+    },
+    {
+      "icon": "fas fa-user-tie",
+      "title": "Gerente Administrativo",
+      "company": "Associação Médica Brasileira",
+      "period": "Julho 2012 - Outubro 2017 (5 anos 4 meses)",
+      "intro": "Grande Desenvolvimento de SoftSkils Reponsabilidades, Lidar com gestão e até politica, Lidar com médicos e hierarquias",
+      "bullets": [
+        "Gestão de implementação de projetos/sistemas (requisitos, tecnologias, testes e usabilidade).",
+        "Relatórios e cálculos estatísticos (Excel).",
+        "Seleção, contratação e treinamento de novos funcionários.",
+        "Inglês com médicos estrangeiros."
+      ]
+    },
+    {
+      "icon": "fas fa-bullhorn",
+      "title": "Desenvolvedor Web",
+      "company": "Trevisan MKT",
+      "period": "Janeiro 2016 - Fevereiro 2017 (1 ano 2 meses)",
+      "intro": "Consultoria de marketing que repassava trabalhos de diverentes produtos para criar soluções",
+      "bullets": [
+        "Projetos e manutenção para sites de clientes (PHP, JavaScript, jQuery, CSS, HTML5, PostgreSQL, MySQL)."
+      ]
+    }
+  ],
+  "companies": [
+    "Itaú Unibanco",
+    "Flytour",
+    "Duosystem",
+    "ITWS Group",
+    "GT40",
+    "Dominic 360",
+    "AMB",
+    "Trevisan MKT",
+    "D360",
+    "QUIDDE",
+    "Vivo",
+    "OpenTravel"
+  ]
+}
