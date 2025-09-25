@@ -953,27 +953,25 @@
         }
 
         body {
-          background: white !important;
+          /* usa a cor/fundo do modo de leitura atual */
+          background: var(--page-bg) !important;
           padding: 0 !important;
           margin: 0 !important;
           -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
         }
 
         .container {
           max-width: 100% !important;
           margin: 0 !important;
-          background: white !important;
+          background: var(--bg-white) !important;
           border-radius: 0 !important;
           box-shadow: none !important;
           overflow: visible !important;
         }
 
         .header {
-          background: linear-gradient(
-            135deg,
-            #1f2937 0%,
-            #374151 100%
-          ) !important;
+          background: linear-gradient(135deg, var(--text-dark) 0%, var(--text-dark) 100%) !important;
           color: white !important;
           padding: 20px 15px !important;
           -webkit-print-color-adjust: exact !important;
@@ -1002,7 +1000,7 @@
         .profile-img {
           width: 100px !important;
           height: 100px !important;
-          background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+          background: linear-gradient(135deg, var(--primary-color), var(--accent-color)) !important;
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
         }
@@ -1038,7 +1036,7 @@
         }
 
         .sidebar {
-          background: #f8fafc !important;
+          background: var(--bg-light) !important;
           padding: 20px 15px !important;
           border-right: 1px solid #e5e7eb !important;
           -webkit-print-color-adjust: exact !important;
@@ -1047,7 +1045,7 @@
 
         .content {
           padding: 20px 15px !important;
-          background: white !important;
+          background: var(--bg-white) !important;
         }
 
         .section {
@@ -1065,10 +1063,10 @@
         }
 
         .experience-item {
-          background: #f8fafc !important;
+          background: var(--bg-light) !important;
           padding: 20px !important;
           margin-bottom: 20px !important;
-          border-left: 4px solid #2563eb !important;
+          border-left: 4px solid var(--primary-color) !important;
           page-break-inside: avoid !important;
           break-inside: avoid !important;
           -webkit-print-color-adjust: exact !important;
@@ -1080,7 +1078,7 @@
           height: 12px !important;
           left: -8px !important;
           top: 20px !important;
-          background: #2563eb !important;
+          background: var(--primary-color) !important;
           -webkit-print-color-adjust: exact !important;
         }
 
@@ -1093,10 +1091,10 @@
 
         .company {
           font-size: 1rem !important;
-          color: #2563eb !important;
+          color: var(--primary-color) !important;
           margin-bottom: 5px !important;
           -webkit-print-color-adjust: exact !important;
-        }
+       }
 
         .period {
           font-size: 0.8rem !important;
@@ -1113,14 +1111,14 @@
         .contact-item {
           margin-bottom: 12px !important;
           padding: 10px !important;
-          background: white !important;
+          background: var(--bg-white) !important;
           -webkit-print-color-adjust: exact !important;
         }
 
         .contact-icon {
           width: 35px !important;
           height: 35px !important;
-          background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+          background: linear-gradient(135deg, var(--primary-color), var(--accent-color)) !important;
           color: white !important;
           font-size: 14px !important;
           margin-right: 10px !important;
@@ -1185,7 +1183,7 @@
         }
 
         .education-institution {
-          color: #2563eb !important;
+          color: var(--primary-color) !important;
           font-size: 0.85rem !important;
           -webkit-print-color-adjust: exact !important;
         }
@@ -1600,7 +1598,7 @@
                 onchange="toggleHighlightTech(event)"
               />
               <span class="slider"></span>
-              <span class="toggle-label">Destacar tecnologia</span>
+              <span class="toggle-label">Destacar Cores</span>
             </label>
 
             <button
@@ -2133,6 +2131,65 @@
         return CMS;
       }
 
+      // ===== Helpers: Geração dinâmica de paleta por tecnologia (via CMS) =====
+      function shadeHex(hex, p) {
+        // p entre -1 e 1 (negativo = escurece, positivo = clareia)
+        let f = (hex || "").replace("#", "").trim();
+        if (f.length === 3) f = f.split("").map((c) => c + c).join("");
+        if (!/^[0-9a-fA-F]{6}$/.test(f)) return hex || "#999999";
+        const num = parseInt(f, 16);
+        let r = (num >> 16) & 0xff;
+        let g = (num >> 8) & 0xff;
+        let b = num & 0xff;
+        const t = p < 0 ? 0 : 255;
+        const pr = Math.abs(p);
+        r = Math.round((t - r) * pr) + r;
+        g = Math.round((t - g) * pr) + g;
+        b = Math.round((t - b) * pr) + b;
+        return (
+          "#" +
+          [r, g, b]
+            .map((v) => {
+              const s = v.toString(16);
+              return s.length === 1 ? "0" + s : s;
+            })
+            .join("")
+        );
+      }
+      function contrastText(hex) {
+        let f = (hex || "").replace("#", "").trim();
+        if (f.length === 3) f = f.split("").map((c) => c + c).join("");
+        if (!/^[0-9a-fA-F]{6}$/.test(f)) return "#ffffff";
+        const r = parseInt(f.substr(0, 2), 16);
+        const g = parseInt(f.substr(2, 2), 16);
+        const b = parseInt(f.substr(4, 2), 16);
+        // YIQ
+        const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+        return yiq >= 150 ? "#0b1220" : "#ffffff";
+      }
+      function generateTechPalette(map) {
+        if (!map || typeof map !== "object") return;
+        const styleId = "tech-palette";
+        const old = document.getElementById(styleId);
+        if (old && old.parentNode) old.parentNode.removeChild(old);
+        let css = "";
+        Object.keys(map).forEach((key) => {
+          const m = map[key] || {};
+          const base = m.base || "#64748b"; // slate-500 fallback
+          const alt = m.alt || shadeHex(base, -0.2);
+          const chipText = m.text || contrastText(base);
+          // chips (habilidades técnicas)
+          css += `.skill-tag[data-tech="${key}"]{background:linear-gradient(135deg, ${base}, ${alt});color:${chipText};}`;
+          // textos (tabela de proficiência, nomes)
+          css += `.tech-name[data-tech="${key}"]{color:${base};}`;
+          // destaques dentro de descrições
+          css += `.tech-highlight[data-tech="${key}"]{color:${base};}`;
+        });
+        const style = document.createElement("style");
+        style.id = styleId;
+        style.textContent = css;
+        document.head.appendChild(style);
+      }
       function updateSectionTitle(iconClass, text) {
         const h2 = Array.from(document.querySelectorAll(".section-title")).find(
           (h) =>
@@ -2332,6 +2389,12 @@
         renderSummary(c);
         renderExperience(c);
         renderObjective(c);
+        // aplica paleta oficial por tecnologia vinda do CMS
+        try {
+          generateTechPalette(cms.techColors || c.techColors);
+        } catch (e) {
+          console.warn("Falha ao aplicar paleta de tecnologias do CMS:", e);
+        }
       }
 
       async function changeLanguage() {
