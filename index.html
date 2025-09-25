@@ -2099,7 +2099,6 @@
 
     <script>
       // Reading mode + I18N + Tech Colors
-      let CMS = null;
       let I18N = null;
       let TECH_COLORS = null;
       let currentLang = localStorage.getItem("lang") || "pt";
@@ -2121,17 +2120,6 @@
         if (select && select.value !== mode) select.value = mode;
       }
 
-      async function loadCMS() {
-        if (CMS) return CMS;
-        try {
-          const res = await fetch("cms.json", { cache: "no-store" });
-          CMS = await res.json();
-        } catch (e) {
-          console.error("Erro ao carregar CMS:", e);
-          CMS = null;
-        }
-        return CMS;
-      }
       
       // Carrega I18N do idioma escolhido. Tenta arquivo local, cache localStorage e fallback com tradução automática mínima.
       async function loadI18n(lang) {
@@ -2156,49 +2144,23 @@
             return I18N;
           }
         } catch {}
-        // fallback: traduz rótulos essenciais a partir do EN (pode falhar por CORS, mantém EN)
+        // fallback local: EN (sem requisições externas para evitar CORS)
         try {
-          I18N = await autoTranslateI18n(lang);
-          I18N.__lang = lang;
-          localStorage.setItem(cacheKey, JSON.stringify(I18N));
-          return I18N;
-        } catch (e) {
-          console.warn("Auto-translate falhou, usando EN:", e);
           const resEn = await fetch("i18n/en.json", { cache: "no-store" });
           const en = await resEn.json();
           en.__lang = "en";
           I18N = en;
           return I18N;
+        } catch {
+          // último recurso: objeto mínimo para não quebrar UI
+          I18N = {
+            __lang: "en",
+            ui: { readingModeLabel: "Reading mode", languageLabel: "Language", print: "Print" },
+            sections: {},
+            categories: {}
+          };
+          return I18N;
         }
-      }
-      async function autoTranslateI18n(targetLang) {
-        const resEn = await fetch("i18n/en.json", { cache: "no-store" });
-        const en = await resEn.json();
-        const endpoint = "https://libretranslate.de/translate";
-        async function tr(text) {
-          if (!text) return text;
-          try {
-            const r = await fetch(endpoint, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ q: text, source: "en", target: targetLang, format: "text" })
-            });
-            if (!r.ok) return text;
-            const j = await r.json();
-            return j.translatedText || text;
-          } catch {
-            return text;
-          }
-        }
-        const ui = { ...en.ui };
-        ui.readingModeLabel = await tr(en.ui.readingModeLabel);
-        ui.languageLabel = await tr(en.ui.languageLabel);
-        ui.print = await tr(en.ui.print);
-        const sections = { ...en.sections };
-        for (const k of Object.keys(sections)) sections[k] = await tr(sections[k]);
-        const categories = { ...en.categories };
-        for (const k of Object.keys(categories)) categories[k] = await tr(categories[k]);
-        return { ...en, ui, sections, categories };
       }
       async function loadTechColors() {
         if (TECH_COLORS) return TECH_COLORS;
@@ -2238,7 +2200,7 @@
         document.documentElement.setAttribute("lang", lang);
       }
 
-      // ===== Helpers: Geração dinâmica de paleta por tecnologia (via CMS) =====
+      // ===== Helpers: Geração dinâmica de paleta por tecnologia (via tech-colors.json) =====
       function shadeHex(hex, p) {
         // p entre -1 e 1 (negativo = escurece, positivo = clareia)
         let f = (hex || "").replace("#", "").trim();
@@ -2482,27 +2444,170 @@
         updateSectionTitle("fa-target", c.sections.objective);
       }
 
+      // Renderiza empresas a partir do I18N
+      function renderCompanies(c) {
+        const companiesTitle = Array.from(
+          document.querySelectorAll(".section-title")
+        ).find(
+          (h) =>
+            h.textContent.trim().includes("Empresas") ||
+            h.querySelector(".fa-building")
+        );
+        const section = companiesTitle?.closest(".section");
+        if (!section) return;
+        const grid = section.querySelector(".companies-grid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        const names = Array.isArray(c.companies) ? c.companies : [];
+        // Mapeia nomes conhecidos para slugs usados no CSS
+        const slugMap = {
+          "Itaú Unibanco": "itau",
+          "Flytour": "flytour",
+          "Duosystem": "duosystem",
+          "ITWS Group": "itws",
+          "GT40": "gt40",
+          "Dominic 360": "dominic",
+          "AMB": "amb",
+          "Associação Médica Brasileira": "amb",
+          "Trevisan MKT": "trevisan",
+          "D360": "d360",
+          "QUIDDE": "quidde",
+          "Vivo": "vivo",
+          "OpenTravel": "opentravel"
+        };
+        const slugify = (s) =>
+          s
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9]+/g, "")
+            .trim();
+        names.forEach((name) => {
+          const div = document.createElement("div");
+          const slug = slugMap[name] || slugify(name);
+          div.className = "company-item";
+          div.setAttribute("data-company", slug);
+          div.textContent = name;
+          grid.appendChild(div);
+        });
+      }
+
+      // Limpa conteúdo estático seed para evitar duplicidades antes de renderizar I18N
+      function cleanStaticSeed() {
+        // Resumo
+        try {
+          const sumTitle = Array.from(document.querySelectorAll(".section-title")).find(
+            (h) => h.textContent.trim().includes("Resumo") || h.querySelector(".fa-user")
+          );
+          const sumSection = sumTitle?.closest(".section");
+          if (sumSection) {
+            Array.from(sumSection.childNodes).forEach((n) => {
+              const isTitle = n.nodeType === 1 && n.classList && n.classList.contains("section-title");
+              if (!isTitle) sumSection.removeChild(n);
+            });
+          }
+        } catch {}
+
+        // Experiência
+        try {
+          const expTitle = Array.from(document.querySelectorAll(".section-title")).find(
+            (h) => h.textContent.trim().includes("Experiência") || h.querySelector(".fa-briefcase")
+          );
+          const expSection = expTitle?.closest(".section");
+          expSection?.querySelectorAll(".experience-item")?.forEach((e) => e.remove());
+        } catch {}
+
+        // Formação
+        try {
+          const eduTitle = Array.from(document.querySelectorAll(".section-title")).find(
+            (h) => h.textContent.trim().includes("Formação") || h.querySelector(".fa-graduation-cap")
+          );
+          const eduSection = eduTitle?.closest(".section");
+          eduSection?.querySelectorAll(".education-item")?.forEach((e) => e.remove());
+        } catch {}
+
+        // Objetivo
+        try {
+          const objTitle = Array.from(document.querySelectorAll(".section-title")).find(
+            (h) => h.textContent.trim().includes("Objetivo") || h.querySelector(".fa-target")
+          );
+          const objSection = objTitle?.closest(".section");
+          objSection?.querySelectorAll(".description")?.forEach((e) => e.remove());
+        } catch {}
+
+        // Empresas
+        try {
+          const compTitle = Array.from(document.querySelectorAll(".section-title")).find(
+            (h) => h.textContent.trim().includes("Empresas") || h.querySelector(".fa-building")
+          );
+          const compSection = compTitle?.closest(".section");
+          const grid = compSection?.querySelector(".companies-grid");
+          if (grid) grid.innerHTML = "";
+        } catch {}
+
+        // Principais competências
+        try {
+          const keyTitle = Array.from(document.querySelectorAll(".section-title")).find(
+            (h) => h.textContent.trim().includes("Competências") || h.querySelector(".fa-star")
+          );
+          const keySection = keyTitle?.closest(".section");
+          const wrap = keySection?.querySelector(".skill-tags");
+          if (wrap) wrap.innerHTML = "";
+        } catch {}
+      }
+
       async function renderFromCMS() {
-        const cms = await loadCMS();
-        if (!cms) return;
-        const c = cms[currentLang] || cms["pt"];
-        if (!c) return;
-
-        // Atualiza rótulos dos selects (será definido após carregar I18N)
-
+        // Usando apenas I18N para textos; CMS não é necessário
         const t = await loadI18n(currentLang);
         await loadTechColors();
         // Atualiza rótulos dos selects (somente texto exibido no placeholder)
         const langSel = document.getElementById("languageSelector");
         if (langSel) langSel.value = currentLang;
 
-        // Render com textos do I18N e dados do CMS
+        // Render a partir do I18N (textos/labels)
         renderHeader(t);
         renderSectionTitles(t);
         renderEducation(t);
         renderSummary(t);
-        renderExperience(c);
+        renderExperience(t);
         renderObjective(t);
+        renderCompanies(t);
+
+        // Principais Competências dinâmicas via I18N (restaura lista completa)
+        try {
+          const keySkills = Array.isArray(t.keySkills) ? t.keySkills : [];
+          const keyTitle = Array.from(document.querySelectorAll(".section-title")).find(
+            (h) => h.textContent.trim().includes("Competências") || h.querySelector(".fa-star")
+          );
+          const keySection = keyTitle?.closest(".section");
+          if (keySection) {
+            const wrap = keySection.querySelector(".skill-tags");
+            if (wrap) {
+              wrap.innerHTML = "";
+              const labelMap = {
+                "react-native": "React Native",
+                nodejs: "Node.js",
+                csharp: "C#",
+                css3: "CSS3",
+                html5: "HTML5",
+                ga4: "GA4",
+                graphql: "GraphQL",
+                rest: "REST"
+              };
+              keySkills.forEach((tech) => {
+                const span = document.createElement("span");
+                span.className = "skill-tag";
+                span.setAttribute("data-tech", tech);
+                span.textContent =
+                  labelMap[tech] ||
+                  tech.replace(/(^|[-_])\w/g, (s) => s.replace(/[-_]/, " ").toUpperCase());
+                wrap.appendChild(span);
+              });
+            }
+          }
+        } catch (e) {
+          console.warn("Falha ao renderizar Principais Competências:", e);
+        }
 
         // aplica paleta oficial por tecnologia vinda do arquivo tech-colors
         try {
@@ -2670,6 +2775,7 @@
 
       // Inicialização
       document.addEventListener("DOMContentLoaded", () => {
+        cleanStaticSeed();
         // init reading mode
         const savedMode = localStorage.getItem("readingMode") || "light";
         const modeSel = document.getElementById("readingMode");
@@ -2707,7 +2813,7 @@
         const savedHL = localStorage.getItem("highlightTech") === "1";
         if (hlToggle) hlToggle.checked = savedHL;
 
-        // carregar e renderizar CMS e só então aplicar destaque (se ativo)
+        // carregar e renderizar I18N e só então aplicar destaque (se ativo)
         renderFromCMS().then(() => {
           if (savedHL) applyTechHighlights(true);
         });

@@ -1,0 +1,260 @@
+﻿{
+  "ui": {
+    "readingModeLabel": "閲覧モード",
+    "languageLabel": "言語",
+    "print": "印刷",
+    "modes": {
+      "light": "ライト",
+      "sepia": "セピア",
+      "dark": "ダーク",
+      "contrast": "ハイコントラスト"
+    },
+    "languages": {
+      "pt": "ポルトガル語",
+      "en": "英語"
+    }
+  },
+  "header": {
+    "name": "Rodrigo Blefari Gonçalves",
+    "title": "フロントエンドソフトウェアエンジニア（ミッド/シニア）| Angular | React",
+    "location": "サンパウロ（ブラジル）",
+    "contactLocationLabel": "北部ゾーン - SP",
+    "phone": "+55 (11) 94820-5237",
+    "email": "rodrigo.blefari@gmail.com",
+    "linkedinLabel": "LinkedInプロフィール"
+  },
+  "sections": {
+    "contact": "連絡先",
+    "keySkills": "主要スキル",
+    "techSkills": "技術スキル",
+    "techProficiency": "技術と習熟度",
+    "education": "学歴",
+    "summary": "職務概要",
+    "experience": "職務経験",
+    "companies": "過去の企業",
+    "objective": "キャリア目標"
+  },
+  "categories": {
+    "frontend": "フロントエンド",
+    "backend": "バックエンド",
+    "db": "データベース",
+    "devops": "DevOps",
+    "cicd": "CI/CD",
+    "tools": "ツール",
+    "apis": "API",
+    "tests": "テスト"
+  },
+  "proficiencyCategoriesOrder": [
+    "frontend",
+    "backend",
+    "db",
+    "devops",
+    "cicd"
+  ],
+  "chipsCategoriesOrder": [
+    "frontend",
+    "tests",
+    "backend",
+    "db",
+    "devops",
+    "cicd",
+    "apis",
+    "tools"
+  ],
+  "keySkills": [
+    "angular",
+    "react",
+    "typescript",
+    "javascript",
+    "html5",
+    "css3",
+    "nodejs",
+    "react-native",
+    "redux",
+    "tailwind",
+    "bootstrap",
+    "graphql",
+    "rest",
+    "php",
+    "mysql",
+    "postgresql",
+    "mongodb",
+    "firebase",
+    "github",
+    "gitlab",
+    "cypress",
+    "jest",
+    "karma",
+    "jasmine",
+    "testing-library",
+    "playwright",
+    "datadog",
+    "fullstory",
+    "ga4",
+    "azure",
+    "apache",
+    "webpack",
+    "vite",
+    "babel",
+    "wordpress",
+    "laravel",
+    "jquery"
+  ],
+  "summaryText": [
+    "テクノロジーに情熱を注ぐWeb開発者であり、Angular、React、TypeScriptなど複数のスタックで豊富な経験を積んでいます。規模や業界の異なるプロジェクトに携わり、ソフトウェアアーキテクチャ、テスト自動化（単体・E2E）、アクセシビリティ、オブザーバビリティ、アプリケーションセキュリティのベストプラクティスを実践してきました。Scrum/ Kanbanなどのアジャイル手法、マイクロフロントエンド、デザインシステム、監視ツールの統合にも精通しています。開発にとどまらず、チームのリード、採用、育成を担い、エンジニアリングのベストプラクティスとビジネスに高い価値をもたらす成果を実現しました。クライアントと直接向き合い、要件の精査やドキュメント化を通じて成功事例を創出してきた経験もあります。バックオフィス基盤とB2Cプロダクトの双方で価値を提供し、改善点の抽出やMVPの議論に積極的に携わっています。",
+    "キャリアの大半をフルスタック開発者として過ごし、プロジェクトのエンドツーエンド（360°）の開発、管理、実装を担ってきました。アプリケーションライフサイクル全体—アーキテクチャ設計と実装からテスト、デプロイ、運用保守まで—を経験しています。大手企業での就業や著名ブランドのフリーランス案件に参画し、常にエンジニアリング、スケーラビリティ、セキュリティのベストプラクティスを適用してきました。リーダーシップを備え、新しい技術への適応も速く、高いインパクトを持つ効率的なソリューションの提供に注力しています。"
+  ],
+  "objectiveText": "現在はJavaScriptフレームワーク、特にAngularとReactの専門性を磨きながら、必要に応じてNode、Java、PHP、C#、データベースのプロジェクトにも貢献しています。どの言語にも迅速にキャッチアップできる能力と卓越性へのこだわりにより、ダイナミックな課題に柔軟に対応できる多才なプロフェッショナルです。",
+  "education": [
+    {
+      "title": "準学士号 - コンピュータープログラミング",
+      "institution": "UNINOVE",
+      "period": "2010 - 2013"
+    },
+    {
+      "title": "オンラインコース - プログラミング言語",
+      "institution": "W3Schools",
+      "period": "2017 - 2018"
+    },
+    {
+      "title": "認定 - データベース",
+      "institution": "Faculdade Impacta Tecnologia",
+      "period": "2014"
+    },
+    {
+      "title": "認定 - Excel I & II",
+      "institution": "Faculdade Impacta Tecnologia",
+      "period": "2015 - 2016"
+    },
+    {
+      "title": "トレーニング - Microsoft Azure（Fundamentals, Dev/Cloud）",
+      "institution": "Microsoft | 社内・オンラインコース",
+      "period": "2020 - 2021"
+    },
+    {
+      "title": "トレーニング - Security Engineer II",
+      "institution": "Itaú Unibanco",
+      "period": "01/2025 - 08/2025"
+    },
+    {
+      "title": "トレーニング - AWS Cloud Practitioner",
+      "institution": "Itaú Unibanco",
+      "period": "02/2025 - 08/2025"
+    }
+  ],
+  "experience": [
+    {
+      "icon": "fas fa-laptop-code",
+      "title": "ITエンジニアリングアナリスト（ミッドレベル／TM）",
+      "company": "Itaú Unibanco",
+      "period": "2024年4月 - 現在（1年6か月）",
+      "intro": "月間数百万のアクセスがあるItaú個人向けアプリのフロントエンドソフトウェアエンジニア。給与ポータビリティのジャーニーからキャリアを開始し、指標とデータに基づくエンドツーエンドのフロー設計と改善を担いました。リファインメント、ドキュメント化、実装をリードし、顧客中心のジャーニーを単体テストとモダンなデザインシステムを備えた堅牢なソリューションへと進化させました。",
+      "highlightsTitle": "主な成果と責務：",
+      "highlights": [
+        "表彰：「One Click」ジャーニーのリリースに貢献。スコードが年間最優秀ジャーニーに選出され、効率を60%以上向上させ、数百万のユーザーに影響。",
+        "データ分析：指標主導のフロー、ドキュメント、テストシナリオ、完全なフローチャートを作成。",
+        "アーキテクチャと開発：WebViewとマイクロフロントエンド（Angular/React）を担当し、Voxelソリューションを新しいIDS（Itaú Design System）へ進化させた。",
+        "オブザーバビリティ：Datadog、FullStory、GA4を導入し、ダッシュボードと戦略的指標を構築。",
+        "品質とテスト：Jest/Karmaによる高い単体テストカバレッジと、CypressによるE2Eテストを実施。",
+        "ジャーニーアーキテクチャ：バリューストリーム全体にわたる戦略会議に積極的に参加。"
+      ]
+    },
+    {
+      "icon": "fas fa-plane",
+      "title": "シニアソフトウェア開発エンジニア",
+      "company": "Flytour Oficial",
+      "period": "2022年3月 - 2023年11月（1年9か月）",
+      "intro": "ホテル、航空券、レンタカー、付帯サービスを扱う旅行プラットフォーム（航空・陸）のエンドツーエンドに関わりました。Angular 2+とReactに注力し、スケーラブルでレスポンシブかつ高パフォーマンスなUIを提供。再利用可能なコンポーネント開発、CSS/SCSSレイアウト（デスクトップ/モバイル）の最適化、データベースおよびバックエンド統合（REST/GraphQL API）など重要領域の支援を担当。コードレビューやフロントエンドアーキテクチャ、アクセシビリティとセキュリティのベストプラクティス、デプロイ・テスト・モニタリングへの協業にも積極的に参加し、アジャイル手法、デザインシステム、大規模ユーザー向け複雑ソリューション統合で大きな学びを得ました。",
+      "bullets": [
+        "再利用可能なコンポーネントとCSS/SCSSレイアウト最適化（デスクトップ/モバイル）。",
+        "データベースおよびバックエンドの支援（REST/GraphQL API）。",
+        "コードレビュー、フロントエンドアーキテクチャの意思決定、アクセシビリティとセキュリティの実践。",
+        "デプロイ、テスト、モニタリングでの協働（アジャイル/デザインシステム）。"
+      ]
+    },
+    {
+      "icon": "fas fa-heartbeat",
+      "title": "シニアアナリストプログラマー",
+      "company": "Duosystem - Inteligência e Inovação em Saúde",
+      "period": "2020年3月 - 2021年9月（1年7か月）",
+      "intro": "SUS向けソリューションに特化したヘルステックで、信頼性と監査性の高いシステムを提供し、エンドユーザーのセキュリティを重視。Symfony/Twigでの機能追加、ホットフィックス、バグ修正を担当し、フロントエンドはAngular 2+、React、CSS、JS/jQuery、バックエンドはNode.jsとPHP/SQLを使用。分析と診断から本番リリースまでエンドツーエンドで参画し、品質・性能・重要要件を確保しました。Microsoft Azureの研修とコースで、技術的な成長とクラウド対応力を大きく向上。",
+      "bullets": [
+        "Symfony/Twigシステムでの機能追加、ホットフィックス、バグ修正。",
+        "フロントエンド：Angular 2+、React、CSS、JS/jQuery／バックエンド：Node.js、PHP/SQL。",
+        "分析、トラブルシューティングから本番リリースまでのエンドツーエンド対応。",
+        "Microsoft Azure研修・講座（技術力向上とクラウド対応）。"
+      ]
+    },
+    {
+      "icon": "fas fa-globe",
+      "title": "シニアフルスタックPHPウェブデザイナー/プログラマー",
+      "company": "ITWS - IT Web Solutions",
+      "period": "2018年9月 - 2020年3月（1年7か月）",
+      "intro": "React、Angular 2+、PHP（Yii2、Laravel）、JavaScript、jQuery、Bootstrap、CSS、HTML、Ajax、MySQL、Apacheに加え、API/ Webサービス統合を用いたWeb開発。フロントエンド、バックエンド、データベース全体でカスタマイズされたeコマースソリューションに注力しました。要件定義、競合分析、改善提案などのクライアント対応と外部チームのトレーニングも担当。",
+      "bullets": [
+        "スタック：React、Angular 2+、PHP（Yii2、Laravel）、JavaScript、jQuery、Bootstrap、CSS、HTML、Ajax、MySQL、Apache。",
+        "カスタムeコマースソリューション：フロントエンド・バックエンド・データベース全体での改修、アップデート、改善。",
+        "クライアントとの直接連携（要件、競合分析、改善提案）と外部チームのトレーニング。"
+      ]
+    },
+    {
+      "icon": "fas fa-car",
+      "title": "PHPデベロッパー",
+      "company": "GT40",
+      "period": "2018年3月 - 2018年8月（6か月）",
+      "intro": "実践的なプログラミングを本格的に学んだ現場。フレームワークを使わないフルスタックロールで、GT40とFlatout（自動車クラシファイド）のフロントエンド、バックエンド、データベース開発と保守を担当。API/ Webサービス開発、レイアウト制作、HTML/CSS/JS/jQuery、およびAjax、PHP、MySQL、PostgreSQLによるバックエンド構築を行いました。",
+      "bullets": [
+        "GT40とFlatoutの保守・開発（フロントエンド/バックエンド）。",
+        "API/ Webサービス、HTML/CSS/JS/jQuery、Ajax、PHP、MySQL、PostgreSQL。"
+      ]
+    },
+    {
+      "icon": "fas fa-graduation-cap",
+      "title": "Webデベロッパー",
+      "company": "Dominic 360",
+      "period": "2017年4月 - 2018年3月（1年）",
+      "intro": "Eラーニングサイトのフリーランスプロジェクト。",
+      "bullets": [
+        "WordPressによるEラーニングプラットフォーム構築（カスタマイズ、プラグイン、テーマ編集）。",
+        "PHP、jQuery、JavaScript、MySQL、CSS3、HTML5による日々のソリューション。"
+      ]
+    },
+    {
+      "icon": "fas fa-user-tie",
+      "title": "管理マネージャー",
+      "company": "Associação Médica Brasileira",
+      "period": "2012年7月 - 2017年10月（5年4か月）",
+      "intro": "責任感、ガバナンス/政治的ダイナミクス、医師や階層構造との関係構築など、ソフトスキルを大きく伸ばした役割。",
+      "bullets": [
+        "プロジェクト/システム導入の管理（要件、技術、テストケース、ユーザビリティ）。",
+        "レポート作成と統計計算（Excel）。",
+        "新規社員の採用、オンボーディング、トレーニング。",
+        "海外医師との英語コミュニケーション。"
+      ]
+    },
+    {
+      "icon": "fas fa-bullhorn",
+      "title": "Webデベロッパー",
+      "company": "Trevisan MKT",
+      "period": "2016年1月 - 2017年2月（1年2か月）",
+      "intro": "多様なプロダクト案件に対応し、カスタムWebソリューションを構築するマーケティングコンサルティング。",
+      "bullets": [
+        "クライアントサイトのプロジェクトと保守（PHP、JavaScript、jQuery、CSS、HTML5、PostgreSQL、MySQL）。"
+      ]
+    }
+  ],
+  "companies": [
+    "Itaú Unibanco",
+    "Flytour",
+    "Duosystem",
+    "ITWS Group",
+    "GT40",
+    "Dominic 360",
+    "AMB",
+    "Trevisan MKT",
+    "D360",
+    "QUIDDE",
+    "Vivo",
+    "OpenTravel"
+  ]
+}

@@ -1,0 +1,260 @@
+﻿{
+  "ui": {
+    "readingModeLabel": "阅读模式",
+    "languageLabel": "语言",
+    "print": "打印",
+    "modes": {
+      "light": "浅色",
+      "sepia": "褐色",
+      "dark": "深色",
+      "contrast": "高对比度"
+    },
+    "languages": {
+      "pt": "葡萄牙语",
+      "en": "英语"
+    }
+  },
+  "header": {
+    "name": "Rodrigo Blefari Gonçalves",
+    "title": "前端软件工程师（中/高级）| Angular | React",
+    "location": "圣保罗，巴西",
+    "contactLocationLabel": "北区 - SP",
+    "phone": "+55 (11) 94820-5237",
+    "email": "rodrigo.blefari@gmail.com",
+    "linkedinLabel": "LinkedIn 个人资料"
+  },
+  "sections": {
+    "contact": "联系方式",
+    "keySkills": "核心技能",
+    "techSkills": "技术技能",
+    "techProficiency": "技术与熟练度",
+    "education": "教育背景",
+    "summary": "职业概述",
+    "experience": "工作经验",
+    "companies": "曾任职公司",
+    "objective": "职业目标"
+  },
+  "categories": {
+    "frontend": "前端",
+    "backend": "后端",
+    "db": "数据库",
+    "devops": "DevOps",
+    "cicd": "CI/CD",
+    "tools": "工具",
+    "apis": "API",
+    "tests": "测试"
+  },
+  "proficiencyCategoriesOrder": [
+    "frontend",
+    "backend",
+    "db",
+    "devops",
+    "cicd"
+  ],
+  "chipsCategoriesOrder": [
+    "frontend",
+    "tests",
+    "backend",
+    "db",
+    "devops",
+    "cicd",
+    "apis",
+    "tools"
+  ],
+  "keySkills": [
+    "angular",
+    "react",
+    "typescript",
+    "javascript",
+    "html5",
+    "css3",
+    "nodejs",
+    "react-native",
+    "redux",
+    "tailwind",
+    "bootstrap",
+    "graphql",
+    "rest",
+    "php",
+    "mysql",
+    "postgresql",
+    "mongodb",
+    "firebase",
+    "github",
+    "gitlab",
+    "cypress",
+    "jest",
+    "karma",
+    "jasmine",
+    "testing-library",
+    "playwright",
+    "datadog",
+    "fullstory",
+    "ga4",
+    "azure",
+    "apache",
+    "webpack",
+    "vite",
+    "babel",
+    "wordpress",
+    "laravel",
+    "jquery"
+  ],
+  "summaryText": [
+    "热爱技术的 Web 开发者，拥有多个技术栈（Angular、React、TypeScript 等）的扎实经验。曾参与不同规模和行业的项目，实践软件架构、自动化测试（单元与 E2E）、无障碍、可观测性以及应用安全等最佳实践。熟悉敏捷方法（Scrum/Kanban）、微前端、设计系统以及监控工具集成。除了开发工作，还领导团队、负责招聘与培训，确保工程最佳实践并为业务创造高价值交付。同时擅长与客户直接沟通，梳理需求、编制文档，打造成功案例。擅长为后台系统和 B2C 产品创造价值，主动挖掘改进点并参与 MVP 范围讨论。",
+    "职业生涯的大部分时间担任全栈开发者，负责项目的端到端（360°）开发、管理与落地。熟悉应用全生命周期：从架构设计、编码到测试、部署与维护。曾在大型企业任职，也参与知名品牌的自由职业项目，始终坚持工程、可扩展性与安全方面的最佳实践。具备领导力，能快速适应新技术，专注于交付高效且具有高影响力的解决方案。"
+  ],
+  "objectiveText": "目前专注于提升对 JavaScript 框架的掌握，特别是 Angular 和 React，同时偶尔支持 Node、Java、PHP、C# 及数据库相关项目。凭借快速掌握任意语言的能力与对卓越的追求，我是一名多才多艺、能够灵活应对动态挑战的专业人士。",
+  "education": [
+    {
+      "title": "副学士学位 - 计算机编程",
+      "institution": "UNINOVE",
+      "period": "2010 - 2013"
+    },
+    {
+      "title": "在线课程 - 编程语言",
+      "institution": "W3Schools",
+      "period": "2017 - 2018"
+    },
+    {
+      "title": "认证 - 数据库",
+      "institution": "Faculdade Impacta Tecnologia",
+      "period": "2014"
+    },
+    {
+      "title": "认证 - Excel I 与 II",
+      "institution": "Faculdade Impacta Tecnologia",
+      "period": "2015 - 2016"
+    },
+    {
+      "title": "培训 - Microsoft Azure（基础、Dev/Cloud）",
+      "institution": "Microsoft | 内部及在线课程",
+      "period": "2020 - 2021"
+    },
+    {
+      "title": "培训 - Security Engineer II",
+      "institution": "Itaú Unibanco",
+      "period": "01/2025 - 08/2025"
+    },
+    {
+      "title": "培训 - AWS Cloud Practitioner",
+      "institution": "Itaú Unibanco",
+      "period": "02/2025 - 08/2025"
+    }
+  ],
+  "experience": [
+    {
+      "icon": "fas fa-laptop-code",
+      "title": "IT 工程分析师（中级）（TM）",
+      "company": "Itaú Unibanco",
+      "period": "2024年4月 - 至今（1年6个月）",
+      "intro": "担任 Itaú 个人银行 App 的前端软件工程师，月度访问量达数百万。我从薪资迁移旅程开始，负责基于指标和数据设计端到端流程与改进，主导需求 refinement、文档与完整开发，将以客户为中心的旅程打造成具备单元测试与现代设计系统的稳健解决方案。",
+      "highlightsTitle": "主要成就与职责：",
+      "highlights": [
+        "荣誉：参与交付 \"One Click\" 旅程；小组获评年度旅程，将流程效率提升 60% 以上，影响数百万用户。",
+        "数据分析：构建以指标驱动的流程、文档、测试场景及完整流程图。",
+        "架构与开发：负责 WebView 与微前端（Angular/React），将 Voxel 方案升级至全新的 IDS（Itaú Design System）。",
+        "可观测性：实施 Datadog、FullStory 与 GA4，并构建仪表盘与关键指标。",
+        "质量与测试：通过 Jest/Karma 提升单元测试覆盖率，并使用 Cypress 进行 E2E 测试。",
+        "旅程架构：在价值流全程的战略会议中积极参与。"
+      ]
+    },
+    {
+      "icon": "fas fa-plane",
+      "title": "高级软件开发工程师",
+      "company": "Flytour Oficial",
+      "period": "2022年3月 - 2023年11月（1年9个月）",
+      "intro": "全程参与覆盖机票与陆路旅行的出行平台，涵盖酒店、航班、汽车及增值服务的预订。专注 Angular 2+ 与 React，交付可扩展、响应迅速且高性能的界面。负责开发可复用组件、优化 CSS/SCSS 布局（桌面与移动端），并支持数据库与后端（REST/GraphQL API）等关键集成。积极参与代码评审、前端架构、无障碍与安全实践，以及部署、测试与监控协作。深入学习敏捷方法、设计系统，以及高用户量复杂方案的集成。",
+      "bullets": [
+        "可复用组件与 CSS/SCSS 布局优化（桌面端与移动端）。",
+        "支持数据库与后端集成（REST/GraphQL API）。",
+        "代码评审、前端架构决策、无障碍与安全实践。",
+        "在部署、测试、监控中的协作（敏捷、设计系统）。"
+      ]
+    },
+    {
+      "icon": "fas fa-heartbeat",
+      "title": "高级分析程序员",
+      "company": "Duosystem - Inteligência e Inovação em Saúde",
+      "period": "2020年3月 - 2021年9月（1年7个月）",
+      "intro": "面向巴西公共卫生系统（SUS）的健康科技公司，交付高度可靠、可审计且重视终端用户安全的系统。负责 Symfony/Twig 的功能、热修与缺陷修复；前端使用 Angular 2+、React、CSS、JS/jQuery，后端使用 Node.js 与 PHP/SQL。从分析、诊断到上线的端到端流程全面参与，确保质量、性能与关键需求。通过 Microsoft Azure 培训与课程，实现显著的技术成长与云端准备。",
+      "bullets": [
+        "在 Symfony/Twig 系统中进行功能开发、热修与缺陷修复。",
+        "前端：Angular 2+、React、CSS、JS/jQuery；后端：Node.js、PHP/SQL。",
+        "端到端参与：从分析、排障到投产交付。",
+        "Microsoft Azure 培训课程（技术成长与云端准备）。"
+      ]
+    },
+    {
+      "icon": "fas fa-globe",
+      "title": "高级 Full Stack PHP 网页设计师/开发者",
+      "company": "ITWS - IT Web Solutions",
+      "period": "2018年9月 - 2020年3月（1年7个月）",
+      "intro": "使用 React、Angular 2+、PHP（Yii2、Laravel）、JavaScript、jQuery、Bootstrap、CSS、HTML、Ajax、MySQL、Apache 以及 API/Web 服务集成开展网页开发。专注为电商平台提供定制化解决方案，涵盖前端、后端与数据库。大量面向客户（需求调研、竞争分析、优化建议）的工作，并培训外部团队。",
+      "bullets": [
+        "技术栈：React、Angular 2+、PHP（Yii2、Laravel）、JavaScript、jQuery、Bootstrap、CSS、HTML、Ajax、MySQL、Apache。",
+        "定制电商解决方案：在前端、后端与数据库层面进行修复、更新与优化。",
+        "直接对接客户（需求、竞争分析、改进建议）并培训外部团队。"
+      ]
+    },
+    {
+      "icon": "fas fa-car",
+      "title": "PHP 开发工程师",
+      "company": "GT40",
+      "period": "2018年3月 - 2018年8月（6个月）",
+      "intro": "在这里真正学会了实战编程；不使用框架，承担全栈角色。为 GT40 与 Flatout（汽车分类信息平台）负责前端、后端与数据库的维护与开发。开发 API/Web 服务、页面布局，使用 HTML/CSS/JS/jQuery，以及基于 Ajax、PHP、MySQL、PostgreSQL 的后端实现。",
+      "bullets": [
+        "负责 GT40 与 Flatout 的维护与开发（前端与后端）。",
+        "API/Web 服务、HTML/CSS/JS/jQuery、Ajax、PHP、MySQL、PostgreSQL。"
+      ]
+    },
+    {
+      "icon": "fas fa-graduation-cap",
+      "title": "网页开发工程师",
+      "company": "Dominic 360",
+      "period": "2017年4月 - 2018年3月（1年）",
+      "intro": "E-Learning 网站的自由职业项目。",
+      "bullets": [
+        "基于 WordPress 构建 E-Learning 平台（定制、插件与主题编辑）。",
+        "使用 PHP、jQuery、JavaScript、MySQL、CSS3、HTML5 提供日常解决方案。"
+      ]
+    },
+    {
+      "icon": "fas fa-user-tie",
+      "title": "行政经理",
+      "company": "Associação Médica Brasileira",
+      "period": "2012年7月 - 2017年10月（5年4个月）",
+      "intro": "在责任心、治理/政治协作以及与医生和层级结构的互动方面大幅提升软技能。",
+      "bullets": [
+        "负责项目/系统实施管理（需求、技术、测试与可用性）。",
+        "撰写报告与统计分析（Excel）。",
+        "招聘、录用并培训新员工。",
+        "与外籍医生使用英语沟通。"
+      ]
+    },
+    {
+      "icon": "fas fa-bullhorn",
+      "title": "网页开发工程师",
+      "company": "Trevisan MKT",
+      "period": "2016年1月 - 2017年2月（1年2个月）",
+      "intro": "营销咨询公司，将不同产品的需求转化为定制化数字解决方案。",
+      "bullets": [
+        "为客户网站提供项目交付与维护（PHP、JavaScript、jQuery、CSS、HTML5、PostgreSQL、MySQL）。"
+      ]
+    }
+  ],
+  "companies": [
+    "Itaú Unibanco",
+    "Flytour",
+    "Duosystem",
+    "ITWS Group",
+    "GT40",
+    "Dominic 360",
+    "AMB",
+    "Trevisan MKT",
+    "D360",
+    "QUIDDE",
+    "Vivo",
+    "OpenTravel"
+  ]
+}
