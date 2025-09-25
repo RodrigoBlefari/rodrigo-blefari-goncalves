@@ -4,12 +4,19 @@
  * - Gera CSS dinâmico para chips (.skill-tag), nomes (.tech-name) e destaques (.tech-highlight)
  */
 
+function getRepoBase() {
+  const path = location.pathname;
+  const idx = path.indexOf("/templates/");
+  const basePath = idx !== -1 ? path.substring(0, idx + 1) : path.replace(/[^/]+$/, "");
+  return location.origin + basePath;
+}
+
 let TECH_COLORS_CACHE = null;
 
 export async function loadTechColors() {
   if (TECH_COLORS_CACHE) return TECH_COLORS_CACHE;
   try {
-    const res = await fetch("/tech-colors.json", { cache: "no-store" });
+    const res = await fetch(new URL("tech-colors.json", getRepoBase()).href, { cache: "no-store" });
     if (res.ok) {
       TECH_COLORS_CACHE = await res.json();
       return TECH_COLORS_CACHE;

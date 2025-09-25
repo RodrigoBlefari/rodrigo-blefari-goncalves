@@ -3,12 +3,19 @@
  * - Lê /assets/backgrounds/backgrounds.json
  * - Aplica imagem de fundo por idioma (fallback para 'en' ou primeira disponível)
  */
+function getRepoBase() {
+  const path = location.pathname;
+  const idx = path.indexOf("/templates/");
+  const basePath = idx !== -1 ? path.substring(0, idx + 1) : path.replace(/[^/]+$/, "");
+  return location.origin + basePath;
+}
+
 let BG_MAP = null;
 
 async function loadBackgroundMap() {
   if (BG_MAP) return BG_MAP;
   try {
-    const res = await fetch("/assets/backgrounds/backgrounds.json", { cache: "no-store" });
+    const res = await fetch(new URL("assets/backgrounds/backgrounds.json", getRepoBase()).href, { cache: "no-store" });
     if (res.ok) {
       BG_MAP = await res.json();
       return BG_MAP;
@@ -52,7 +59,7 @@ export function setBackgroundOverride(fileOrNull) {
 
 export async function getBackgroundOptions() {
   try {
-    const res = await fetch("/assets/backgrounds/gallery.json", { cache: "no-store" });
+    const res = await fetch(new URL("assets/backgrounds/gallery.json", getRepoBase()).href, { cache: "no-store" });
     if (!res.ok) return [];
     const j = await res.json();
     const arr = Array.isArray(j.files) ? j.files : [];
@@ -89,7 +96,7 @@ export async function applyBackgroundForLang(lang, i18nOverride, userOverride) {
     (userOverride && String(userOverride).trim()) ||
     (i18nOverride && String(i18nOverride).trim()) ||
     resolveFilenameForLang(map, lang);
-  const url = filename ? `/assets/backgrounds/${filename}` : null;
+  const url = filename ? new URL(`assets/backgrounds/${filename}`, getRepoBase()).href : null;
 
   const body = document.body;
   // preserva outras propriedades do body (gradientes, temas etc.)

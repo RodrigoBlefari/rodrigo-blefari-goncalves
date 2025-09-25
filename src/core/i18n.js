@@ -4,6 +4,13 @@
  * - Usa cache em localStorage
  * - Fallback local para en.json (sem chamadas externas)
  */
+function getRepoBase() {
+  const path = location.pathname;
+  const idx = path.indexOf("/templates/");
+  const basePath = idx !== -1 ? path.substring(0, idx + 1) : path.replace(/[^/]+$/, "");
+  return location.origin + basePath;
+}
+
 let CURRENT_I18N = null;
 
 export async function loadI18n(lang) {
@@ -13,7 +20,7 @@ export async function loadI18n(lang) {
 
   // 1) Tenta arquivo local do idioma selecionado
   try {
-    const res = await fetch(`/i18n/${lang}.json`, { cache: "no-store" });
+    const res = await fetch(new URL(`i18n/${lang}.json`, getRepoBase()).href, { cache: "no-store" });
     if (res.ok) {
       const data = await res.json();
       data.__lang = lang;
@@ -38,7 +45,7 @@ export async function loadI18n(lang) {
 
   // 3) Fallback para EN local
   try {
-    const resEn = await fetch("/i18n/en.json", { cache: "no-store" });
+    const resEn = await fetch(new URL("i18n/en.json", getRepoBase()).href, { cache: "no-store" });
     const en = await resEn.json();
     en.__lang = "en";
     CURRENT_I18N = en;
