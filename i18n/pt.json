@@ -13,7 +13,9 @@
       "pt": "Português",
       "en": "English"
     },
-    "bannerBackground": "bg-globo-antigo.jpg"
+    "bannerBackground": "bg-globo-antigo.jpg",
+    "backgroundLabel": "Plano de fundo",
+    "highlightLabel": "Destacar tecnologias"
   },
   "header": {
     "name": "Rodrigo Blefari Gonçalves",

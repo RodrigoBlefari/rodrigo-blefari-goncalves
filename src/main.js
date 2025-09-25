@@ -143,6 +143,38 @@ function renderKeySkillsFromI18n(t) {
   }
 }
 
+function updateUILocalizedLabels(t) {
+  try {
+    // Template Tech: labels de controles
+    const lblReading = document.querySelector('label[for="readingMode"] span') || document.querySelector('label[for="readingMode"]');
+    if (lblReading && t?.ui?.readingModeLabel) lblReading.textContent = t.ui.readingModeLabel;
+
+    const lblLang = document.querySelector('label[for="languageSelector"] span') || document.querySelector('label[for="languageSelector"]');
+    if (lblLang && t?.ui?.languageLabel) lblLang.textContent = t.ui.languageLabel;
+
+    const lblBg = document.querySelector('label[for="backgroundSelector"] span') || document.querySelector('label[for="backgroundSelector"]');
+    // Não existe no i18n ainda; se desejar adicionar depois use t.ui.backgroundLabel
+    if (lblBg && t?.ui?.backgroundLabel) lblBg.textContent = t.ui.backgroundLabel;
+
+    // Toggle "Destacar tecnologias" (fallback caso não exista no i18n)
+    const toggle = document.querySelector('.toggle .slider + span');
+    if (toggle) toggle.textContent = t?.ui?.highlightLabel || 'Destacar tecnologias';
+
+    // Botão Imprimir (ambos templates)
+    const btnPrint = document.querySelector('.btn.print, .download-btn');
+    if (btnPrint && t?.ui?.print) {
+      // Mantém ícone se houver e substitui o texto
+      const icon = btnPrint.querySelector('i');
+      btnPrint.textContent = '';
+      if (icon) btnPrint.appendChild(icon);
+      const txt = document.createTextNode(' ' + t.ui.print);
+      btnPrint.appendChild(txt);
+    }
+  } catch (e) {
+    console.warn('Falha ao aplicar labels de UI:', e);
+  }
+}
+
 async function renderAll(t) {
   renderHeader(t);
   renderSectionTitles(t);
@@ -153,6 +185,7 @@ async function renderAll(t) {
   renderCompanies(t);
   renderKeySkillsFromI18n(t);
   initSkills();
+  updateUILocalizedLabels(t);
 
   // aplica paleta oficial por tecnologia vinda do arquivo tech-colors
   try {
@@ -190,6 +223,7 @@ async function boot() {
   }
 
   await renderAll(t);
+  updateUILocalizedLabels(t);
 
   // Bind changeLanguage
   const langSel = document.getElementById("languageSelector");
@@ -203,6 +237,7 @@ async function boot() {
       await populateBackgroundSelect(document.getElementById("backgroundSelector"), ti18n?.ui?.bannerBackground);
       await applyBackgroundForLang(currentLang, ti18n?.ui?.bannerBackground, getBackgroundOverride());
       await renderAll(ti18n);
+      updateUILocalizedLabels(ti18n);
     });
   }
 
