@@ -445,6 +445,112 @@
         background: linear-gradient(135deg, #e37400, #ff9500);
       }
 
+      /* Additional Technology Colors */
+      .skill-tag[data-tech="mongodb"] {
+        background: linear-gradient(135deg, #47A248, #3FA440);
+      }
+      .skill-tag[data-tech="firebase"] {
+        background: linear-gradient(135deg, #FFCA28, #FFA000);
+        color: #20232a;
+      }
+      .skill-tag[data-tech="dynamodb"] {
+        background: linear-gradient(135deg, #4053D6, #1F3B8F);
+      }
+
+      /* Tech proficiency list */
+      .tech-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .tech-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 10px 12px;
+      }
+      .tech-item .skill-tag {
+        margin: 0;
+      }
+      .stars {
+        display: inline-flex;
+        gap: 2px;
+        margin-left: auto;
+      }
+      .stars .fa-solid.fa-star {
+        color: #FFD700; /* gold */
+      }
+      .stars .fa-regular.fa-star {
+        color: #d1d5db; /* gray-300 */
+      }
+
+      /* Elegant tech table */
+      .tech-table { display: grid; gap: 14px; }
+      .tech-cat { font-weight: 700; color: var(--text-dark); margin-top: 10px; }
+      .tech-rows { display: grid; gap: 8px; }
+      .tech-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 10px 12px;
+      }
+      .tech-name { font-weight: 600; color: var(--text-dark); }
+      .tech-stars { margin-left: auto; display: inline-flex; gap: 2px; }
+      .tech-stars .fa-solid.fa-star { color: #FFD700; }
+      .tech-stars .fa-regular.fa-star { color: #d1d5db; }
+
+      /* Tech name color mapping (proficiency table) */
+      .tech-name[data-tech="javascript"] { color: #323330; }
+      .tech-name[data-tech="typescript"] { color: #3178c6; }
+      .tech-name[data-tech="react"] { color: #61dafb; }
+      .tech-name[data-tech="react-native"] { color: #61dafb; }
+      .tech-name[data-tech="angular"] { color: #dd0031; }
+      .tech-name[data-tech="nodejs"] { color: #339933; }
+      .tech-name[data-tech="php"] { color: #777bb4; }
+      .tech-name[data-tech="csharp"] { color: #68217a; }
+      .tech-name[data-tech="html5"] { color: #e34f26; }
+      .tech-name[data-tech="css3"] { color: #1572b6; }
+      .tech-name[data-tech="mysql"] { color: #4479a1; }
+      .tech-name[data-tech="postgresql"] { color: #336791; }
+      .tech-name[data-tech="mongodb"] { color: #47A248; }
+      .tech-name[data-tech="firebase"] { color: #FFA000; }
+      .tech-name[data-tech="dynamodb"] { color: #4053D6; }
+      .tech-name[data-tech="github"] { color: #24292e; }
+      .tech-name[data-tech="gitlab"] { color: #fc6d26; }
+      .tech-name[data-tech="jira"] { color: #0052cc; }
+      .tech-name[data-tech="trello"] { color: #0079bf; }
+      .tech-name[data-tech="datadog"] { color: #632ca6; }
+      .tech-name[data-tech="cypress"] { color: #17202c; }
+      .tech-name[data-tech="ga4"] { color: #e37400; }
+      .tech-name[data-tech="laravel"] { color: #ff2d20; }
+      .tech-name[data-tech="wordpress"] { color: #21759b; }
+      .tech-name[data-tech="jest"] { color: #99425B; }
+      .tech-name[data-tech="karma"] { color: #58BD2F; }
+      .tech-name[data-tech="jasmine"] { color: #8A4182; }
+      .tech-name[data-tech="testing-library"] { color: #E33332; }
+      .tech-name[data-tech="playwright"] { color: #2EAD33; }
+      .tech-name[data-tech="jquery"] { color: #0769AD; }
+      .tech-name[data-tech="bootstrap"] { color: #7952B3; }
+      .tech-name[data-tech="sass"] { color: #CC6699; }
+      .tech-name[data-tech="scss"] { color: #CC6699; }
+      .tech-name[data-tech="tailwind"] { color: #0EA5E9; }
+      .tech-name[data-tech="webpack"] { color: #1C78C0; }
+      .tech-name[data-tech="vite"] { color: #646CFF; }
+      .tech-name[data-tech="babel"] { color: #F9DC3E; }
+      .tech-name[data-tech="redux"] { color: #764ABC; }
+      .tech-name[data-tech="storybook"] { color: #FF4785; }
+      .tech-name[data-tech="graphql"] { color: #E10098; }
+      .tech-name[data-tech="apache"] { color: #D22128; }
+      .tech-name[data-tech="rest"] { color: #4b5563; }
+      .tech-name[data-tech="fullstory"] { color: #FF0066; }
+      .tech-name[data-tech="azure"] { color: #0078D4; }
+
       .experience-item {
         background: var(--bg-light);
         padding: 30px;
@@ -1117,9 +1223,9 @@
               <div class="skill-tags">
                 <span class="skill-tag" data-tech="mysql">MySQL</span>
                 <span class="skill-tag" data-tech="postgresql">PostgreSQL</span>
-                  <span class="skill-tag" data-tech="postgresql">Mongo</span>
-                <span class="skill-tag" data-tech="postgresql">Firebase</span>
-                <span class="skill-tag" data-tech="postgresql">Dynamo</span>
+                <span class="skill-tag" data-tech="mongodb">MongoDB</span>
+                <span class="skill-tag" data-tech="firebase">Firebase</span>
+                <span class="skill-tag" data-tech="dynamodb">DynamoDB</span>
               </div>
             </div>
 
@@ -1132,6 +1238,14 @@
                 <span class="skill-tag" data-tech="trello">Trello</span>
               </div>
             </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-medal"></i>
+              Technologies & Proficiency
+            </h2>
+            <div id="tech-proficiency-list" class="tech-list"></div>
           </section>
 
           <section class="section">
@@ -1170,6 +1284,22 @@
                 Faculdade Impacta Tecnologia
               </div>
               <div class="education-period">2015 - 2016</div>
+            </div>
+
+            <div class="education-item">
+              <div class="education-title">Training - Microsoft Azure (Fundamentals, Dev/Cloud)</div>
+              <div class="education-institution">Microsoft | Internal and Online Courses</div>
+              <div class="education-period">2020 - 2021</div>
+            </div>
+            <div class="education-item">
+              <div class="education-title">Training - Security Engineer II</div>
+              <div class="education-institution">Itaú Unibanco</div>
+              <div class="education-period">01/2025 - 08/2025</div>
+            </div>
+            <div class="education-item">
+              <div class="education-title">Training - AWS Cloud Practitioner</div>
+              <div class="education-institution">Itaú Unibanco</div>
+              <div class="education-period">02/2025 - 08/2025</div>
             </div>
           </section>
         </aside>
@@ -1561,6 +1691,230 @@ Extensive experience working directly with clients to gather requirements, condu
           }, 1000);
         }, 100);
       }
+    </script>
+    <script>
+      // Build "Technologies & Proficiency" automatically
+      (function () {
+        const container = document.getElementById('tech-proficiency-list');
+        if (!container) return;
+
+        // Collect unique technologies from existing HTML
+        const techMap = new Map();
+        document.querySelectorAll('.skill-tag[data-tech]').forEach(el => {
+          const key = el.getAttribute('data-tech')?.trim();
+          const label = (el.textContent || '').trim();
+          if (key && !techMap.has(key)) {
+            techMap.set(key, label || key);
+          }
+        });
+
+        // Proficiency map (1-5). Edit here.
+        const ratingMap = {
+          javascript: 5,
+          typescript: 4,
+          react: 5,
+          'react-native': 4,
+          angular: 5,
+          nodejs: 4,
+          php: 4,
+          csharp: 3,
+          html5: 5,
+          css3: 5,
+          mysql: 4,
+          postgresql: 4,
+          mongodb: 3,
+          firebase: 3,
+          dynamodb: 3,
+          github: 5,
+          gitlab: 4,
+          jira: 4,
+          trello: 4,
+          datadog: 4,
+          cypress: 4,
+          ga4: 4,
+          laravel: 3,
+          wordpress: 3
+        };
+
+        const items = Array.from(techMap.entries())
+          .map(([key, label]) => ({ key, label, rating: ratingMap[key] ?? 3 }))
+          .sort((a, b) => (b.rating - a.rating) || a.label.localeCompare(b.label));
+
+        items.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'tech-item';
+
+          const tag = document.createElement('span');
+          tag.className = 'skill-tag';
+          tag.setAttribute('data-tech', item.key);
+          tag.textContent = item.label;
+
+          const stars = document.createElement('div');
+          stars.className = 'stars';
+          const r = Math.max(0, Math.min(5, item.rating | 0));
+          for (let i = 1; i <= 5; i++) {
+            const icon = document.createElement('i');
+            icon.className = i <= r ? 'fa-solid fa-star' : 'fa-regular fa-star';
+            stars.appendChild(icon);
+          }
+          stars.title = `Level: ${r}/5`;
+
+          row.appendChild(tag);
+          row.appendChild(stars);
+          container.appendChild(row);
+        });
+      })();
+    </script>
+    <script>
+      // Override: render categorized "Technologies & Proficiency" as elegant table (no chips)
+      (function () {
+        const container = document.getElementById('tech-proficiency-list');
+        if (!container) return;
+
+        // Collect unique techs
+        const techMap = new Map();
+        document.querySelectorAll('.skill-tag[data-tech]').forEach(el => {
+          const key = el.getAttribute('data-tech')?.trim();
+          const label = (el.textContent || '').trim();
+          if (key && !techMap.has(key)) techMap.set(key, label || key);
+        });
+
+        // Ratings (same as PT page)
+        const ratingMap = {
+          javascript: 5, typescript: 4, react: 5, 'react-native': 4, angular: 5,
+          nodejs: 4, php: 4, csharp: 3, html5: 5, css3: 5,
+          mysql: 4, postgresql: 4, mongodb: 3, firebase: 3, dynamodb: 3,
+          github: 5, gitlab: 4, jira: 4, trello: 4,
+          datadog: 4, cypress: 4, ga4: 4, laravel: 3, wordpress: 3
+        };
+
+        // Category preferred order and tech ordering (competitors first)
+        const order = {
+          'Front-end': ['angular', 'react', 'react-native', 'html5', 'css3', 'javascript', 'typescript'],
+          'Back-end': ['nodejs', 'php', 'csharp', 'laravel', 'wordpress'],
+          'Databases': ['mysql', 'postgresql', 'mongodb', 'firebase', 'dynamodb'],
+          'DevOps': ['datadog', 'ga4'],
+          'CI/CD': ['github', 'gitlab', 'cypress']
+        };
+
+        container.innerHTML = '';
+        const table = document.createElement('div');
+        table.className = 'tech-table';
+
+        const star = (r) => {
+          const wrap = document.createElement('span');
+          wrap.className = 'tech-stars';
+          const v = Math.max(0, Math.min(5, r | 0));
+          for (let i = 1; i <= 5; i++) {
+            const icon = document.createElement('i');
+            icon.className = i <= v ? 'fa-solid fa-star' : 'fa-regular fa-star';
+            wrap.appendChild(icon);
+          }
+          wrap.title = `Level: ${Math.max(1, Math.min(5, r | 0))}/5`;
+          return wrap;
+        };
+
+        Object.keys(order).forEach(cat => {
+          // Header
+          const h = document.createElement('div');
+          h.className = 'tech-cat';
+          h.textContent = cat;
+          table.appendChild(h);
+
+          const rows = document.createElement('div');
+          rows.className = 'tech-rows';
+
+          const list = order[cat]
+            .filter(key => techMap.has(key))
+            .map(key => ({ key, label: techMap.get(key), rating: ratingMap[key] ?? 3 }));
+
+          const extras = Array.from(techMap.keys())
+            .filter(k => !order[cat].includes(k))
+            .filter(k => {
+              if (cat === 'Front-end') return ['react','react-native','angular','html5','css3','javascript','typescript'].includes(k);
+              if (cat === 'Back-end') return ['nodejs','php','csharp','laravel','wordpress'].includes(k);
+              if (cat === 'Databases') return ['mysql','postgresql','mongodb','firebase','dynamodb'].includes(k);
+              if (cat === 'DevOps') return ['datadog','ga4'].includes(k);
+              if (cat === 'CI/CD') return ['github','gitlab','cypress'].includes(k);
+              return false;
+            })
+            .map(k => ({ key: k, label: techMap.get(k), rating: ratingMap[k] ?? 3 }))
+            .sort((a,b) => a.label.localeCompare(b.label));
+
+          [...list, ...extras].forEach(item => {
+            const row = document.createElement('div');
+            row.className = 'tech-row';
+
+            const name = document.createElement('span');
+            name.className = 'tech-name';
+            name.setAttribute('data-tech', item.key);
+            name.textContent = item.label;
+
+            row.appendChild(name);
+            row.appendChild(star(item.rating));
+            rows.appendChild(row);
+          });
+
+          table.appendChild(rows);
+        });
+
+        container.appendChild(table);
+      })();
+
+      // Reorganize "Technical Skills" chips by stacks
+      (function () {
+        const sectionTitle = Array.from(document.querySelectorAll('.section-title'))
+          .find(el => el.textContent.trim().includes('Technical Skills'));
+        if (!sectionTitle) return;
+        const section = sectionTitle.closest('.section');
+        if (!section) return;
+
+        const chips = Array.from(section.querySelectorAll('.skill-tag[data-tech]'));
+        const byKey = new Map();
+        chips.forEach(el => {
+          const key = el.getAttribute('data-tech')?.trim();
+          if (key && !byKey.has(key)) byKey.set(key, el);
+        });
+
+        const oldCats = section.querySelectorAll('.skill-category');
+        oldCats.forEach(n => n.remove());
+
+        const mkCat = (icon, title, keys) => {
+          const cat = document.createElement('div');
+          cat.className = 'skill-category';
+          const h = document.createElement('h4');
+          h.innerHTML = `<i class="${icon}"></i> ${title}`;
+          const wrap = document.createElement('div');
+          wrap.className = 'skill-tags';
+          keys.forEach(k => {
+            const chip = byKey.get(k);
+            if (chip) wrap.appendChild(chip);
+          });
+          cat.appendChild(h);
+          cat.appendChild(wrap);
+          return cat;
+        };
+
+        const order = {
+          'Front-end': ['angular','react','react-native','html5','css3','javascript','typescript'],
+          'Back-end': ['nodejs','php','csharp','laravel','wordpress'],
+          'Databases': ['mysql','postgresql','mongodb','firebase','dynamodb'],
+          'DevOps': ['datadog','ga4'],
+          'CI/CD': ['github','gitlab','cypress'],
+          'Tools': ['jira','trello']
+        };
+
+        const categories = [
+          mkCat('fas fa-desktop', 'Front-end', order['Front-end']),
+          mkCat('fas fa-server', 'Back-end', order['Back-end']),
+          mkCat('fas fa-database', 'Databases', order['Databases']),
+          mkCat('fas fa-infinity', 'DevOps', order['DevOps']),
+          mkCat('fas fa-code-branch', 'CI/CD', order['CI/CD']),
+          mkCat('fas fa-toolbox', 'Tools', order['Tools'])
+        ];
+
+        categories.forEach(cat => section.appendChild(cat));
+      })();
     </script>
   </body>
 </html>]]>
