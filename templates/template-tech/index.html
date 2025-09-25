@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currículo - Template Tech</title>
+
+    <!-- Libs externas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CSS do template tech (layout diferente) -->
+    <link rel="stylesheet" href="/styles/tech.css" />
+  </head>
+  <body>
+    <div class="page">
+      <!-- Sidebar tecnológica com controles -->
+      <aside class="tech-sidebar">
+        <div class="brand">
+          <div class="logo-dot"></div>
+          <div class="brand-name">RB</div>
+        </div>
+
+        <div class="profile-card">
+          <div class="avatar-wrap">
+            <img
+              src="/perfil.png"
+              alt="Foto de perfil"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="avatar-fallback">RB</div>
+          </div>
+          <div class="profile-info">
+            <h1>Rodrigo Blefari Gonçalves</h1>
+            <p class="title">—</p>
+            <p class="location"><i class="fas fa-map-marker-alt"></i> —</p>
+          </div>
+        </div>
+
+        <div class="controls">
+          <label class="control-label" for="readingMode">
+            <i class="fa-solid fa-eye"></i> Modo de leitura
+          </label>
+          <select id="readingMode" class="control-input" aria-label="Modo de leitura">
+            <option value="light">Claro</option>
+            <option value="sepia">Sépia</option>
+            <option value="dark">Escuro</option>
+            <option value="contrast">Alto contraste</option>
+          </select>
+
+          <label class="control-label" for="languageSelector">
+            <i class="fa-solid fa-language"></i> Idioma
+          </label>
+          <select id="languageSelector" class="control-input" aria-label="Idioma"></select>
+
+          <label class="toggle">
+            <input type="checkbox" id="highlightTech" />
+            <span class="slider"></span>
+            <span>Destacar tecnologias</span>
+          </label>
+
+          <button class="btn print" onclick="printResume()">
+            <i class="fa-solid fa-print"></i> Imprimir
+          </button>
+        </div>
+
+        <!-- Contatos -->
+        <section class="section contact-section">
+          <h2 class="section-title">
+            <i class="fas fa-address-book"></i>
+            <span>Contato</span>
+          </h2>
+          <div class="contact-list">
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <a href="https://maps.google.com/?q=Zona+norte+São+Paulo+SP" target="_blank" rel="noopener">—</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <a href="tel:+5511948205237">—</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:rodrigo.blefari@gmail.com">—</a>
+            </div>
+            <div class="contact-item">
+              <i class="fab fa-linkedin"></i>
+              <a href="https://linkedin.com/in/rodrigo-blefari-gonçalves-847ab63a" target="_blank" rel="noopener">—</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Principais Competências -->
+        <section class="section skills-keys">
+          <h2 class="section-title">
+            <i class="fas fa-star"></i>
+            <span>Principais Competências</span>
+          </h2>
+          <div class="skill-tags"></div>
+        </section>
+
+        <!-- Tecnologias & Proficiência -->
+        <section class="section tech-prof">
+          <h2 class="section-title">
+            <i class="fas fa-medal"></i>
+            <span>Tecnologias & Proficiência</span>
+          </h2>
+          <div id="tech-proficiency-list" class="tech-list"></div>
+        </section>
+      </aside>
+
+      <!-- Conteúdo principal em layout diferente (cards, colunas) -->
+      <main class="tech-content" id="resume">
+        <!-- Resumo com destaque de tecnologias (marcado via highlight) -->
+        <section class="section resume-section">
+          <h2 class="section-title">
+            <i class="fas fa-user"></i>
+            <span>Resumo Profissional</span>
+          </h2>
+          <!-- Parágrafos adicionados dinamicamente por renderSummary -->
+        </section>
+
+        <!-- Habilidades Técnicas reorganizadas por stacks (reconstruído via initSkills) -->
+        <section class="section tech-skills">
+          <h2 class="section-title">
+            <i class="fas fa-code"></i>
+            <span>Habilidades Técnicas</span>
+          </h2>
+          <!-- initSkills criará blocos .skill-category automaticamente -->
+        </section>
+
+        <!-- Experiência em cards de timeline -->
+        <section class="section experience-section">
+          <h2 class="section-title">
+            <i class="fas fa-briefcase"></i>
+            <span>Experiência Profissional</span>
+          </h2>
+          <!-- Cards adicionados dinamicamente por renderExperience -->
+        </section>
+
+        <!-- Educação em grid de cartões -->
+        <section class="section education-section">
+          <h2 class="section-title">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Formação Acadêmica</span>
+          </h2>
+          <!-- Itens adicionados dinamicamente por renderEducation -->
+        </section>
+
+        <!-- Empresas em chips coloridos -->
+        <section class="section companies-section">
+          <h2 class="section-title">
+            <i class="fas fa-building"></i>
+            <span>Empresas Anteriores</span>
+          </h2>
+          <div class="companies-grid"></div>
+        </section>
+
+        <!-- Objetivo com ênfase de leitura -->
+        <section class="section objective-section">
+          <h2 class="section-title">
+            <i class="fas fa-target"></i>
+            <span>Objetivo Profissional</span>
+          </h2>
+          <!-- Texto adicionado dinamicamente por renderObjective -->
+        </section>
+      </main>
+    </div>
+
+    <!-- App JS (ES Modules) -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

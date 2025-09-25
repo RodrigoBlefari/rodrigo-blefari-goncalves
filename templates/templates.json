@@ -1,0 +1,6 @@
+{
+  "templates": [
+    { "id": "template-moderno", "name": "Moderno" },
+    { "id": "template-tech", "name": "Tech" }
+  ]
+}

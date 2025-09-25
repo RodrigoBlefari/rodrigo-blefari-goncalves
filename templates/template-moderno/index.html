@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rodrigo Blefari Gonçalves - Currículo (Template Moderno)</title>
+
+    <!-- Libs externas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CSS modular (caminho absoluto para funcionar dentro de templates/) -->
+    <link rel="stylesheet" href="/styles/base.css" />
+  </head>
+  <body>
+    <div class="container" id="resume">
+      <header class="header">
+        <div class="header-content">
+          <div class="profile-section">
+            <div class="profile-img">
+              <img
+                src="/perfil.png"
+                alt="Rodrigo Blefari Gonçalves"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+              />
+              <div class="initials" style="display: none">RB</div>
+            </div>
+            <div class="profile-info">
+              <h1>Rodrigo Blefari Gonçalves</h1>
+              <p class="title">—</p>
+              <p class="location">
+                <i class="fas fa-map-marker-alt"></i> —
+              </p>
+            </div>
+          </div>
+
+          <div class="header-controls">
+            <div class="theme-selector">
+              <select id="readingMode" aria-label="Modo de leitura">
+                <option value="light">🔆 Claro</option>
+                <option value="sepia">📜 Sépia</option>
+                <option value="dark">🌙 Escuro</option>
+                <option value="contrast">⚪ Alto contraste</option>
+              </select>
+            </div>
+
+            <div class="theme-selector">
+              <select id="languageSelector" aria-label="Idioma"></select>
+            </div>
+
+            <!-- Destacar tecnologia (toggle) -->
+            <label class="toggle-switch" title="Destacar tecnologia">
+              <input type="checkbox" id="highlightTech" />
+              <span class="slider"></span>
+              <span class="toggle-label">Destacar Cores</span>
+            </label>
+
+            <button
+              class="download-btn"
+              onclick="printResume()"
+              style="background: linear-gradient(135deg, #059669, #10b981)"
+            >
+              <i class="fas fa-print"></i>
+              Imprimir
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <aside class="sidebar">
+          <!-- Contato (renderHeader atualiza labels) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-address-book"></i>
+              Contato
+            </h2>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-text">
+                <a
+                  href="https://maps.google.com/?q=Zona+norte+São+Paulo+SP"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >—</a
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-text">
+                <a href="tel:+5511948205237">—</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-text">
+                <a href="mailto:rodrigo.blefari@gmail.com">—</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-linkedin"></i>
+              </div>
+              <div class="contact-text">
+                <a
+                  href="https://linkedin.com/in/rodrigo-blefari-gonçalves-847ab63a"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >—</a
+                >
+              </div>
+            </div>
+          </section>
+
+          <!-- Principais Competências (será preenchido por i18n.keySkills) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-star"></i>
+              Principais Competências
+            </h2>
+            <div class="skill-tags"></div>
+          </section>
+
+          <!-- Habilidades Técnicas (reconstruído dinamicamente por initSkills) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-code"></i>
+              Habilidades Técnicas
+            </h2>
+            <!-- initSkills remove quaisquer .skill-category e cria as categorias automaticamente -->
+          </section>
+
+          <!-- Tecnologias & Proficiência (montada pelo componente de skills) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-medal"></i>
+              Tecnologias & Proficiência
+            </h2>
+            <div id="tech-proficiency-list" class="tech-list"></div>
+          </section>
+
+          <!-- Formação (renderEducation) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-graduation-cap"></i>
+              Formação Acadêmica
+            </h2>
+            <!-- itens adicionados dinamicamente -->
+          </section>
+        </aside>
+
+        <main class="content">
+          <!-- Resumo Profissional (renderSummary) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-user"></i>
+              Resumo Profissional
+            </h2>
+            <!-- parágrafos adicionados dinamicamente -->
+          </section>
+
+          <!-- Experiência Profissional (renderExperience) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-briefcase"></i>
+              Experiência Profissional
+            </h2>
+            <!-- cards adicionados dinamicamente -->
+          </section>
+
+          <!-- Empresas Anteriores (renderCompanies) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-building"></i>
+              Empresas Anteriores
+            </h2>
+            <div class="companies-grid"></div>
+          </section>
+
+          <!-- Objetivo (renderObjective) -->
+          <section class="section">
+            <h2 class="section-title">
+              <i class="fas fa-target"></i>
+              Objetivo Profissional
+            </h2>
+            <!-- texto adicionado dinamicamente -->
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- App JS (ES Modules) -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
