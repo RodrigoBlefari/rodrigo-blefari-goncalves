@@ -118,61 +118,7 @@
       <iframe id="templateFrame" src="" title="Pré-visualização do template"></iframe>
     </div>
 
-    <script>
-      const TEMPLATES_INDEX = "/templates/templates.json";
-      const SELECT_ID = "templateSelector";
-      const IFRAME_ID = "templateFrame";
-      const STORAGE_KEY = "currentTemplateId";
-
-      async function loadTemplatesList() {
-        try {
-          const res = await fetch(TEMPLATES_INDEX, { cache: "no-store" });
-          if (!res.ok) throw new Error("Falha ao carregar templates.json");
-          const json = await res.json();
-          return Array.isArray(json.templates) ? json.templates : [];
-        } catch (e) {
-          console.error(e);
-          return [];
-        }
-      }
-
-      function setIframeTemplate(id) {
-        const iframe = document.getElementById(IFRAME_ID);
-        if (!iframe) return;
-        const url = `/templates/${id}/index.html`;
-        iframe.src = url;
-        try { localStorage.setItem(STORAGE_KEY, id); } catch {}
-      }
-
-      function populateSelect(templates, defaultId) {
-        const sel = document.getElementById(SELECT_ID);
-        if (!sel) return;
-        sel.innerHTML = "";
-        templates.forEach(t => {
-          const opt = document.createElement("option");
-          opt.value = t.id;
-          opt.textContent = t.name || t.id;
-          sel.appendChild(opt);
-        });
-        sel.value = defaultId;
-        sel.addEventListener("change", () => setIframeTemplate(sel.value));
-      }
-
-      async function boot() {
-        const templates = await loadTemplatesList();
-        if (!templates.length) {
-          populateSelect([{ id: "template-moderno", name: "Moderno" }], "template-moderno");
-          setIframeTemplate("template-moderno");
-          return;
-        }
-        const saved = localStorage.getItem(STORAGE_KEY);
-        const exists = templates.find(t => t.id === saved);
-        const defaultId = exists ? saved : templates[0].id;
-        populateSelect(templates, defaultId);
-        setIframeTemplate(defaultId);
-      }
-
-      document.addEventListener("DOMContentLoaded", boot);
-    </script>
+    <!-- CSP-friendly external script -->
+    <script src="scripts/hub.js" defer></script>
   </body>
 </html>
