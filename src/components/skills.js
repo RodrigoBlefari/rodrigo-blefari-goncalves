@@ -257,9 +257,9 @@ export function reorganizeTechChips() {
     if (key && !byKey.has(key)) byKey.set(key, el);
   });
 
-  // Criar chip caso não exista ainda
+  // Criar chip SEM mover o original (não desloca os chips de "Principais Competências")
   const ensureChip = (key) => {
-    if (byKey.has(key)) return byKey.get(key);
+    // Sempre cria um novo elemento para não remover do bloco de Principais Competências
     const span = document.createElement("span");
     span.className = "skill-tag";
     span.setAttribute("data-tech", key);
@@ -276,7 +276,6 @@ export function reorganizeTechChips() {
     span.textContent =
       labelMap[key] ||
       key.replace(/(^|[-_])\w/g, (s) => s.replace(/[-_]/, " ").toUpperCase());
-    byKey.set(key, span);
     return span;
   };
 

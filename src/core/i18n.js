@@ -7,7 +7,8 @@
 function getRepoBase() {
   const path = location.pathname;
   const idx = path.indexOf("/templates/");
-  const basePath = idx !== -1 ? path.substring(0, idx + 1) : path.replace(/[^/]+$/, "");
+  // Base do repositório (antes de /templates/), com barra final
+  const basePath = idx !== -1 ? path.substring(0, idx) + "/" : path.replace(/[^/]+$/, "");
   return location.origin + basePath;
 }
 

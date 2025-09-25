@@ -108,15 +108,101 @@ function populateLanguageSelector() {
   }
 }
 
-function renderKeySkillsFromI18n(t) {
+async function renderKeySkillsFromI18n(t) {
   try {
-    const keyTitle = Array.from(document.querySelectorAll(".section-title")).find(
-      (h) => h.textContent.trim().includes("Competências") || h.querySelector(".fa-star")
+    // Primeiro: ancora estável por id (template-agnóstico)
+    const anchor = document.getElementById("key-skills");
+    if (anchor) {
+      anchor.innerHTML = "";
+      const labelMap = {
+        "react-native": "React Native",
+        nodejs: "Node.js",
+        csharp: "C#",
+        css3: "CSS3",
+        html5: "HTML5",
+        ga4: "GA4",
+        graphql: "GraphQL",
+        rest: "REST"
+      };
+      const skills = Array.isArray(t?.keySkills) ? t.keySkills : [];
+      skills.forEach((tech) => {
+        if (!tech) return;
+        const span = document.createElement("span");
+        span.className = "skill-tag";
+        span.setAttribute("data-tech", tech);
+        span.textContent =
+          labelMap[tech] ||
+          String(tech).replace(/(^|[-_])\w/g, (s) => s.replace(/[-_]/, " ").toUpperCase());
+        anchor.appendChild(span);
+      });
+      if (anchor.children.length) return;
+    }
+
+    // Prefira localizar pela presença do ícone (robusto para todos idiomas)
+    let keyTitle = Array.from(document.querySelectorAll(".section-title")).find(
+      (h) => h.querySelector(".fa-star")
     );
-    const keySection = keyTitle?.closest(".section");
-    if (!keySection) return;
-    const wrap = keySection.querySelector(".skill-tags");
-    if (!wrap) return;
+    console.debug("[KeySkills] lang:", t?.__lang, "| title by icon:", !!keyTitle);
+    // Fallback: tente pelo texto vindo do i18n (se existir)
+    if (!keyTitle && t?.sections?.keySkills) {
+      keyTitle = Array.from(document.querySelectorAll(".section-title")).find((h) =>
+        h.textContent.trim().includes(t.sections.keySkills)
+      );
+      console.debug("[KeySkills] title by i18n text:", !!keyTitle, "| text:", t.sections.keySkills);
+    }
+    // Fallback adicional: palavra "Compet" para pt-PT/variações (melhora resiliência)
+    if (!keyTitle) {
+      keyTitle = Array.from(document.querySelectorAll(".section-title")).find((h) =>
+        /Compet/i.test(h.textContent)
+      );
+      console.debug("[KeySkills] title by regex /Compet/:", !!keyTitle);
+    }
+
+    let keySection = keyTitle?.closest(".section");
+    if (!keySection) {
+      // Fallback: cria a seção "Principais Competências" caso ela não exista no template
+      console.warn("[KeySkills] Section not found. Creating a new one.");
+      const container =
+        document.querySelector(".sidebar") ||
+        document.querySelector(".tech-sidebar") ||
+        document.querySelector("main") ||
+        document.body;
+
+      const sec = document.createElement("section");
+      sec.className = "section";
+
+      const h2 = document.createElement("h2");
+      h2.className = "section-title";
+      const icon = document.createElement("i");
+      icon.className = "fas fa-star";
+      const span = document.createElement("span");
+      span.textContent = " " + (t?.sections?.keySkills || "Principais Competências");
+      h2.appendChild(icon);
+      h2.appendChild(span);
+
+      const tagWrap = document.createElement("div");
+      tagWrap.className = "skill-tags";
+
+      sec.appendChild(h2);
+      sec.appendChild(tagWrap);
+
+      if (container.firstChild) {
+        container.insertBefore(sec, container.firstChild.nextSibling || null);
+      } else {
+        container.appendChild(sec);
+      }
+
+      keySection = sec;
+    }
+
+    // Garante container .skill-tags (se for ausente no template)
+    let wrap = keySection.querySelector(".skill-tags");
+    if (!wrap) {
+      wrap = document.createElement("div");
+      wrap.className = "skill-tags";
+      keySection.appendChild(wrap);
+      console.debug("[KeySkills] Created .skill-tags container");
+    }
     wrap.innerHTML = "";
 
     const labelMap = {
@@ -129,15 +215,53 @@ function renderKeySkillsFromI18n(t) {
       graphql: "GraphQL",
       rest: "REST"
     };
-    (Array.isArray(t.keySkills) ? t.keySkills : []).forEach((tech) => {
+    const skills = Array.isArray(t?.keySkills) ? t.keySkills : [];
+    console.debug("[KeySkills] skills count:", skills.length, "| sample:", skills.slice(0, 5));
+    skills.forEach((tech) => {
+      if (!tech) return;
       const span = document.createElement("span");
       span.className = "skill-tag";
       span.setAttribute("data-tech", tech);
       span.textContent =
         labelMap[tech] ||
-        tech.replace(/(^|[-_])\w/g, (s) => s.replace(/[-_]/, " ").toUpperCase());
+        String(tech).replace(/(^|[-_])\w/g, (s) => s.replace(/[-_]/, " ").toUpperCase());
       wrap.appendChild(span);
     });
+
+    // Fallback defensivo: se por algum motivo não renderizou nada (ex.: falha de i18n pt),
+    // tenta reaproveitar as keySkills do inglês para não ficar vazio visualmente.
+    if (!wrap.children.length) {
+      try {
+        const base = (() => {
+          const p = location.pathname;
+          const idx = p.indexOf("/templates/");
+          const basePath = idx !== -1 ? p.substring(0, idx) + "/" : p.replace(/[^/]+$/, "");
+          return location.origin + basePath;
+        })();
+        const resEn = await fetch(new URL("i18n/en.json", base).href, { cache: "no-store" });
+        if (resEn.ok) {
+          const en = await resEn.json();
+          const enSkills = Array.isArray(en?.keySkills) ? en.keySkills : [];
+          enSkills.forEach((tech) => {
+            if (!tech) return;
+            const span = document.createElement("span");
+            span.className = "skill-tag";
+            span.setAttribute("data-tech", tech);
+            span.textContent =
+              labelMap[tech] ||
+              String(tech).replace(/(^|[-_])\w/g, (s) => s.replace(/[-_]/, " ").toUpperCase());
+            wrap.appendChild(span);
+          });
+          console.warn("[KeySkills] Fallback to EN applied. Rendered:", wrap.children.length);
+        } else {
+          console.warn("[KeySkills] Could not fetch EN fallback. Status:", resEn.status);
+        }
+      } catch (err) {
+        console.warn("[KeySkills] EN fallback error:", err);
+      }
+    } else {
+      console.debug("[KeySkills] Rendered PT items:", wrap.children.length);
+    }
   } catch (e) {
     console.warn("Falha ao renderizar Principais Competências:", e);
   }
@@ -183,7 +307,7 @@ async function renderAll(t) {
   renderExperience(t);
   renderObjective(t);
   renderCompanies(t);
-  renderKeySkillsFromI18n(t);
+  await renderKeySkillsFromI18n(t);
   initSkills();
   updateUILocalizedLabels(t);
 
