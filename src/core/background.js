@@ -28,9 +28,9 @@ function resolveFilenameForLang(map, lang) {
   return first || null;
 }
 
-export async function applyBackgroundForLang(lang) {
+export async function applyBackgroundForLang(lang, overrideFilename) {
   const map = await loadBackgroundMap();
-  const filename = resolveFilenameForLang(map, lang);
+  const filename = (overrideFilename && String(overrideFilename).trim()) || resolveFilenameForLang(map, lang);
   const url = filename ? `/assets/backgrounds/${filename}` : null;
 
   const body = document.body;
@@ -42,6 +42,18 @@ export async function applyBackgroundForLang(lang) {
     body.style.backgroundPosition = "center center";
     body.style.backgroundRepeat = "no-repeat";
     body.style.backgroundAttachment = "fixed";
+
+    // Também aplica no header do template-moderno (se existir)
+    const header = document.querySelector("header.header");
+    if (header) {
+      let bg = header.querySelector(".header-bg");
+      if (!bg) {
+        bg = document.createElement("div");
+        bg.className = "header-bg";
+        header.appendChild(bg);
+      }
+      bg.style.backgroundImage = `url("${url}")`;
+    }
   } else {
     body.classList.remove("bg-image-active");
     body.style.removeProperty("background-image");
@@ -49,5 +61,12 @@ export async function applyBackgroundForLang(lang) {
     body.style.removeProperty("background-position");
     body.style.removeProperty("background-repeat");
     body.style.removeProperty("background-attachment");
+
+    // Remove o background do header (se existir)
+    const header = document.querySelector("header.header");
+    if (header) {
+      const bg = header.querySelector(".header-bg");
+      if (bg) header.removeChild(bg);
+    }
   }
 }

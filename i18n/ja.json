@@ -12,7 +12,8 @@
     "languages": {
       "pt": "ポルトガル語",
       "en": "英語"
-    }
+    },
+    "bannerBackground": "bg-default.jpg"
   },
   "header": {
     "name": "Rodrigo Blefari Gonçalves",

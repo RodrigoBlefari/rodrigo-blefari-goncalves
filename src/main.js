@@ -171,11 +171,11 @@ async function boot() {
   initReadingMode();
   populateLanguageSelector();
   loadFontForLang(currentLang);
-  await applyBackgroundForLang(currentLang);
 
   cleanStaticSeed();
 
   const t = await loadI18n(currentLang);
+  await applyBackgroundForLang(currentLang, t?.ui?.bannerBackground);
   await renderAll(t);
 
   // Bind changeLanguage
@@ -185,9 +185,9 @@ async function boot() {
       currentLang = langSel.value || "pt";
       localStorage.setItem("lang", currentLang);
       loadFontForLang(currentLang);
-      await applyBackgroundForLang(currentLang);
       cleanStaticSeed();
       const ti18n = await loadI18n(currentLang);
+      await applyBackgroundForLang(currentLang, ti18n?.ui?.bannerBackground);
       await renderAll(ti18n);
     });
   }

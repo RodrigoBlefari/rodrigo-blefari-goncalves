@@ -17,6 +17,28 @@ export function renderHeader(c) {
     locEl.appendChild(span);
   }
 
+  // Iniciais a partir do nome (ex.: "Rodrigo Blefari Gonçalves" => "RBG")
+  const initialsEl = document.querySelector(".profile-img .initials");
+  if (initialsEl) {
+    const initials = (c.header.name || "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((w) => w[0]?.toUpperCase())
+      .slice(0, 3)
+      .join("");
+    initialsEl.textContent = initials || "";
+    // Suporte ao template-tech (avatar fallback)
+    const avatarFallbackEl = document.querySelector(".avatar-wrap .avatar-fallback");
+    if (avatarFallbackEl) {
+      avatarFallbackEl.textContent = initials || "";
+    }
+    // Marca também a sigla no topo do template-tech (brand-name)
+    const brandNameEl = document.querySelector(".brand .brand-name");
+    if (brandNameEl) {
+      brandNameEl.textContent = initials || "";
+    }
+  }
+
   // Contato (4 itens)
   const contactSection = Array.from(
     document.querySelectorAll(".section-title")

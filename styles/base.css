@@ -69,6 +69,18 @@ body {
   z-index: 2;
 }
 
+/* Background de banner dentro do header (template-moderno) */
+.header .header-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1; /* atrás do conteúdo do header */
+  opacity: 0.35; /* legibilidade do texto sobre a imagem */
+  transform: scale(1.02); /* leve zoom para evitar bordas aparentes */
+}
+
 .profile-section {
   display: flex;
   align-items: center;
