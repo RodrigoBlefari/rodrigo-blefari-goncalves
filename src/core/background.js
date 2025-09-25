@@ -28,9 +28,67 @@ function resolveFilenameForLang(map, lang) {
   return first || null;
 }
 
-export async function applyBackgroundForLang(lang, overrideFilename) {
+// ===== Seleção manual de background (galeria) =====
+const BG_OVERRIDE_KEY = "bgOverrideFile";
+
+export function getBackgroundOverride() {
+  try {
+    const v = localStorage.getItem(BG_OVERRIDE_KEY);
+    return v && v !== "auto" ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+export function setBackgroundOverride(fileOrNull) {
+  try {
+    if (!fileOrNull) {
+      localStorage.removeItem(BG_OVERRIDE_KEY);
+    } else {
+      localStorage.setItem(BG_OVERRIDE_KEY, String(fileOrNull));
+    }
+  } catch {}
+}
+
+export async function getBackgroundOptions() {
+  try {
+    const res = await fetch("/assets/backgrounds/gallery.json", { cache: "no-store" });
+    if (!res.ok) return [];
+    const j = await res.json();
+    const arr = Array.isArray(j.files) ? j.files : [];
+    return arr.filter((x) => x && typeof x.file === "string");
+  } catch {
+    return [];
+  }
+}
+
+export async function populateBackgroundSelect(selectEl, currentFile) {
+  if (!selectEl) return;
+  const options = await getBackgroundOptions();
+  // Limpa e popula
+  selectEl.innerHTML = "";
+  const optAuto = document.createElement("option");
+  optAuto.value = "auto";
+  optAuto.textContent = "Automático (por idioma)";
+  selectEl.appendChild(optAuto);
+  options.forEach((o) => {
+    const opt = document.createElement("option");
+    opt.value = o.file;
+    opt.textContent = o.label || o.file;
+    selectEl.appendChild(opt);
+  });
+  // Define valor atual (override > i18n)
+  const override = getBackgroundOverride();
+  const value = override || currentFile || "auto";
+  selectEl.value = value;
+}
+
+export async function applyBackgroundForLang(lang, i18nOverride, userOverride) {
   const map = await loadBackgroundMap();
-  const filename = (overrideFilename && String(overrideFilename).trim()) || resolveFilenameForLang(map, lang);
+  const filename =
+    (userOverride && String(userOverride).trim()) ||
+    (i18nOverride && String(i18nOverride).trim()) ||
+    resolveFilenameForLang(map, lang);
   const url = filename ? `/assets/backgrounds/${filename}` : null;
 
   const body = document.body;

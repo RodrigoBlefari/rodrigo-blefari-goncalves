@@ -12,7 +12,7 @@ import { renderObjective } from "./components/objective.js";
 import { initReadingMode } from "./features/readingMode.js";
 import { printResume, downloadPDF } from "./features/print.js";
 import { initSkills } from "./components/skills.js";
-import { applyBackgroundForLang } from "./core/background.js";
+import { applyBackgroundForLang, getBackgroundOverride, setBackgroundOverride, populateBackgroundSelect } from "./core/background.js";
 
 // Estado de idioma
 let currentLang = localStorage.getItem("lang") || "pt";
@@ -175,7 +175,20 @@ async function boot() {
   cleanStaticSeed();
 
   const t = await loadI18n(currentLang);
-  await applyBackgroundForLang(currentLang, t?.ui?.bannerBackground);
+  await applyBackgroundForLang(currentLang, t?.ui?.bannerBackground, getBackgroundOverride());
+
+  // Popular seletor de plano de fundo (se existir)
+  const bgSel = document.getElementById("backgroundSelector");
+  await populateBackgroundSelect(bgSel, t?.ui?.bannerBackground);
+  if (bgSel) {
+    bgSel.addEventListener("change", async () => {
+      const val = bgSel.value;
+      if (val === "auto") setBackgroundOverride(null);
+      else setBackgroundOverride(val);
+      await applyBackgroundForLang(currentLang, t?.ui?.bannerBackground, getBackgroundOverride());
+    });
+  }
+
   await renderAll(t);
 
   // Bind changeLanguage
@@ -187,7 +200,8 @@ async function boot() {
       loadFontForLang(currentLang);
       cleanStaticSeed();
       const ti18n = await loadI18n(currentLang);
-      await applyBackgroundForLang(currentLang, ti18n?.ui?.bannerBackground);
+      await populateBackgroundSelect(document.getElementById("backgroundSelector"), ti18n?.ui?.bannerBackground);
+      await applyBackgroundForLang(currentLang, ti18n?.ui?.bannerBackground, getBackgroundOverride());
       await renderAll(ti18n);
     });
   }

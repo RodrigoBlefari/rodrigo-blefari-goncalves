@@ -1,0 +1,7 @@
+{
+  "files": [
+    { "file": "bg-globo-antigo.jpg", "label": "Globo Antigo" },
+    { "file": "bg-globo-moderno.jpg", "label": "Globo Moderno" },
+    { "file": "bg-robo-apocalipse-maxtrix.jpg", "label": "Robo Apocalipse Matrix" }
+  ]
+}
