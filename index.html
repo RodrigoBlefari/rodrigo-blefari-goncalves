@@ -2176,14 +2176,19 @@
         Object.keys(map).forEach((key) => {
           const m = map[key] || {};
           const base = m.base || "#64748b"; // slate-500 fallback
-          const alt = m.alt || shadeHex(base, -0.2);
-          const chipText = m.text || contrastText(base);
-          // chips (habilidades técnicas)
-          css += `.skill-tag[data-tech="${key}"]{background:linear-gradient(135deg, ${base}, ${alt});color:${chipText};}`;
-          // textos (tabela de proficiência, nomes)
-          css += `.tech-name[data-tech="${key}"]{color:${base};}`;
-          // destaques dentro de descrições
-          css += `.tech-highlight[data-tech="${key}"]{color:${base};}`;
+          // gradient oficial da marca, quando disponível
+          const stops = Array.isArray(m.gradient) && m.gradient.length >= 2
+            ? m.gradient
+            : [base, (m.alt || shadeHex(base, -0.2))];
+          const grad = `linear-gradient(135deg, ${stops.join(", ")})`;
+          const textColor = m.text || contrastText(stops[0]);
+          const borderColor = m.border || stops[0];
+          // chips (habilidades técnicas) com borda de marca opcional
+          css += `.skill-tag[data-tech="${key}"]{background:${grad};color:${textColor};border:2px solid ${borderColor};}`;
+          // textos (tabela de proficiência, nomes) + acento de borda à esquerda
+          css += `.tech-name[data-tech="${key}"]{color:${stops[0]};border-left:4px solid ${borderColor};padding-left:8px;}`;
+          // destaques dentro de descrições (apenas cor do texto preservando legibilidade)
+          css += `.tech-highlight[data-tech="${key}"]{color:${stops[0]};}`;
         });
         const style = document.createElement("style");
         style.id = styleId;
