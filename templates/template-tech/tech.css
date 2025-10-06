@@ -465,3 +465,41 @@ a:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+
+/* Impressão: evitar quebra de palavras/linhas entre páginas e manter blocos inteiros */
+@media print {
+  /* Não cortar palavras nem forçar quebras */
+  *, *::before, *::after {
+    hyphens: none !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+  }
+  /* Evitar que blocos sejam quebrados no meio da página */
+  p, li, blockquote, pre,
+  .resume-section .description,
+  .experience-section .description,
+  .education-section .description,
+  .objective-section .description,
+  .skill-tags,
+  .tech-row,
+  .education-item,
+  .experience-item,
+  .company-item,
+  .section,
+  .contact-item {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    orphans: 3;
+    widows: 3;
+  }
+  /* Manter títulos juntos com o próximo conteúdo */
+  h1, h2, h3, .section-title {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  /* Imagens/figuras não devem ser cortadas */
+  img, figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

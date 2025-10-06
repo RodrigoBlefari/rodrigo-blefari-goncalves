@@ -793,3 +793,114 @@ body {
 .tech-highlight[data-tech="rest"] { color: #4b5563; }
 .tech-highlight[data-tech="fullstory"] { color: #ff0066; }
 .tech-highlight[data-tech="azure"] { color: #0078d4; }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    padding: 0 !important;
+  }
+
+  .container {
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .header {
+    background: #ffffff !important;
+    color: var(--text-dark) !important;
+    padding: 32px;
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .header::before,
+  .header .header-bg {
+    display: none !important;
+  }
+
+  .profile-section {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 12px;
+  }
+
+  .profile-img {
+    border: 4px solid rgba(37, 99, 235, 0.25);
+    box-shadow: none;
+  }
+
+  .profile-info h1 {
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: var(--text-dark) !important;
+  }
+
+  .profile-info .title,
+  .profile-info .location {
+    color: var(--text-dark);
+  }
+
+  .header-controls {
+    display: none !important;
+  }
+
+  .main-content {
+    display: block;
+  }
+
+  .sidebar,
+  .content {
+    padding: 24px 32px;
+    background: transparent;
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  /* Evitar cortes de palavras/linhas entre páginas */
+  *, *::before, *::after {
+    hyphens: manual !important;
+  }
+
+  p, li, blockquote, .description {
+    word-break: normal !important;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+  }
+
+  /* Evitar que blocos sejam quebrados no meio da página */
+  p, li, blockquote, pre,
+  .description,
+  .skill-tags,
+  .tech-row,
+  .education-item,
+  .experience-item,
+  .company-item,
+  .section,
+  .contact-item {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Manter títulos juntos com o bloco seguinte */
+  h1, h2, h3, .section-title {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Imagens e figuras não devem ser cortadas */
+  img, figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
