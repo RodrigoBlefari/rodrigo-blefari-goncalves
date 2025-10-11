@@ -38,7 +38,7 @@
 
     <div id="interface">
       <aside id="coluna-esquerda" class="painel-controle">
-        <section id="controles-jogo" class="bloco-controle"></section>
+        <section id="controles-jogo" class="bloco-controle" data-collapsible data-title="Controles do jogo"></section>
       </aside>
       <main id="painel-jogo">
         <header id="cabecalho">
@@ -77,10 +77,10 @@
         </div>
       </main>
       <aside id="coluna-direita" class="painel-controle">
-        <section id="controles-ia" class="bloco-controle"></section>
+        <section id="controles-ia" class="bloco-controle" data-collapsible data-title="Controles da IA"></section>
       </aside>
       <footer id="painel-inferior" class="painel-controle">
-        <section id="painel-visualizacoes" class="bloco-controle">
+        <section id="painel-visualizacoes" class="bloco-controle" data-collapsible>
           <h2>Mapa neural</h2>
           <canvas id="canvas-ativacoes" width="960" height="280"></canvas>
           <canvas id="canvas-fitness" width="960" height="160"></canvas>
@@ -106,8 +106,8 @@
             </p>
           </div>
         </section>
-        <section id="painel-relatorios"></section>
-        <section id="guia-projeto" class="game-docs" aria-labelledby="guiaProjetoTitulo">
+        <section id="painel-relatorios" data-collapsible data-title="Relatórios"></section>
+        <section id="guia-projeto" class="game-docs" aria-labelledby="guiaProjetoTitulo" data-collapsible data-title="Guia do projeto">
           <div class="game-docs__wrap">
             <h2 id="guiaProjetoTitulo">Manual de bordo do Rede Neural Rogue</h2>
             <p class="game-docs__lead">Se você chegou até aqui, parabéns: já sobreviveu ao estagiário digital e ao modal. Agora vem uma dose de explicação divertida com um after credit técnico para quem curte apertar botões certos.</p>

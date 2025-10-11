@@ -2,10 +2,12 @@ const INPUTS = [
   { chave: "posicaoX", titulo: "Posicao lateral" },
   { chave: "distanciaProjetil", titulo: "Delta proj x" },
   { chave: "alturaProjetil", titulo: "Delta proj y" },
+  { chave: "anguloProjetil", titulo: "Angulo proj" },
   { chave: "tempoImpactoProjetil", titulo: "Tempo impacto" },
   { chave: "densidadeProjetil", titulo: "Densidade proj" },
   { chave: "distanciaInimigo", titulo: "Delta inimigo x" },
   { chave: "alturaInimigo", titulo: "Delta inimigo y" },
+  { chave: "anguloInimigo", titulo: "Angulo inimigo" },
   { chave: "memoria", titulo: "Memoria" },
 ];
 
@@ -21,12 +23,19 @@ export class VisualizacaoIA {
     this.ctxAtivacoes = canvasAtivacoes?.getContext("2d") ?? null;
     this.ctxFitness = canvasFitness?.getContext("2d") ?? null;
     this.historicoFitness = [];
+    this.animacoesAtivas = true;
+    this._ultimoDadosAtivacao = null;
+    this._ultimaAmostraFitness = null;
     this._ajustarResolucao();
     window.addEventListener("resize", () => this._ajustarResolucao());
   }
 
   atualizarAtivacoes(dados) {
     if (!this.ctxAtivacoes || !dados) {
+      return;
+    }
+    this._ultimoDadosAtivacao = dados;
+    if (!this.animacoesAtivas) {
       return;
     }
     const area = this._prepararContexto(this.canvasAtivacoes, this.ctxAtivacoes);
@@ -40,12 +49,16 @@ export class VisualizacaoIA {
     if (!this.ctxFitness || !resumo) {
       return;
     }
+    this._ultimaAmostraFitness = resumo;
     this.historicoFitness.push({
       melhor: resumo.melhorFitness,
       media: resumo.mediaFitness,
     });
     if (this.historicoFitness.length > 180) {
       this.historicoFitness.shift();
+    }
+    if (!this.animacoesAtivas) {
+      return;
     }
     const area = this._prepararContexto(this.canvasFitness, this.ctxFitness);
     if (!area) {
@@ -65,6 +78,33 @@ export class VisualizacaoIA {
       const areaFitness = this._prepararContexto(this.canvasFitness, this.ctxFitness);
       if (areaFitness) {
         this.ctxFitness.clearRect(0, 0, areaFitness.largura, areaFitness.altura);
+      }
+    }
+  }
+
+  definirAnimacoesAtivas(ativo) {
+    this.animacoesAtivas = !!ativo;
+    if (!this.animacoesAtivas) {
+      this.limpar();
+    } else {
+      this._redesenhar();
+    }
+  }
+
+  _redesenhar() {
+    if (!this.animacoesAtivas) {
+      return;
+    }
+    if (this._ultimoDadosAtivacao) {
+      const areaAtivacoes = this._prepararContexto(this.canvasAtivacoes, this.ctxAtivacoes);
+      if (areaAtivacoes) {
+        this._desenharAtivacoes(areaAtivacoes, this._ultimoDadosAtivacao);
+      }
+    }
+    if (this.ctxFitness && this.historicoFitness.length) {
+      const areaFitness = this._prepararContexto(this.canvasFitness, this.ctxFitness);
+      if (areaFitness) {
+        this._desenharGraficoFitness(areaFitness);
       }
     }
   }
@@ -278,9 +318,15 @@ export class VisualizacaoIA {
   _calcularHiddenAtivacoes(dados) {
     const sensores = dados.sensores ?? {};
     const urgenciaProj =
-      ((sensores.tempoImpactoProjetil ?? -1) + Math.max(0, sensores.densidadeProjetil ?? -1)) / 2;
+      ((sensores.tempoImpactoProjetil ?? -1) +
+        Math.max(0, sensores.densidadeProjetil ?? -1) +
+        (1 - Math.min(1, Math.abs(sensores.anguloProjetil ?? 0)))) /
+      3;
     const pressaoInimigo =
-      ((1 - Math.abs(sensores.distanciaInimigo ?? 0)) + Math.abs(sensores.alturaInimigo ?? 0)) / 2;
+      ((1 - Math.abs(sensores.distanciaInimigo ?? 0)) +
+        Math.abs(sensores.alturaInimigo ?? 0) +
+        (1 - Math.min(1, Math.abs(sensores.anguloInimigo ?? 0)))) /
+      3;
     const memoriaAtiva = (sensores.memoria ?? 0 + (dados.memoriaAtual ?? 0)) / 2;
     return [
       {

@@ -86,9 +86,11 @@ export class AgenteSombra {
         posicaoX: sensoriais.posicaoX ?? 0,
         distanciaProjetil: sensoriais.distanciaProjetil ?? 0,
         alturaProjetil: sensoriais.alturaProjetil ?? 0,
+        anguloProjetil: sensoriais.anguloProjetil ?? 0,
         tempoImpactoProjetil: sensoriais.tempoImpactoProjetil ?? -1,
         distanciaInimigo: sensoriais.distanciaInimigo ?? 0,
         alturaInimigo: sensoriais.alturaInimigo ?? 0,
+        anguloInimigo: sensoriais.anguloInimigo ?? 0,
         densidadeProjetil: sensoriais.densidadeProjetil ?? -1,
         memoria: decisao.memoriaAnterior ?? 0,
       },
@@ -173,6 +175,7 @@ export class AgenteSombra {
     let distanciaProjetil = 1;
     let alturaProjetil = 0;
     let tempoImpactoProjetil = -1;
+    let anguloProjetil = 0;
     if (projetil) {
       const centroProj = projetil.x + projetil.largura / 2;
       const centroProjY = projetil.y + projetil.altura / 2;
@@ -180,6 +183,9 @@ export class AgenteSombra {
       const deltaY = centroProjY - this.y;
       distanciaProjetil = normalizar(deltaX, canvas.width / 2);
       alturaProjetil = normalizar(deltaY, canvas.height / 2);
+      if (deltaX !== 0 || deltaY !== 0) {
+        anguloProjetil = Math.atan2(this.y - centroProjY, this.x - centroProj) / Math.PI;
+      }
       const distancia = Math.hypot(deltaX, deltaY);
       const velocidade = Math.hypot(projetil.velX, projetil.velY) || 1;
       const tempo = distancia / velocidade;
@@ -189,11 +195,17 @@ export class AgenteSombra {
 
     let distanciaInimigo = 1;
     let alturaInimigo = 0;
+    let anguloInimigo = 0;
     if (inimigo) {
       const centroInimigoX = inimigo.x + inimigo.largura / 2;
       const centroInimigoY = inimigo.y + inimigo.altura / 2;
       distanciaInimigo = normalizar(centroInimigoX - this.x, canvas.width / 2);
       alturaInimigo = normalizar(centroInimigoY - this.y, canvas.height / 2);
+      const deltaInimigoX = this.x - centroInimigoX;
+      const deltaInimigoY = this.y - centroInimigoY;
+      if (deltaInimigoX !== 0 || deltaInimigoY !== 0) {
+        anguloInimigo = Math.atan2(deltaInimigoY, deltaInimigoX) / Math.PI;
+      }
     }
 
     const densidadeProjetil = (() => {
@@ -217,9 +229,11 @@ export class AgenteSombra {
       posicaoX,
       distanciaProjetil,
       alturaProjetil,
+      anguloProjetil,
       tempoImpactoProjetil,
       distanciaInimigo,
       alturaInimigo,
+      anguloInimigo,
       densidadeProjetil,
     };
   }
@@ -231,9 +245,11 @@ export class AgenteSombra {
       pesos.posicaoX * sensores.posicaoX +
       pesos.distanciaProjetil * sensores.distanciaProjetil +
       pesos.alturaProjetil * sensores.alturaProjetil +
+      (pesos.anguloProjetil ?? 0) * sensores.anguloProjetil +
       (pesos.tempoImpactoProjetil ?? 0) * sensores.tempoImpactoProjetil +
       (pesos.distanciaInimigo ?? 0) * sensores.distanciaInimigo +
       (pesos.alturaInimigo ?? 0) * sensores.alturaInimigo +
+      (pesos.anguloInimigo ?? 0) * sensores.anguloInimigo +
       (pesos.densidadeProjetil ?? 0) * sensores.densidadeProjetil +
       pesos.memoria * memoria;
     let evadiu = false;

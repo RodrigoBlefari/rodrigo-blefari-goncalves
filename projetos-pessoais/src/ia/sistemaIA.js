@@ -225,7 +225,11 @@ export class SistemaIA {
     if (melhor) {
       const pesos = melhor.cromossomo.pesos;
       this.monitor.registrarEvento(
-        `Pesos destaque PX:${pesos.posicaoX.toFixed(2)} DP:${pesos.distanciaProjetil.toFixed(2)} AP:${pesos.alturaProjetil.toFixed(2)} MEM:${pesos.memoria.toFixed(2)}`
+        `Pesos destaque PX:${pesos.posicaoX.toFixed(2)} DP:${pesos.distanciaProjetil.toFixed(2)} AP:${pesos.alturaProjetil.toFixed(2)} ANG:${(pesos.anguloProjetil ?? 0).toFixed(2)} TMP:${(
+          pesos.tempoImpactoProjetil ?? 0
+        ).toFixed(2)} DIN:${(pesos.distanciaInimigo ?? 0).toFixed(2)} AIN:${(pesos.alturaInimigo ?? 0).toFixed(2)} ANGI:${(
+          pesos.anguloInimigo ?? 0
+        ).toFixed(2)} MEM:${pesos.memoria.toFixed(2)}`
       );
       if (melhor.ultimaAtivacao) {
         this.visualizacao?.atualizarAtivacoes({
@@ -381,9 +385,11 @@ export class SistemaIA {
     contexto.font = "11px 'Segoe UI'";
     contexto.textAlign = "center";
     const sensores = sombra.ultimaAtivacao?.sensores ?? {};
-    const texto = `proj:${this._formatarNumeroCurto(sensores.distanciaProjetil)}  tempo:${this._formatarNumeroCurto(
-      sensores.tempoImpactoProjetil
-    )}  inimigo:${this._formatarNumeroCurto(sensores.distanciaInimigo)}`;
+    const texto = `proj:${this._formatarNumeroCurto(sensores.distanciaProjetil)}  ang:${this._formatarNumeroCurto(
+      sensores.anguloProjetil
+    )}  tempo:${this._formatarNumeroCurto(sensores.tempoImpactoProjetil)}  inim:${this._formatarNumeroCurto(
+      sensores.distanciaInimigo
+    )}  angI:${this._formatarNumeroCurto(sensores.anguloInimigo)}`;
     contexto.fillText(texto, origemX, origemY - 14);
     contexto.restore();
   }

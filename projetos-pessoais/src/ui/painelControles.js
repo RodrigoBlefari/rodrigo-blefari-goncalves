@@ -133,8 +133,16 @@ export class PainelControles {
     this.areaLog = null;
     this.configuracao = configuracao;
     this.aoAlterar = aoAlterar;
+    this.visualizacao = null;
+    this.animacoesAtivas = true;
+    this.botaoAnimacoes = null;
     this._renderizar();
     this._adicionarControlesAdicionais();
+  }
+
+  definirVisualizacao(visualizacao) {
+    this.visualizacao = visualizacao;
+    this._sincronizarBotaoAnimacoes();
   }
 
   _adicionarControlesAdicionais() {
@@ -188,6 +196,17 @@ export class PainelControles {
       });
       
       controleAdicional.appendChild(botaoAjusteIA);
+
+      const botaoAnimacoes = document.createElement("button");
+      botaoAnimacoes.type = "button";
+      botaoAnimacoes.className = "botao-toggle";
+      botaoAnimacoes.addEventListener("click", () => {
+        this._alternarAnimacoesIA();
+      });
+      this.botaoAnimacoes = botaoAnimacoes;
+      this._sincronizarBotaoAnimacoes();
+      controleAdicional.appendChild(botaoAnimacoes);
+
       this.containerIA.appendChild(controleAdicional);
     }
   }
@@ -213,6 +232,27 @@ export class PainelControles {
       clearInterval(this.intervaloAjuste);
       this.registrarEventoRelatorio("Ajuste automático da IA desativado");
     }
+  }
+
+  _alternarAnimacoesIA() {
+    this.animacoesAtivas = !this.animacoesAtivas;
+    this.visualizacao?.definirAnimacoesAtivas(this.animacoesAtivas);
+    this._sincronizarBotaoAnimacoes();
+    this.registrarEventoRelatorio(
+      this.animacoesAtivas ? "Animações da IA ativadas" : "Animações da IA desativadas"
+    );
+  }
+
+  _sincronizarBotaoAnimacoes() {
+    if (!this.botaoAnimacoes) {
+      return;
+    }
+    const texto = this.animacoesAtivas
+      ? "Animações da IA: Ligadas"
+      : "Animações da IA: Desligadas";
+    this.botaoAnimacoes.textContent = texto;
+    this.botaoAnimacoes.classList.toggle("is-off", !this.animacoesAtivas);
+    this.botaoAnimacoes.setAttribute("aria-pressed", this.animacoesAtivas ? "true" : "false");
   }
 
   _ajustarPesosIaComBaseEmRelatorios() {

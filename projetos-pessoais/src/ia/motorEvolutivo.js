@@ -5,9 +5,11 @@ const PESOS_CHAVES = Object.freeze([
   "distanciaProjetil",
   "alturaProjetil",
   "memoria",
+  "anguloProjetil",
   "tempoImpactoProjetil",
   "distanciaInimigo",
   "alturaInimigo",
+  "anguloInimigo",
   "densidadeProjetil",
 ]);
 

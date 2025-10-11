@@ -31,6 +31,43 @@ const canvasFitness = document.getElementById("canvas-fitness");
 const indicadorQualidadeElemento = document.getElementById("indicador-qualidade");
 const indicadorQualidade = new IndicadorQualidade(indicadorQualidadeElemento);
 const historicoIA = new HistoricoIA(document.getElementById("historico-ia"));
+const areaCanvas = document.getElementById("area-canvas");
+
+const PERFORMANCE_SESSION_KEY = "redeNeuralRogue_visuals";
+const BODY_CLASS_MODO_DESEMPENHO = "modo-desempenho";
+
+const lerPersistenciaModoVisual = () => {
+  try {
+    return sessionStorage.getItem(PERFORMANCE_SESSION_KEY);
+  } catch (erro) {
+    console.warn("Falha ao ler estado salvo do modo visual:", erro);
+    return null;
+  }
+};
+
+let efeitosVisuaisAtivos = lerPersistenciaModoVisual() !== "off";
+let botaoEfeitosVisuais = null;
+let avisoDesempenho = null;
+
+if (areaCanvas) {
+  avisoDesempenho = document.createElement("div");
+  avisoDesempenho.id = "aviso-desempenho";
+  avisoDesempenho.textContent = "Modo desempenho ativo: simulacao continua em segundo plano.";
+  avisoDesempenho.setAttribute("role", "status");
+  avisoDesempenho.setAttribute("aria-live", "polite");
+  avisoDesempenho.hidden = true;
+  areaCanvas.appendChild(avisoDesempenho);
+}
+
+const atualizarBotaoEfeitos = () => {
+  if (!botaoEfeitosVisuais) {
+    return;
+  }
+  const texto = efeitosVisuaisAtivos ? "Desligar efeitos visuais" : "Ligar efeitos visuais";
+  botaoEfeitosVisuais.textContent = texto;
+  botaoEfeitosVisuais.setAttribute("aria-pressed", efeitosVisuaisAtivos ? "false" : "true");
+  botaoEfeitosVisuais.dataset.estadoVisual = efeitosVisuaisAtivos ? "on" : "off";
+};
 
 const INTRO_MODAL_KEY = "redeNeuralRogue_intro_modal_until";
 const SEMANA_MS = 7 * 24 * 60 * 60 * 1000;
@@ -43,6 +80,7 @@ const contexto = new ContextoJogo({
   canvas,
   configuracao: configuracaoAtual,
 });
+contexto.armazenarDado("efeitosVisuaisAtivos", efeitosVisuaisAtivos);
 
 const controleTeclado = new ControleTeclado();
 controleTeclado.iniciar();
@@ -68,6 +106,11 @@ const painelControles = new PainelControles({
 sistemaIA = contexto.registrarSistema("ia", new SistemaIA(configuracaoAtual.ia, painelControles));
 sistemaIA.definirConfiguracaoJogador(configuracaoAtual.jogador, configuracaoAtual.plataforma);
 const visualizacaoIA = new VisualizacaoIA({ canvasAtivacoes, canvasFitness });
+sistemaIA.definirVisualizacao(visualizacaoIA);
+painelControles.definirVisualizacao(visualizacaoIA);
+sistemaIA.monitor.definirIndicadorQualidade(indicadorQualidade);
+sistemaIA.monitor.definirHistoricoIA(historicoIA);
+sistemaJogador.jogador.definirControladorIA(sistemaIA);
 sistemaIA.definirVisualizacao(visualizacaoIA);
 sistemaIA.monitor.definirIndicadorQualidade(indicadorQualidade);
 sistemaIA.monitor.definirHistoricoIA(historicoIA);
@@ -108,6 +151,46 @@ const hud = new HudVida(hudElemento);
 const telaDerrota = new TelaDerrota(telaDerrotaElemento, () => reiniciarPartida());
 const cenaPrincipal = new CenaPrincipal(contexto);
 
+const aplicarModoDesempenho = (ativo) => {
+  efeitosVisuaisAtivos = !!ativo;
+  contexto.armazenarDado("efeitosVisuaisAtivos", efeitosVisuaisAtivos);
+  if (!efeitosVisuaisAtivos) {
+    const ctx = contexto.contexto;
+    if (ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  document.body.classList.toggle(BODY_CLASS_MODO_DESEMPENHO, !efeitosVisuaisAtivos);
+  if (avisoDesempenho) {
+    avisoDesempenho.hidden = efeitosVisuaisAtivos;
+  }
+  try {
+    sessionStorage.setItem(PERFORMANCE_SESSION_KEY, efeitosVisuaisAtivos ? "on" : "off");
+  } catch {
+    // Ignorado: navegadores podem bloquear sessionStorage em alguns contextos.
+  }
+  visualizacaoIA?.definirAnimacoesAtivas(efeitosVisuaisAtivos);
+  if (efeitosVisuaisAtivos) {
+    cenaPrincipal.desenhar();
+  }
+  atualizarBotaoEfeitos();
+};
+
+botaoEfeitosVisuais = document.createElement("button");
+botaoEfeitosVisuais.type = "button";
+botaoEfeitosVisuais.className = "botao-efeitos-visuais";
+botaoEfeitosVisuais.title = "Alternar renderizacao e modo desempenho";
+botaoEfeitosVisuais.addEventListener("click", () => {
+  const proximo = !efeitosVisuaisAtivos;
+  aplicarModoDesempenho(proximo);
+  painelControles.registrarEventoRelatorio(
+    proximo ? "Efeitos visuais ligados" : "Efeitos visuais desligados (modo desempenho)"
+  );
+});
+containerControlesIA.appendChild(botaoEfeitosVisuais);
+
+aplicarModoDesempenho(efeitosVisuaisAtivos);
+
 let partidaAtiva = true;
 
 const loop = new LoopJogo({
@@ -115,6 +198,9 @@ const loop = new LoopJogo({
     atualizarJogo(delta);
   },
   desenhar: () => {
+    if (!efeitosVisuaisAtivos) {
+      return;
+    }
     cenaPrincipal.desenhar();
   },
   taxaQuadros: configuracaoAtual.jogo.taxaQuadros,
@@ -193,16 +279,24 @@ function atualizarHud() {
 
 function ajustarEscalaCanvas() {
   const proporcao = configuracaoAtual.jogo.largura / configuracaoAtual.jogo.altura;
-  const areaPainel = document.getElementById("painel-jogo").getBoundingClientRect();
-  const margem = 48;
-  let largura = Math.min(areaPainel.width - margem, configuracaoAtual.jogo.largura);
+  const painel = document.getElementById("painel-jogo");
+  if (!painel) {
+    return;
+  }
+  const areaPainel = painel.getBoundingClientRect();
+  const margem = window.innerWidth <= 600 ? 24 : 48;
+  const larguraMaxima = Math.max(120, areaPainel.width - margem);
+  let largura = Math.min(larguraMaxima, configuracaoAtual.jogo.largura);
   let altura = largura / proporcao;
-  if (altura > areaPainel.height - margem) {
-    altura = areaPainel.height - margem;
+  const alturaDisponivel = Math.max(120, areaPainel.height - margem);
+  if (altura > alturaDisponivel) {
+    altura = alturaDisponivel;
     largura = altura * proporcao;
   }
-  canvas.style.width = `${Math.max(320, largura)}px`;
-  canvas.style.height = `${Math.max(180, altura)}px`;
+  const larguraMinima = window.innerWidth <= 600 ? 220 : 320;
+  const alturaMinima = window.innerWidth <= 600 ? 140 : 180;
+  canvas.style.width = `${Math.max(larguraMinima, Math.round(largura))}px`;
+  canvas.style.height = `${Math.max(alturaMinima, Math.round(altura))}px`;
 }
 
 function sincronizarConfiguracao() {
