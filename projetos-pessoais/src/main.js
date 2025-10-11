@@ -32,6 +32,9 @@ const indicadorQualidadeElemento = document.getElementById("indicador-qualidade"
 const indicadorQualidade = new IndicadorQualidade(indicadorQualidadeElemento);
 const historicoIA = new HistoricoIA(document.getElementById("historico-ia"));
 
+const INTRO_MODAL_KEY = "redeNeuralRogue_intro_modal_until";
+const SEMANA_MS = 7 * 24 * 60 * 60 * 1000;
+
 const configuracaoAtual = clonarConfiguracao(configuracaoInicial);
 canvas.width = configuracaoAtual.jogo.largura;
 canvas.height = configuracaoAtual.jogo.altura;
@@ -139,6 +142,7 @@ window.addEventListener("resize", () => {
 
 ajustarEscalaCanvas();
 atualizarHud();
+inicializarModalApresentacao();
 
 function atualizarJogo(delta) {
   if (!partidaAtiva) {
@@ -208,4 +212,58 @@ function sincronizarConfiguracao() {
   sistemaIA.aplicarConfiguracao(configuracaoAtual.ia);
   sistemaIA.definirConfiguracaoJogador(configuracaoAtual.jogador, configuracaoAtual.plataforma);
   cenaPrincipal.fundo.configuracao = configuracaoAtual.efeitos;
+}
+
+function inicializarModalApresentacao() {
+  const modal = document.getElementById("gameIntroModal");
+  if (!modal) {
+    return;
+  }
+
+  const ateQuando = Number(localStorage.getItem(INTRO_MODAL_KEY) || 0);
+  if (ateQuando && Date.now() < ateQuando) {
+    return;
+  }
+
+  const backdrop = modal.querySelector("[data-modal-backdrop]");
+  const botaoFechar = modal.querySelector("[data-modal-close]");
+  const botaoOk = modal.querySelector("[data-modal-accept]");
+  const lembrarCheckbox = document.getElementById("gameIntroModalRemember");
+
+  const abrir = () => {
+    modal.hidden = false;
+    modal.classList.add("is-open");
+    document.body.classList.add("modal-open");
+    (botaoOk || botaoFechar)?.focus({ preventScroll: true });
+  };
+
+  const fechar = (lembrar) => {
+    modal.classList.remove("is-open");
+    document.body.classList.remove("modal-open");
+    if (lembrar) {
+      localStorage.setItem(INTRO_MODAL_KEY, String(Date.now() + SEMANA_MS));
+    } else {
+      localStorage.removeItem(INTRO_MODAL_KEY);
+    }
+    window.setTimeout(() => {
+      modal.hidden = true;
+    }, 200);
+  };
+
+  const tratarFechamento = (persistir) => {
+    const lembrar = persistir && !!lembrarCheckbox?.checked;
+    fechar(lembrar);
+  };
+
+  botaoOk?.addEventListener("click", () => tratarFechamento(true));
+  botaoFechar?.addEventListener("click", () => tratarFechamento(false));
+  backdrop?.addEventListener("click", () => tratarFechamento(false));
+  modal.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape") {
+      evento.preventDefault();
+      tratarFechamento(false);
+    }
+  });
+
+  abrir();
 }

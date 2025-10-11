@@ -7,6 +7,35 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="game-intro-modal" id="gameIntroModal" hidden>
+      <div class="game-intro-modal__backdrop" data-modal-backdrop></div>
+      <div class="game-intro-modal__content" role="dialog" aria-modal="true" aria-labelledby="gameIntroTitle" aria-describedby="gameIntroDescription">
+        <button type="button" class="game-intro-modal__close" data-modal-close aria-label="Fechar apresentação inicial">×</button>
+        <h2 id="gameIntroTitle">Bem-vindo ao laboratório rogue</h2>
+        <p class="game-intro-modal__subtitle">Aqui o herói é você e a I.A. ainda está em fase de estágio supervisionado.</p>
+        <section class="game-intro-modal__section">
+          <h3>O que está acontecendo?</h3>
+          <p id="gameIntroDescription">É um rogue-like 2D onde o jogador humano e uma inteligência artificial se revezam na mesma arena. Pense num estagiário robótico tentando aprender com o seu exemplo — e anotando tudo no painel à esquerda.</p>
+        </section>
+        <section class="game-intro-modal__section">
+          <h3>Como brincar sem precisar de PhD?</h3>
+          <ul>
+            <li>No painel esquerdo você liga/desliga modos e escolhe quem assume o controle.</li>
+            <li>No painel inferior acompanhe os mapas neurais, fitness e fofocas da IA em tempo real.</li>
+            <li>Você pode pausar, reiniciar e brincar com parâmetros sem quebrar nada. Prometemos.</li>
+          </ul>
+          <p class="game-intro-modal__note">Spoiler: no final da página tem um guia completo com as nerdices todas.</p>
+        </section>
+        <label class="game-intro-modal__remember">
+          <input type="checkbox" id="gameIntroModalRemember" />
+          Não quero ver essa apresentação pelos próximos 7 dias
+        </label>
+        <div class="game-intro-modal__actions">
+          <button type="button" class="game-intro-modal__action" data-modal-accept>Partiu explorar!</button>
+        </div>
+      </div>
+    </div>
+
     <div id="interface">
       <aside id="coluna-esquerda" class="painel-controle">
         <section id="controles-jogo" class="bloco-controle"></section>
@@ -80,6 +109,56 @@
         <section id="painel-relatorios"></section>
       </footer>
     </div>
+
+  <section id="guia-projeto" class="game-docs" aria-labelledby="guiaProjetoTitulo">
+    <div class="game-docs__wrap">
+      <h2 id="guiaProjetoTitulo">Manual de bordo do Rede Neural Rogue</h2>
+      <p class="game-docs__lead">Se você chegou até aqui, parabéns: já sobreviveu ao estagiário digital e ao modal. Agora vem uma dose de explicação divertida com um after credit técnico para quem curte apertar botões certos.</p>
+      <div class="game-docs__grid">
+        <article class="game-docs__card">
+          <h3>Guia rápido para humanos curiosos</h3>
+          <p>Use o painel esquerdo para configurar a partida: escolha se você joga, se a IA assume ou se ficam em modo observação. Cada botão é autoexplicativo e mostra dicas quando o mouse passa por cima.</p>
+          <ul>
+            <li><strong>Começar/Resetar:</strong> reinicia o jogo com as configurações ativas — perfeito para testar microajustes.</li>
+            <li><strong>Modo IA:</strong> alterna entre controle humano e aprendizado automático. Ótimo para ver a criatura evoluindo.</li>
+            <li><strong>Power-ups de análise:</strong> ative estatísticas extras e veja o mapa neural reagindo ao que acontece na tela.</li>
+          </ul>
+        </article>
+        <article class="game-docs__card">
+          <h3>Parâmetros e painéis sem drama</h3>
+          <p>O painel inferior mostra as entranhas da rede neural.</p>
+          <ul>
+            <li><strong>Mapa neural:</strong> PX, DP, DY, TI, DZ, IX, IY e MEM são as entradas que alimentam a IA — uma enciclopédia compacta do campo de batalha.</li>
+            <li><strong>Fitness & evolução:</strong> curvas indicando se a IA está aprendendo ou apenas improvisando.</li>
+            <li><strong>Histórico da IA:</strong> um log em português claro sobre o que a inteligência está testando, comemorando e corrigindo.</li>
+          </ul>
+          <p>Quer experimentar? Ajuste velocidades, densidade de projéteis e comportamento dos inimigos nos controles laterais para observar novas táticas.</p>
+        </article>
+        <article class="game-docs__card">
+          <h3>Tecnologias sob o capô</h3>
+          <p>Por trás da cortina temos:</p>
+          <ul>
+            <li><strong>HTML5 Canvas</strong> renderizando o jogo em tempo real.</li>
+            <li><strong>Arquitetura ECS</strong> dividindo entidades, componentes e sistemas.</li>
+            <li><strong>Módulos ES6</strong> organizando IA, HUD, controles e efeitos.</li>
+            <li><strong>Algoritmo evolutivo</strong> que ajusta pesos, avalia fitness e seleciona os melhores comportamentos.</li>
+            <li><strong>Web Audio API</strong> para feedbacks sonoros sem travar o loop.</li>
+          </ul>
+        </article>
+        <article class="game-docs__card">
+          <h3>Dicas técnicas para ir além</h3>
+          <ul>
+            <li><code>src/core/configuracao.js</code> concentra presets de jogo, IA e efeitos — duplique perfis para novos experimentos.</li>
+            <li><code>src/ia</code> guarda a lógica neural e o ciclo de mutações. Perfeito para plugar novos sensores ou funções de ativação.</li>
+            <li><code>src/ui</code> renderiza HUD e visualizações: ponto ideal para exportar dados ou acoplar dashboards.</li>
+            <li>O <code>PainelControles</code> fornece hooks para telemetria, replays ou integração com dashboards externos.</li>
+          </ul>
+          <p class="game-docs__closing">Teste deixar a IA treinando alguns minutos, depois reassuma o teclado: é como jogar com um colega que aprendeu todos os atalhos enquanto você pegava café.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
     <script type="module" src="../src/main.js"></script>
   </body>
 </html>
