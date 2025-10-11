@@ -12,6 +12,7 @@ import { renderObjective } from "./components/objective.js";
 import { initReadingMode } from "./features/readingMode.js";
 import { printResume, downloadPDF } from "./features/print.js";
 import { initSkills } from "./components/skills.js";
+import { renderProjects } from "./components/projects.js";
 import { applyBackgroundForLang, getBackgroundOverride, setBackgroundOverride, populateBackgroundSelect } from "./core/background.js";
 
 // Estado de idioma
@@ -79,6 +80,24 @@ function cleanStaticSeed() {
     const keySection = keyTitle?.closest(".section");
     const wrap = keySection?.querySelector(".skill-tags");
     if (wrap) wrap.innerHTML = "";
+  } catch {}
+
+  // Projetos pessoais
+  try {
+    const projTitle = Array.from(document.querySelectorAll(".section-title")).find((h) => {
+      const text = (h.textContent || "").toLowerCase();
+      return h.querySelector(".fa-robot") || text.includes("conheca meus projetos") || text.includes("meet my projects");
+    });
+    const projSection = projTitle?.closest(".section");
+    if (projSection) {
+      const grid = projSection.querySelector(".projects-grid");
+      if (grid) grid.innerHTML = "";
+      const intro = projSection.querySelector(".projects-intro");
+      if (intro) {
+        intro.textContent = "";
+        intro.style.display = "none";
+      }
+    }
   } catch {}
 }
 
@@ -307,6 +326,7 @@ async function renderAll(t) {
   renderExperience(t);
   renderObjective(t);
   renderCompanies(t);
+  renderProjects(t);
   await renderKeySkillsFromI18n(t);
   initSkills();
   updateUILocalizedLabels(t);

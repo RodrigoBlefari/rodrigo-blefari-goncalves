@@ -364,6 +364,143 @@ body.bg-image-active .page::before {
 }
 .company-item:hover { transform: translateY(-3px); filter: brightness(1.08); box-shadow: 0 14px 32px var(--shadow); }
 
+/* Projetos em modo showcase */
+.projects-section .projects-intro {
+  margin: 12px 0 20px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  max-width: 720px;
+}
+.projects-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.project-card {
+  position: relative;
+  background:
+    linear-gradient(140deg, rgba(124, 58, 237, .18), rgba(34, 211, 238, .08)),
+    rgba(15, 23, 42, .9);
+  border: 1px solid rgba(34, 211, 238, .32);
+  border-radius: 18px;
+  padding: 22px 24px;
+  box-shadow: 0 22px 44px rgba(2, 6, 23, 0.6);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  overflow: hidden;
+}
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% -10%, rgba(124, 58, 237, .22), transparent 60%);
+  pointer-events: none;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(124, 58, 237, .55);
+  box-shadow: 0 28px 56px rgba(2, 6, 23, 0.75);
+}
+.project-card h3 {
+  position: relative;
+  z-index: 1;
+  font-size: 1.05rem;
+  margin: 0 0 10px 0;
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--text);
+}
+.project-card .project-slug {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.8rem;
+  background: rgba(34, 211, 238, .12);
+  border: 1px solid rgba(34, 211, 238, .3);
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+.project-card .project-description {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 14px 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.project-card .project-note {
+  position: relative;
+  z-index: 1;
+  margin: 12px 0 0 0;
+  font-size: 0.8rem;
+  color: rgba(148, 163, 184, .9);
+  font-style: italic;
+}
+.project-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 58, 237, .4);
+  background: rgba(124, 58, 237, .18);
+  color: rgba(224, 242, 254, 0.9);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 14px;
+}
+.project-tags {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.project-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, .16);
+  border: 1px solid rgba(34, 211, 238, .28);
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+.project-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 211, 238, .4);
+  color: var(--primary);
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: .4px;
+  background: linear-gradient(135deg, rgba(34, 211, 238, .12), rgba(124, 58, 237, .18));
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.project-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(34, 211, 238, .25);
+  border-color: rgba(124, 58, 237, .5);
+}
+.project-link::after {
+  content: "\\2197";
+  font-size: 0.9rem;
+}
+
 /* Destaque de tecnologias (texto) - melhora legibilidade */
 .tech-highlight {
   font-weight: 900;

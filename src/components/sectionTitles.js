@@ -26,5 +26,6 @@ export function renderSectionTitles(c) {
   updateSectionTitle("fa-user", c.sections.summary);
   updateSectionTitle("fa-briefcase", c.sections.experience);
   updateSectionTitle("fa-building", c.sections.companies);
+  updateSectionTitle("fa-robot", c.sections.projects);
   updateSectionTitle("fa-target", c.sections.objective);
 }

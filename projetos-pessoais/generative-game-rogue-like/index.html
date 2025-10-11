@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rede Neural Rogue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="interface">
+      <aside id="coluna-esquerda" class="painel-controle">
+        <section id="controles-jogo" class="bloco-controle"></section>
+      </aside>
+      <main id="painel-jogo">
+        <header id="cabecalho">
+          <h1>Rede Neural Rogue</h1>
+          <p id="descricao">
+            Rogue like 2d com modos jogador e aprendizado.
+          </p>
+        </header>
+        <div id="area-canvas">
+          <canvas id="tela-jogo" width="960" height="540"></canvas>
+          <div id="tela-derrota" class="oculto"></div>
+        </div>
+        <div id="hud">
+          <div id="info-jogador">
+            <div id="hp-jogador">
+              <div class="hp-label">Vida do Jogador</div>
+              <div class="hp-valor"></div>
+            </div>
+            <div id="modo-ia">
+              <div class="modo-label">Modo</div>
+              <div class="modo-valor">Jogador</div>
+            </div>
+            <div id="indicador-qualidade">
+              <div class="qualidade-label">Qualidade da I.A</div>
+              <div class="qualidade-medidor">
+                <div class="qualidade-gradiente"></div>
+                <div id="qualidade-ponteiro"></div>
+              </div>
+              <div id="qualidade-estado">Aguardando avaliacao</div>
+            </div>
+            <div id="historico-ia">
+              <div class="historico-label">Histórico da I.A</div>
+              <div id="historico-lista"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <aside id="coluna-direita" class="painel-controle">
+        <section id="controles-ia" class="bloco-controle"></section>
+      </aside>
+      <footer id="painel-inferior" class="painel-controle">
+        <section id="painel-visualizacoes" class="bloco-controle">
+          <h2>Mapa neural</h2>
+          <canvas id="canvas-ativacoes" width="960" height="280"></canvas>
+          <canvas id="canvas-fitness" width="960" height="160"></canvas>
+          <div class="explicacao-visualizacao">
+            <p>
+              Entradas do mapa neural: PX posicao lateral, DP delta horizontal do projetil, DY delta vertical,
+              TI tempo ate impacto, DZ densidade local de projetis, IX delta do inimigo, IY diferencial vertical
+              do inimigo e MEM estado interno. Cores azul/laranja indicam sinal positivo/negativo.
+            </p>
+            <p>
+              O painel central sintetiza tres nodos: urg proj (pressao imediata de projetis), press inimigo
+              (forca taticas dos inimigos) e memoria ativa (estado recursivo). Conexoes brilham proporcionalmente
+              aos pesos evoluidos.
+            </p>
+            <p>
+              A barra inferior resume fitness instantaneo, movimento bruto, estado de evasao e probabilidade de
+              pulo estimada. O grafico a direita acompanha melhor individuo e media da populacao ao longo das
+              geracoes.
+            </p>
+            <p>
+              Indicadores de boas praticas: o painel de resumo contextualiza o ritmo do aprendizado (hiperplastico,
+              acelerado, gradual, homeostase, estagnado ou regressivo) e sugere ajustes de exploracao ou estabilidade.
+            </p>
+          </div>
+        </section>
+        <section id="painel-relatorios"></section>
+      </footer>
+    </div>
+    <script type="module" src="../src/main.js"></script>
+  </body>
+</html>

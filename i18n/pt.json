@@ -35,6 +35,7 @@
     "summary": "Resumo Profissional",
     "experience": "Experiência Profissional",
     "companies": "Empresas Anteriores",
+    "projects": "Conheça meus projetos",
     "objective": "Objetivo Profissional"
   },
   "categories": {
@@ -240,6 +241,21 @@
       ]
     }
   ],
+  "projects": {
+    "intro": "Explorações que combinam Canvas, IA generativa e gameplay procedural.",
+    "ctaLabel": "Abrir projeto",
+    "items": [
+      {
+        "badge": "Projeto de IA generativa",
+        "title": "Generative Game Rogue Like",
+        "slug": "generative-game-rogue-like",
+        "description": "Rogue-like 2D em HTML5 Canvas com alternância entre modo jogador e aprendizado, evoluindo a IA em tempo real.",
+        "href": "../../projetos-pessoais/generative-game-rogue-like/index.html",
+        "tags": ["Canvas", "IA generativa", "Rogue-like"],
+        "note": "Disponível no GitHub Pages (mesma branch)."
+      }
+    ]
+  },
   "companies": [
     "Itaú Unibanco",
     "Flytour",

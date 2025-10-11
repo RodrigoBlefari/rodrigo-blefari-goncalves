@@ -33,6 +33,7 @@
     "summary": "Professional Summary",
     "experience": "Professional Experience",
     "companies": "Previous Companies",
+    "projects": "Meet my projects",
     "objective": "Career Objective"
   },
   "categories": {
@@ -244,6 +245,21 @@
       ]
     }
   ],
+  "projects": {
+    "intro": "Personal experiments mixing Canvas, generative AI and procedural gameplay.",
+    "ctaLabel": "Open project",
+    "items": [
+      {
+        "badge": "Generative AI project",
+        "title": "Generative Game Rogue Like",
+        "slug": "generative-game-rogue-like",
+        "description": "HTML5 Canvas rogue-like that switches between player and learning modes, evolving the agent in real time.",
+        "href": "../../projetos-pessoais/generative-game-rogue-like/index.html",
+        "tags": ["Canvas", "Generative AI", "Rogue-like"],
+        "note": "Hosted on GitHub Pages (same branch)."
+      }
+    ]
+  },
   "companies": [
     "Itaú Unibanco",
     "Flytour",
