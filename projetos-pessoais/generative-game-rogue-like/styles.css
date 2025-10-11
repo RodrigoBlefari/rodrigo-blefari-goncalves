@@ -961,6 +961,53 @@ select:focus {
   color: #c7d8ff;
 }
 
+.status-relatorios {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(12, 16, 28, 0.7);
+  border: 1px solid rgba(122, 183, 255, 0.25);
+  margin-top: 10px;
+}
+
+.status-relatorios h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #7ab7ff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(122, 183, 255, 0.15);
+}
+
+.status-item:last-child {
+  border-bottom: none;
+}
+
+.status-label {
+  font-size: 12px;
+  color: #a6c8ff;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status-valor {
+  font-size: 13px;
+  font-weight: bold;
+  color: #e8f4ff;
+  min-width: 60px;
+  text-align: right;
+}
+
 .oculto {
   display: none;
 }
@@ -1025,12 +1072,12 @@ body.modal-open {
 }
 
 .game-intro-modal__content h2 {
-  margin: 0 0 8px;
+  margin: 0 8px;
   font-size: 1.8rem;
 }
 
 .game-intro-modal__subtitle {
-  margin: 0 0 16px;
+  margin: 0 16px;
   color: #9fb5ff;
   font-size: 1rem;
 }
@@ -1040,7 +1087,7 @@ body.modal-open {
 }
 
 .game-intro-modal__section h3 {
-  margin: 0 0 8px;
+  margin: 0 8px;
   font-size: 1.1rem;
 }
 
@@ -1227,7 +1274,6 @@ body.modal-open {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 16px;
-    padding: 12px;
   }
   #indicador-qualidade,
   #historico-ia {

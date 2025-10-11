@@ -15,7 +15,7 @@ export class SistemaIA {
     this.simulacoes = [];
     this.motor = new MotorEvolutivo(configuracaoIA);
     this.tempoSimulacao = 0;
-    this.relatorioIntervalo = 3;
+    this.relatorioIntervalo = configuracaoIA.relatorioIntervalo || 3; // Usa o valor da configuração ou 3 como padrão
     this.tempoDesdeRelatorio = 0;
     this.configuracaoJogador = null;
     this.configuracaoPlataforma = null;
@@ -116,6 +116,7 @@ export class SistemaIA {
   aplicarConfiguracao(configuracaoIA) {
     this.configuracaoIA = configuracaoIA;
     this.motor.configuracao = configuracaoIA;
+    this.relatorioIntervalo = configuracaoIA.relatorioIntervalo || 3; // Atualiza o intervalo de relatório com base na configuração
     if (this.contexto) {
       this.configuracaoPlataforma = this.contexto.configuracao.plataforma;
     }

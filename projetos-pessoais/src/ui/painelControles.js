@@ -131,6 +131,7 @@ export class PainelControles {
     this.containerRelatorios = containerRelatorios;
     this.areaResumo = null;
     this.areaLog = null;
+    this.areaStatus = null;
     this.configuracao = configuracao;
     this.aoAlterar = aoAlterar;
     this.visualizacao = null;
@@ -208,6 +209,67 @@ export class PainelControles {
       controleAdicional.appendChild(botaoAnimacoes);
 
       this.containerIA.appendChild(controleAdicional);
+    }
+    
+    // Adiciona o seletor de refresh ao painel de relatórios
+    if (this.containerRelatorios) {
+      const controleRefresh = document.createElement("div");
+      controleRefresh.className = "bloco-controle";
+      
+      const cabecalho = document.createElement("h2");
+      cabecalho.textContent = "Controles de Atualização";
+      controleRefresh.appendChild(cabecalho);
+      
+      // Seletor de intervalo de atualização
+      const seletorRefresh = document.createElement("div");
+      seletorRefresh.className = "entrada-controle";
+      
+      const labelRefresh = document.createElement("label");
+      labelRefresh.textContent = "Intervalo de atualização (segundos)";
+      seletorRefresh.appendChild(labelRefresh);
+      
+      const selectRefresh = document.createElement("select");
+      selectRefresh.id = "intervalo-refresh";
+      selectRefresh.innerHTML = `
+        <option value="0.5">0.5 segundos</option>
+        <option value="1" selected>1 segundo</option>
+        <option value="2">2 segundos</option>
+        <option value="3">3 segundos</option>
+        <option value="5">5 segundos</option>
+        <option value="10">10 segundos</option>
+      `;
+      seletorRefresh.appendChild(selectRefresh);
+      
+      // Adiciona evento para alterar o intervalo de atualização
+      selectRefresh.addEventListener("change", (evento) => {
+        const novoIntervalo = parseFloat(evento.target.value);
+        this.configuracao.ia.relatorioIntervalo = novoIntervalo;
+        this.registrarEventoRelatorio(`Intervalo de atualização alterado para ${novoIntervalo} segundos`);
+      });
+      
+      controleRefresh.appendChild(seletorRefresh);
+      
+      this.containerRelatorios.appendChild(controleRefresh);
+      
+      // Adiciona área para mostrar o melhor e pior resultado
+      this.areaStatus = document.createElement("div");
+      this.areaStatus.className = "status-relatorios";
+      this.areaStatus.innerHTML = `
+        <h3>Evolução Histórica</h3>
+        <div class="status-item">
+          <span class="status-label">Melhor Fitness:</span>
+          <span id="melhor-fitness" class="status-valor">0</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Pior Fitness:</span>
+          <span id="pior-fitness" class="status-valor">0</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Geração do Melhor:</span>
+          <span id="geracao-melhor" class="status-valor">0</span>
+        </div>
+      `;
+      this.containerRelatorios.appendChild(this.areaStatus);
     }
   }
 
@@ -590,9 +652,9 @@ export class PainelControles {
     const linhas = Array.isArray(texto) ? texto : String(texto || "").split("\n");
     const escapar = (valor) =>
       valor
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+        .replace(/&/g, "&")
+        .replace(/</g, "<")
+        .replace(/>/g, ">");
     this.areaResumo.innerHTML = linhas
       .filter((linha) => linha && linha.trim().length)
       .map((linha) => `<p>${escapar(linha.trim())}</p>`)

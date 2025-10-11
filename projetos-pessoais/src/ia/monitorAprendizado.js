@@ -110,6 +110,11 @@ export class MonitorAprendizado {
     this.indicadorQualidade = null;
     this.historicoIA = null;
     this.qualidadeScore = 0.5;
+    
+    // Adiciona propriedades para rastrear o melhor e pior fitness de todas as gerações
+    this.melhorFitnessGeral = 0;
+    this.piorFitnessGeral = Infinity;
+    this.geracaoMelhorFitness = 0;
   }
 
   definirIndicadorQualidade(indicador) {
@@ -152,6 +157,17 @@ export class MonitorAprendizado {
       this.deltaMedia = deltaMedia;
       this.ultimoMelhor = resumo.melhorFitness;
       this.ultimaMedia = resumo.mediaFitness;
+      
+      // Atualiza o melhor e pior fitness de todas as gerações
+      if (resumo.melhorFitness > this.melhorFitnessGeral) {
+        this.melhorFitnessGeral = resumo.melhorFitness;
+        this.geracaoMelhorFitness = resumo.geracao;
+        this.registrarEvento(`🏆 Novo recorde de fitness: ${this.melhorFitnessGeral.toFixed(2)} na geração ${resumo.geracao}!`);
+      }
+      if (resumo.melhorFitness < this.piorFitnessGeral || this.piorFitnessGeral === Infinity) {
+        this.piorFitnessGeral = resumo.melhorFitness;
+        this.registrarEvento(`📉 Novo pior fitness: ${this.piorFitnessGeral.toFixed(2)} na geração ${resumo.geração || resumo.geracao}`);
+      }
     }
     this._renderizar();
   }
@@ -161,7 +177,7 @@ export class MonitorAprendizado {
     this.historicoIA?.adicionarEntrada(texto);
   }
 
-  _renderizar() {
+   _renderizar() {
     if (!this.painel) {
       return;
     }
@@ -176,6 +192,23 @@ export class MonitorAprendizado {
     ];
     this.painel.atualizarResumo(linhas.join("\n"));
     this.indicadorQualidade?.atualizar(this.qualidadeScore ?? 0.5, pacote.titulo);
+    
+    // Atualiza o painel com informações do melhor e pior fitness de todas as gerações
+    if (this.painel.areaStatus) {
+      const melhorFitnessElement = this.painel.areaStatus.querySelector('#melhor-fitness');
+      const piorFitnessElement = this.painel.areaStatus.querySelector('#pior-fitness');
+      const geracaoMelhorElement = this.painel.areaStatus.querySelector('#geracao-melhor');
+      
+      if (melhorFitnessElement) {
+        melhorFitnessElement.textContent = formatarPontos(this.melhorFitnessGeral);
+      }
+      if (piorFitnessElement) {
+        piorFitnessElement.textContent = formatarPontos(this.piorFitnessGeral);
+      }
+      if (geracaoMelhorElement) {
+        geracaoMelhorElement.textContent = this.geracaoMelhorFitness;
+      }
+    }
   }
 
   _classificarEstado(deltaMelhor, deltaMedia) {

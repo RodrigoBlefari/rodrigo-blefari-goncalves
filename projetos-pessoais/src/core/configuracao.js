@@ -49,5 +49,6 @@ export const configuracaoInicial = Object.freeze({
     pesoDesvio: 1.5,
     pesoSobrevivencia: 2.0,
     pesoExploracao: 0.5,
+    relatorioIntervalo: 1, // Intervalo em segundos para atualização dos relatórios
   },
 });
