@@ -34,6 +34,7 @@ const historicoIA = new HistoricoIA(document.getElementById("historico-ia"));
 const areaCanvas = document.getElementById("area-canvas");
 
 const PERFORMANCE_SESSION_KEY = "redeNeuralRogue_visuals";
+const AGENTES_SESSION_KEY = "redeNeuralRogue_agentes_visiveis";
 const BODY_CLASS_MODO_DESEMPENHO = "modo-desempenho";
 
 const lerPersistenciaModoVisual = () => {
@@ -47,7 +48,18 @@ const lerPersistenciaModoVisual = () => {
 
 let efeitosVisuaisAtivos = lerPersistenciaModoVisual() !== "off";
 let botaoEfeitosVisuais = null;
+let botaoVisibilidadeAgentes = null;
 let avisoDesempenho = null;
+
+const lerPersistenciaAgentes = () => {
+  try {
+    return sessionStorage.getItem(AGENTES_SESSION_KEY);
+  } catch {
+    return null;
+  }
+};
+
+let agentesVisiveis = lerPersistenciaAgentes() !== "hidden";
 
 if (areaCanvas) {
   avisoDesempenho = document.createElement("div");
@@ -69,6 +81,16 @@ const atualizarBotaoEfeitos = () => {
   botaoEfeitosVisuais.dataset.estadoVisual = efeitosVisuaisAtivos ? "on" : "off";
 };
 
+const atualizarBotaoAgentes = () => {
+  if (!botaoVisibilidadeAgentes) {
+    return;
+  }
+  botaoVisibilidadeAgentes.textContent = agentesVisiveis
+    ? "Esconder jogador e inimigos"
+    : "Mostrar jogador e inimigos";
+  botaoVisibilidadeAgentes.setAttribute("aria-pressed", agentesVisiveis ? "true" : "false");
+};
+
 const INTRO_MODAL_KEY = "redeNeuralRogue_intro_modal_until";
 const SEMANA_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -81,6 +103,7 @@ const contexto = new ContextoJogo({
   configuracao: configuracaoAtual,
 });
 contexto.armazenarDado("efeitosVisuaisAtivos", efeitosVisuaisAtivos);
+contexto.armazenarDado("mostrarAgentes", agentesVisiveis);
 
 const controleTeclado = new ControleTeclado();
 controleTeclado.iniciar();
@@ -147,6 +170,27 @@ botaoPerspectiva.addEventListener("click", () => {
 });
 containerControlesIA.appendChild(botaoPerspectiva);
 
+botaoVisibilidadeAgentes = document.createElement("button");
+botaoVisibilidadeAgentes.type = "button";
+botaoVisibilidadeAgentes.title = "Oculta o jogador e os inimigos para focar nas sombras da IA";
+botaoVisibilidadeAgentes.addEventListener("click", () => {
+  agentesVisiveis = !agentesVisiveis;
+  contexto.armazenarDado("mostrarAgentes", agentesVisiveis);
+  try {
+    sessionStorage.setItem(AGENTES_SESSION_KEY, agentesVisiveis ? "visible" : "hidden");
+  } catch {
+    // Sessão pode não estar disponível; ignorar.
+  }
+  atualizarBotaoAgentes();
+  painelControles.registrarEventoRelatorio(
+    agentesVisiveis ? "Jogador e inimigos visiveis novamente" : "Visualizando apenas a IA (jogador e inimigos ocultos)"
+  );
+  if (efeitosVisuaisAtivos) {
+    cenaPrincipal.desenhar();
+  }
+});
+containerControlesIA.appendChild(botaoVisibilidadeAgentes);
+
 const hud = new HudVida(hudElemento);
 const telaDerrota = new TelaDerrota(telaDerrotaElemento, () => reiniciarPartida());
 const cenaPrincipal = new CenaPrincipal(contexto);
@@ -171,6 +215,7 @@ const aplicarModoDesempenho = (ativo) => {
   }
   visualizacaoIA?.definirAnimacoesAtivas(efeitosVisuaisAtivos);
   if (efeitosVisuaisAtivos) {
+    atualizarHud();
     cenaPrincipal.desenhar();
   }
   atualizarBotaoEfeitos();
@@ -189,6 +234,7 @@ botaoEfeitosVisuais.addEventListener("click", () => {
 });
 containerControlesIA.appendChild(botaoEfeitosVisuais);
 
+atualizarBotaoAgentes();
 aplicarModoDesempenho(efeitosVisuaisAtivos);
 
 let partidaAtiva = true;
@@ -239,7 +285,9 @@ function atualizarJogo(delta) {
   }
   contexto.configuracao = configuracaoAtual;
   cenaPrincipal.atualizar(delta);
-  atualizarHud();
+  if (efeitosVisuaisAtivos) {
+    atualizarHud();
+  }
   verificarEstadoJogador();
   if (controleTeclado.foiDisparado("reiniciar")) {
     reiniciarPartida();

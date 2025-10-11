@@ -587,7 +587,16 @@ export class PainelControles {
     if (!this.areaResumo) {
       return;
     }
-    this.areaResumo.textContent = texto;
+    const linhas = Array.isArray(texto) ? texto : String(texto || "").split("\n");
+    const escapar = (valor) =>
+      valor
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    this.areaResumo.innerHTML = linhas
+      .filter((linha) => linha && linha.trim().length)
+      .map((linha) => `<p>${escapar(linha.trim())}</p>`)
+      .join("");
   }
 
   _formatarValor(valor, passo) {

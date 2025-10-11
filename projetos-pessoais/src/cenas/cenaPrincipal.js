@@ -6,14 +6,18 @@ export class CenaPrincipal {
     this.contexto = contexto;
     const { largura, altura } = contexto.configuracao.jogo;
     this.fundo = new FundoParalaxe(contexto.configuracao.efeitos, largura, altura);
+    this.sistemaJogador = contexto.obterSistema("jogador");
+    this.sistemaInimigos = contexto.obterSistema("inimigos");
+    this.sistemaProjeteis = contexto.obterSistema("projeteis");
+    this.sistemaIA = contexto.obterSistema("ia");
   }
 
   atualizar(delta) {
     const baseMultiplicador = this.contexto.configuracao.jogo.multiplicadorVelocidade ?? 1;
-    const multiplicadorIA =
-      this.contexto.obterSistema("ia")?.obterMultiplicadorVelocidade?.() ?? 1;
+    const multiplicadorIA = this.sistemaIA?.obterMultiplicadorVelocidade?.() ?? 1;
     let deltaAjustado = delta * baseMultiplicador * multiplicadorIA;
-    const passoMaximo = 1 / 90;
+    const renderAtivo = this.contexto.obterDado("efeitosVisuaisAtivos") !== false;
+    const passoMaximo = renderAtivo ? 1 / 90 : 1 / 55;
     while (deltaAjustado > 0) {
       const passo = Math.min(passoMaximo, deltaAjustado);
       this._atualizarSistemas(passo);
@@ -22,14 +26,21 @@ export class CenaPrincipal {
   }
 
   desenhar() {
+    const renderAtivo = this.contexto.obterDado("efeitosVisuaisAtivos") !== false;
+    if (!renderAtivo) {
+      return;
+    }
     const { contexto, canvas } = this.contexto;
     limparCanvas(contexto, canvas.width, canvas.height);
     this.fundo.desenhar(contexto);
     this._desenharPlataforma(contexto, canvas);
-    this.contexto.obterSistema("ia")?.desenharSombras?.(contexto);
-    this.contexto.obterSistema("projeteis")?.desenhar(contexto);
-    this.contexto.obterSistema("inimigos")?.desenhar(contexto);
-    this.contexto.obterSistema("jogador")?.desenhar(contexto);
+    this.sistemaIA?.desenharSombras?.(contexto);
+    const mostrarAgentes = this.contexto.obterDado("mostrarAgentes") !== false;
+    if (mostrarAgentes) {
+      this.sistemaProjeteis?.desenhar(contexto);
+      this.sistemaInimigos?.desenhar(contexto);
+      this.sistemaJogador?.desenhar(contexto);
+    }
   }
 
   redimensionar(largura, altura) {
@@ -70,10 +81,24 @@ export class CenaPrincipal {
   }
 
   _atualizarSistemas(delta) {
-    this.fundo.atualizar(delta);
-    this.contexto.obterSistema("jogador")?.atualizar(delta);
-    this.contexto.obterSistema("inimigos")?.atualizar(delta);
-    this.contexto.obterSistema("projeteis")?.atualizar(delta);
-    this.contexto.obterSistema("ia")?.atualizarSombras?.(delta);
+    if (this.contexto.obterDado("efeitosVisuaisAtivos") !== false) {
+      this.fundo.atualizar(delta);
+    }
+    if (!this.sistemaJogador) {
+      this.sistemaJogador = this.contexto.obterSistema("jogador");
+    }
+    if (!this.sistemaInimigos) {
+      this.sistemaInimigos = this.contexto.obterSistema("inimigos");
+    }
+    if (!this.sistemaProjeteis) {
+      this.sistemaProjeteis = this.contexto.obterSistema("projeteis");
+    }
+    if (!this.sistemaIA) {
+      this.sistemaIA = this.contexto.obterSistema("ia");
+    }
+    this.sistemaJogador?.atualizar(delta);
+    this.sistemaInimigos?.atualizar(delta);
+    this.sistemaProjeteis?.atualizar(delta);
+    this.sistemaIA?.atualizarSombras?.(delta);
   }
 }

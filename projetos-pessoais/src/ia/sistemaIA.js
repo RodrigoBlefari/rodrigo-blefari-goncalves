@@ -46,6 +46,7 @@ export class SistemaIA {
     if (!this.modoObservacao) {
       return;
     }
+    const renderAtivo = this.contexto?.obterDado("efeitosVisuaisAtivos") !== false;
     const velocidade = this.modoObservacao ? 1 : this.configuracaoIA.velocidadeSimulacao;
     const passo = delta * velocidade;
     this.sombras.forEach((sombra, indice) => {
@@ -64,7 +65,7 @@ export class SistemaIA {
     const vivos = this.sombras.filter((sombra) => !sombra.morto).length;
     this.tempoVisualizacao += passo;
     this.tempoDesdeRelatorio += passo;
-    if (this.tempoVisualizacao >= 0.25) {
+    if (renderAtivo && this.tempoVisualizacao >= 0.25) {
       const melhor = this._obterMelhorSombra();
       if (melhor?.ultimaAtivacao) {
         this.visualizacao?.atualizarAtivacoes({
@@ -72,6 +73,8 @@ export class SistemaIA {
           fitness: melhor.cromossomo.fitness,
         });
       }
+      this.tempoVisualizacao = 0;
+    } else if (!renderAtivo) {
       this.tempoVisualizacao = 0;
     }
     if (this.tempoDesdeRelatorio >= this.relatorioIntervalo) {
@@ -216,22 +219,18 @@ export class SistemaIA {
   _avaliarGeracao() {
     const resumo = this._gerarResumo();
     this.monitor.atualizar(resumo, { evolucao: true });
-    this.monitor.registrarEvento(
-      `Geracao ${resumo.geracao} melhor ${resumo.melhorFitness.toFixed(2)} media ${resumo.mediaFitness.toFixed(
-        2
-      )}`
-    );
+    const mensagemGeracao = this.monitor.gerarMensagemGeracao?.(resumo);
+    if (mensagemGeracao) {
+      this.monitor.registrarEvento(mensagemGeracao);
+    }
     const melhor = this._obterMelhorSombra();
     if (melhor) {
       const pesos = melhor.cromossomo.pesos;
-      this.monitor.registrarEvento(
-        `Pesos destaque PX:${pesos.posicaoX.toFixed(2)} DP:${pesos.distanciaProjetil.toFixed(2)} AP:${pesos.alturaProjetil.toFixed(2)} ANG:${(pesos.anguloProjetil ?? 0).toFixed(2)} TMP:${(
-          pesos.tempoImpactoProjetil ?? 0
-        ).toFixed(2)} DIN:${(pesos.distanciaInimigo ?? 0).toFixed(2)} AIN:${(pesos.alturaInimigo ?? 0).toFixed(2)} ANGI:${(
-          pesos.anguloInimigo ?? 0
-        ).toFixed(2)} MEM:${pesos.memoria.toFixed(2)}`
-      );
-      if (melhor.ultimaAtivacao) {
+      const insightPesos = this.monitor.obterInsightPesos?.(pesos);
+      if (insightPesos) {
+        this.monitor.registrarEvento(insightPesos);
+      }
+      if (melhor.ultimaAtivacao && this.contexto?.obterDado("efeitosVisuaisAtivos") !== false) {
         this.visualizacao?.atualizarAtivacoes({
           ...melhor.ultimaAtivacao,
           fitness: melhor.cromossomo.fitness,
@@ -270,7 +269,9 @@ export class SistemaIA {
     if (this.indicePerspectiva >= this.sombras.length) {
       this.indicePerspectiva = -1;
     }
-    this.visualizacao?.atualizarFitness(resumo);
+    if (this.contexto?.obterDado("efeitosVisuaisAtivos") !== false) {
+      this.visualizacao?.atualizarFitness(resumo);
+    }
   }
 
   _gerarResumo() {
