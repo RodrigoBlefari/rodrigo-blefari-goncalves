@@ -117,6 +117,23 @@ export class SistemaIA {
     this.configuracaoIA = configuracaoIA;
     this.motor.configuracao = configuracaoIA;
     this.relatorioIntervalo = configuracaoIA.relatorioIntervalo || 3; // Atualiza o intervalo de relatório com base na configuração
+    this.pesoSucesso = configuracaoIA.pesoSucesso !== undefined ? configuracaoIA.pesoSucesso : 1.0;
+    this.pesoFalha = configuracaoIA.pesoFalha !== undefined ? configuracaoIA.pesoFalha : 1.0;
+    this.focoSucesso = configuracaoIA.focoSucesso !== undefined ? configuracaoIA.focoSucesso : 0.7;
+    this.focoFalha = configuracaoIA.focoFalha !== undefined ? configuracaoIA.focoFalha : 0.3;
+    this.controleMultiInimigos = configuracaoIA.controleMultiInimigos !== undefined ? configuracaoIA.controleMultiInimigos : false;
+    this.numeroMaximoInimigos = configuracaoIA.numeroMaximoInimigos !== undefined ? configuracaoIA.numeroMaximoInimigos : 5;
+    this.taxaAprendizado = configuracaoIA.taxaAprendizado !== undefined ? configuracaoIA.taxaAprendizado : 0.1;
+    this.pesoAtaque = configuracaoIA.pesoAtaque !== undefined ? configuracaoIA.pesoAtaque : 1.0;
+    this.pesoDefesa = configuracaoIA.pesoDefesa !== undefined ? configuracaoIA.pesoDefesa : 1.0;
+    this.pesoCooperacao = configuracaoIA.pesoCooperacao !== undefined ? configuracaoIA.pesoCooperacao : 1.0;
+    this.adaptabilidade = configuracaoIA.adaptabilidade !== undefined ? configuracaoIA.adaptabilidade : 1.0;
+    this.memoriaCurtoPrazo = configuracaoIA.memoriaCurtoPrazo !== undefined ? configuracaoIA.memoriaCurtoPrazo : 10;
+    this.memoriaLongoPrazo = configuracaoIA.memoriaLongoPrazo !== undefined ? configuracaoIA.memoriaLongoPrazo : 100;
+    this.pesoExemplosSucesso = configuracaoIA.pesoExemplosSucesso !== undefined ? configuracaoIA.pesoExemplosSucesso : 1.0;
+    this.pesoExemplosFalha = configuracaoIA.pesoExemplosFalha !== undefined ? configuracaoIA.pesoExemplosFalha : 1.0;
+    this.taxaAprendizadoSucesso = configuracaoIA.taxaAprendizadoSucesso !== undefined ? configuracaoIA.taxaAprendizadoSucesso : 0.1;
+    this.taxaAprendizadoFalha = configuracaoIA.taxaAprendizadoFalha !== undefined ? configuracaoIA.taxaAprendizadoFalha : 0.1;
     if (this.contexto) {
       this.configuracaoPlataforma = this.contexto.configuracao.plataforma;
     }

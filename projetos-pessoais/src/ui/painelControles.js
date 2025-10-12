@@ -73,8 +73,59 @@ const CAMPOS_JOGO = [
   },
 ];
 
-const CAMPOS_IA = [
+const CAMPOS_INIMIGOS = [
   { 
+    chave: "tempoEntreSpawns", 
+    min: 0.5, 
+    max: 60, 
+    passo: 0.5, 
+    titulo: "Tempo spawn inimigo",
+    descricao: "Intervalo de tempo entre o surgimento de novos inimigos. Valores menores aumentam dificuldade."
+  },
+  { 
+    chave: "agressividade", 
+    min: 0.5, 
+    max: 30, 
+    passo: 0.1, 
+    titulo: "Agressividade inimigo",
+    descricao: "Determina quão ativamente os inimigos perseguem o jogador. Valores mais altos resultam em inimigos mais agressivos."
+  },
+ { 
+    chave: "alturaBase", 
+    min: 30, 
+    max: 150, 
+    passo: 5, 
+    titulo: "Altura inimigos",
+    descricao: "Altura padrão dos inimigos no jogo. Afeta colisões e posicionamento visual."
+  },
+  { 
+    chave: "distanciaAtaqueJogador", 
+    min: 100, 
+    max: 500, 
+    passo: 10, 
+    titulo: "Distancia ataque inimigo",
+    descricao: "Distância máxima na qual os inimigos começam a atacar o jogador. Influencia tática de combate."
+  },
+  { 
+    chave: "podeAtirar", 
+    min: 0, 
+    max: 1, 
+    passo: 1, 
+    titulo: "Inimigos podem atirar",
+    descricao: "Define se os inimigos podem atirar projéteis contra o jogador. 0 = Não, 1 = Sim."
+  },
+  { 
+    chave: "rangeAtaque", 
+    min: 1, 
+    max: 5000, 
+    passo: 10, 
+    titulo: "Range de ataque inimigo",
+    descricao: "Distância máxima que os inimigos podem atacar. Valores maiores aumentam o alcance do ataque."
+  },
+];
+
+const CAMPOS_IA = [
+ { 
     chave: "tamanhoPopulacao", 
     min: 1, 
     max: 320, 
@@ -121,6 +172,142 @@ const CAMPOS_IA = [
     passo: 0.1, 
     titulo: "Peso exploracao",
     descricao: "Importância dada à exploração de novas estratégias. Valores mais altos incentivam comportamentos ousados e experimentação de ações incomuns."
+  },
+  { 
+    chave: "pesoSucesso", 
+    min: 0, 
+    max: 5, 
+    passo: 0.1, 
+    titulo: "Peso do sucesso",
+    descricao: "Controla o quanto a IA valoriza exemplos de sucesso. Valores mais altos fazem a IA seguir mais fortemente estratégias vencedoras."
+  },
+  { 
+    chave: "pesoFalha", 
+    min: 0, 
+    max: 5, 
+    passo: 0.1, 
+    titulo: "Peso da falha",
+    descricao: "Controla o quanto a IA aprende com exemplos de falha. Valores mais altos fazem a IA evitar estratégias que levam à derrota."
+  },
+  { 
+    chave: "focoSucesso", 
+    min: 0, 
+    max: 1, 
+    passo: 0.01, 
+    titulo: "Foco em sucesso",
+    descricao: "Quanto a IA foca em exemplos de sucesso. Valores mais altos fazem a IA seguir mais fortemente estratégias vencedoras (0.0 a 1.0)."
+  },
+  { 
+    chave: "focoFalha", 
+    min: 0, 
+    max: 1, 
+    passo: 0.01, 
+    titulo: "Foco em falha",
+    descricao: "Quanto a IA foca em exemplos de falha. Valores mais altos fazem a IA evitar estratégias que levam à derrota (0.0 a 1.0)."
+  },
+  { 
+    chave: "controleMultiInimigos", 
+    min: 0, 
+    max: 1, 
+    passo: 1, 
+    titulo: "Controle multi-inimigos",
+    descricao: "Se a IA pode controlar múltiplos inimigos simultaneamente. 0 = Não, 1 = Sim."
+  },
+  { 
+    chave: "numeroMaximoInimigos", 
+    min: 1, 
+    max: 20, 
+    passo: 1, 
+    titulo: "Número máximo de inimigos",
+    descricao: "Número máximo de inimigos que a IA pode controlar simultaneamente. Valores maiores aumentam complexidade."
+  },
+  { 
+    chave: "taxaAprendizado", 
+    min: 0.01, 
+    max: 1, 
+    passo: 0.01, 
+    titulo: "Taxa de aprendizado",
+    descricao: "Taxa de aprendizado da IA. Valores mais altos aceleram o aprendizado mas podem reduzir a precisão (0.01 a 1.0)."
+  },
+  { 
+    chave: "pesoAtaque", 
+    min: 0, 
+    max: 50, 
+    passo: 0.1, 
+    titulo: "Peso do ataque",
+    descricao: "Peso dado à habilidade de atacar. Valores mais altos incentivam comportamentos ofensivos e agressivos (0.0 a 50.0)."
+  },
+  { 
+    chave: "pesoDefesa", 
+    min: 0, 
+    max: 50, 
+    passo: 0.1, 
+    titulo: "Peso da defesa",
+    descricao: "Peso dado à habilidade de defender. Valores mais altos incentivam comportamentos defensivos e cautelosos (0.0 a 50.0)."
+  },
+  { 
+    chave: "pesoCooperacao", 
+    min: 0, 
+    max: 50, 
+    passo: 0.1, 
+    titulo: "Peso da cooperação",
+    descricao: "Peso dado à cooperação entre inimigos. Valores mais altos incentivam comportamentos colaborativos (0.0 a 50.0)."
+  },
+  { 
+    chave: "adaptabilidade", 
+    min: 0, 
+    max: 5, 
+    passo: 0.1, 
+    titulo: "Adaptabilidade",
+    descricao: "Quanto a IA adapta seu comportamento. Valores mais altos aumentam a flexibilidade da IA (0.0 a 5.0)."
+  },
+  { 
+    chave: "memoriaCurtoPrazo", 
+    min: 1, 
+    max: 100, 
+    passo: 1, 
+    titulo: "Memória de curto prazo",
+    descricao: "Número de gerações mantidas na memória de curto prazo. Valores maiores aumentam a memória recente (1 a 100)."
+  },
+  { 
+    chave: "memoriaLongoPrazo", 
+    min: 10, 
+    max: 1000, 
+    passo: 10, 
+    titulo: "Memória de longo prazo",
+    descricao: "Número de gerações mantidas na memória de longo prazo. Valores maiores aumentam a memória histórica (10 a 1000)."
+  },
+  { 
+    chave: "pesoExemplosSucesso", 
+    min: 0, 
+    max: 5, 
+    passo: 0.1, 
+    titulo: "Peso exemplos de sucesso",
+    descricao: "Peso dado aos exemplos de sucesso na evolução. Valores mais altos fazem a IA seguir mais fortemente estratégias vencedoras (0.0 a 5.0)."
+  },
+  { 
+    chave: "pesoExemplosFalha", 
+    min: 0, 
+    max: 5, 
+    passo: 0.1, 
+    titulo: "Peso exemplos de falha",
+    descricao: "Peso dado aos exemplos de falha na evolução. Valores mais altos fazem a IA evitar estratégias que levam à derrota (0.0 a 5.0)."
+  },
+  { 
+    chave: "taxaAprendizadoSucesso", 
+    min: 0.01, 
+    max: 1, 
+    passo: 0.01, 
+    titulo: "Taxa aprendizado sucesso",
+    descricao: "Taxa de aprendizado com exemplos de sucesso. Valores mais altos aceleram o aprendizado com estratégias vencedoras (0.01 a 1.0)."
+  },
+  { 
+    chave: "taxaAprendizadoFalha", 
+    min: 0.01, 
+    max: 1, 
+    passo: 0.01, 
+    titulo: "Taxa aprendizado falha",
+    descricao: "Taxa de aprendizado com exemplos de falha. Valores mais altos aceleram o aprendizado com estratégias fracassadas (0.01 a 1.0)."
   },
 ];
 
@@ -503,6 +690,10 @@ export class PainelControles {
     }
     if (this.containerIA) {
       this._renderizarSecao(this.containerIA, "Parametros IA", CAMPOS_IA, this.configuracao);
+    }
+    // Adiciona uma nova seção para os parâmetros dos inimigos
+    if (this.containerIA) {
+      this._renderizarSecao(this.containerIA, "Parametros Inimigos", CAMPOS_INIMIGOS, this.configuracao);
     }
     if (this.containerRelatorios) {
       this.containerRelatorios.innerHTML = "";

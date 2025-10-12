@@ -68,9 +68,12 @@ export class GerenciadorInimigos {
       distanciaAtaque: this.configuracao.distanciaAtaque,
       tempoCiclo: this.configuracao.tempoCiclo,
       variacaoAltura: this.configuracao.variacaoAltura / 80,
+      podeAtirar: this.configuracao.podeAtirar,
+      rangeAtaque: this.configuracao.rangeAtaque,
       intervaloAtaque: this.contexto.configuracao.projeteis.cadencia / this.configuracao.agressividade,
       velocidadeProjetil: this.contexto.configuracao.projeteis.velocidade,
       dano: this.contexto.configuracao.projeteis.dano,
+      corProjetil: this.contexto.configuracao.projeteis.cor,
     });
     this.inimigos.push(inimigo);
   }

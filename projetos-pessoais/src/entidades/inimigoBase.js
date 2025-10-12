@@ -12,6 +12,8 @@ export class InimigoBase extends EntidadeBase {
     distanciaAtaque,
     tempoCiclo,
     variacaoAltura,
+    podeAtirar,
+    rangeAtaque,
   }) {
     super({ id: gerarId("inimigo"), x, y, largura, altura });
     this.velocidade = velocidade;
@@ -19,8 +21,12 @@ export class InimigoBase extends EntidadeBase {
     this.distanciaAtaque = distanciaAtaque;
     this.tempoCiclo = tempoCiclo;
     this.variacaoAltura = variacaoAltura;
+    this.podeAtirar = podeAtirar !== undefined ? podeAtirar : false;
+    this.rangeAtaque = rangeAtaque !== undefined ? rangeAtaque : 320; // Valor padrão
     this.tempoTotal = 0;
     this.prontoParaAtacar = false;
+    this.tempoDesdeUltimoTiro = 0;
+    this.intervaloTiro = 1.5; // segundos
   }
 
   atualizarInterno(delta, contexto) {
@@ -39,6 +45,17 @@ export class InimigoBase extends EntidadeBase {
     }
     const distanciaX = Math.abs(jogador.x - this.x);
     this.prontoParaAtacar = distanciaX < this.distanciaAtaque;
+    
+    // Atualiza o tempo desde o último tiro
+    this.tempoDesdeUltimoTiro += delta;
+    
+    // Se o inimigo pode atirar e está dentro do range de ataque
+    if (this.podeAtirar && distanciaX < this.rangeAtaque && this.tempoDesdeUltimoTiro >= this.intervaloTiro) {
+      // Chama o método para atirar
+      this.atirar(contexto, jogador);
+      this.tempoDesdeUltimoTiro = 0; // Reseta o temporizador
+    }
+    
     if (this.x + this.largura < 0) {
       this.ativo = false;
     }
@@ -79,5 +96,36 @@ export class InimigoBase extends EntidadeBase {
     contextoCanvas.lineTo(this.largura * 0.6, this.altura * 0.4);
     contextoCanvas.stroke();
     contextoCanvas.restore();
+  }
+  
+  atirar(contexto, jogador) {
+    // Verifica se o contexto tem o sistema de projéteis
+    const sistemaProjeteis = contexto.obterSistema("projeteis");
+    if (sistemaProjeteis) {
+      // Calcula a posição de origem do projétil (centro do inimigo)
+      const xOrigem = this.x + this.largura / 2;
+      const yOrigem = this.y + this.altura / 2;
+      
+      // Calcula a direção do projétil (em direção ao jogador)
+      const direcaoX = jogador.x - xOrigem;
+      const direcaoY = jogador.y - yOrigem;
+      
+      // Normaliza a direção
+      const distancia = Math.sqrt(direcaoX * direcaoX + direcaoY * direcaoY);
+      const velocidadeX = (direcaoX / distancia) * this.velocidadeProjetil;
+      const velocidadeY = (direcaoY / distancia) * this.velocidadeProjetil;
+      
+      // Cria um projétil inimigo com base nas configurações
+      sistemaProjeteis.criarProjetil({
+        x: xOrigem,
+        y: yOrigem,
+        largura: 8,
+        altura: 8,
+        velX: velocidadeX,
+        velY: velocidadeY,
+        dano: this.dano,
+        cor: this.corProjetil, // Cor personalizada para projéteis inimigos
+      });
+    }
   }
 }

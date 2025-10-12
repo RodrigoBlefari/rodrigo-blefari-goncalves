@@ -309,4 +309,40 @@ export class AgenteSombra {
     const alturaPlataforma = plataforma.altura ?? 0;
     return alturaCanvas - alturaPlataforma;
   }
+  
+  _controlarInimigos(inimigos, contexto, delta) {
+    // Se não houver inimigos ou o contexto não estiver disponível, retorna
+    if (!inimigos || inimigos.length === 0 || !contexto) {
+      return;
+    }
+    
+    // Para cada inimigo, aplica uma estratégia de controle
+    for (const inimigo of inimigos) {
+      // Verifica se o inimigo está ativo
+      if (!inimigo.ativo) {
+        continue;
+      }
+      
+      // Calcula a distância entre o agente sombra e o inimigo
+      const distanciaX = Math.abs(this.x - (inimigo.x + inimigo.largura / 2));
+      const distanciaY = Math.abs(this.y - (inimigo.y + inimigo.altura / 2));
+      
+      // Se o inimigo estiver próximo o suficiente, aplica controle
+      if (distanciaX < 200 && distanciaY < 100) {
+        // Determina a direção de movimento com base na posição do agente sombra
+        const direcao = this.x < inimigo.x ? -1 : 1;
+        
+        // Aplica movimento ao inimigo (exemplo simples)
+        inimigo.x += direcao * 50 * delta;
+        
+        // Se o inimigo puder atirar e estiver dentro do range, atira
+        if (inimigo.podeAtirar && distanciaX < inimigo.rangeAtaque) {
+          // Chama o método de atirar do inimigo
+          if (typeof inimigo.atirar === 'function') {
+            inimigo.atirar(contexto, this); // Passa o agente sombra como alvo
+          }
+        }
+      }
+    }
+  }
 }

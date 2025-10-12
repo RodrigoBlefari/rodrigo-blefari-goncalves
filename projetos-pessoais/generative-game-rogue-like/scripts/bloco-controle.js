@@ -137,10 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const prepararTodos = () => {
-    const blocos = document.querySelectorAll(SELECTOR_COLAPSAVEL);
-    blocos.forEach((section, indice) => prepararBloco(section, indice));
-  };
+    const prepararTodos = () => {
+      const blocos = document.querySelectorAll(SELECTOR_COLAPSAVEL);
+      blocos.forEach((section, indice) => prepararBloco(section, indice));
+    };
 
   prepararTodos();
 

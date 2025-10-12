@@ -11,6 +11,9 @@ const PESOS_CHAVES = Object.freeze([
   "alturaInimigo",
   "anguloInimigo",
   "densidadeProjetil",
+  "ataqueInimigo",
+  "defesaInimigo",
+  "cooperacaoInimigo",
 ]);
 
 function gerarUUID() {
@@ -47,7 +50,9 @@ export class MotorEvolutivo {
   }
 
   proximaGeracao(individuos) {
-    const ordenados = [...individuos].sort((a, b) => b.fitness - a.fitness);
+    // Aplica pesos de sucesso e falha para ajustar o fitness antes da seleção
+    const individuosAjustados = this._ajustarFitness(individuos);
+    const ordenados = [...individuosAjustados].sort((a, b) => b.fitness - a.fitness);
     const elite = ordenados.slice(0, Math.max(1, Math.floor(ordenados.length * 0.2)));
     const novaPopulacao = [...elite];
     while (novaPopulacao.length < this.configuracao.tamanhoPopulacao) {
@@ -102,5 +107,35 @@ export class MotorEvolutivo {
       }
     }
     return mutados;
+  }
+  
+  _ajustarFitness(individuos) {
+    // Calcula estatísticas para normalizar os valores
+    const fitnesses = individuos.map(ind => ind.fitness);
+    const media = fitnesses.reduce((sum, val) => sum + val, 0) / fitnesses.length;
+    const maxFitness = Math.max(...fitnesses);
+    const minFitness = Math.min(...fitnesses);
+    
+    // Ajusta o fitness com base nos pesos de sucesso e falha
+    return individuos.map(individuo => {
+      let novoFitness = individuo.fitness;
+      
+      // Se o fitness for acima da média (exemplo de sucesso), aplica o peso de sucesso
+      if (individuo.fitness > media && this.configuracao.pesoSucesso !== undefined) {
+        novoFitness *= this.configuracao.pesoSucesso;
+      } 
+      // Se o fitness for abaixo da média (exemplo de falha), aplica o peso de falha
+      else if (individuo.fitness < media && this.configuracao.pesoFalha !== undefined) {
+        novoFitness *= this.configuracao.pesoFalha;
+      }
+      
+      // Garante que o fitness não fique negativo
+      novoFitness = Math.max(0, novoFitness);
+      
+      return {
+        ...individuo,
+        fitness: novoFitness
+      };
+    });
   }
 }
