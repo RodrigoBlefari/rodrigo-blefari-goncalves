@@ -3,9 +3,11 @@
 ## 1) Apresentação (para leigos)
 Projeto de I.A generativa com jogo.
 
-A ideia principal é simples: você liga o “modo I.A”, deixa o sistema jogar várias partidas, avalia os resultados e vai ajustando os “pesos” (as decisões) da I.A para tentar criar o jogador perfeito — aquele que nunca perde. O ambiente do jogo é propositalmente simples para que o aprendizado aconteça rápido e possamos observar a evolução geração a geração.
+Objetivo do jogador: desafiar-se a superar o recorde da geração anterior, manipulando parâmetros (tamanho da população por geração, quantidade de I.A, taxa de mutação, elitismo, critérios de fitness) e analisando os comportamentos dos agentes. O foco é aprender com as evoluções, identificar estagnações e ajustar o sistema para alcançar gerações cada vez mais eficientes — aproximando-se de uma I.A “quase perfeita”.
 
-Você acompanha as tentativas, vê quando o desempenho melhora, e quando “estacar” (parar de evoluir), analisa os problemas e ajusta parâmetros para buscar gerações mais eficientes.
+Ambiente simples, aprendizado rápido: o cenário foi propositalmente mantido simples para acelerar ciclos de treino e facilitar a observação das melhorias geração a geração.
+
+<span style="color: #d32f2f; font-weight: 600;">Atenção:</span> processar muitas I.A simultâneas é intensivo e depende do hardware do usuário. Configurações altas (ex.: milhares de agentes) podem travar ou deixar a aplicação lenta.
 
 ---
 
@@ -19,7 +21,7 @@ Você acompanha as tentativas, vê quando o desempenho melhora, e quando “esta
 - Avaliar resultados:
   - Acompanhe métricas de cada geração (taxa de vitórias, dano, tempo de sobrevivência, etc.). Telas de histórico/visualização ajudam (ex.: `src/ui/historicoIA.js`, `src/ui/visualizacaoIA.js`).
 - Ajustar parâmetros:
-  - Se a evolução estagnar, mude parâmetros como taxa de mutação, tamanho da população, número de elites, etc. (vide seção “Parâmetros de treino”).
+  - Se a evolução estagnar, mude parâmetros como taxa de mutação, tamanho da população por geração, quantidade de I.A, número de elites, etc. (vide seção “Parâmetros de treino”).
 - Repetir ciclo:
   - Continue treinando e ajustando até melhorar as métricas. O objetivo é aproximar-se do “jogador perfeito”.
 
@@ -70,7 +72,8 @@ Arquitetura em módulos ES6, sem frameworks, visando legibilidade e facilidade d
 ---
 
 ## 5) Parâmetros de treino (para experimentar)
-- Tamanho da população: quantos agentes testados por geração.
+- Tamanho da população por geração: quantos agentes testados por geração.
+- Quantidade de I.A (agentes simultâneos): até 2.000 (depende do hardware; valores altos podem travar ou degradar a aplicação).
 - Taxa de mutação: intensidade/frequência das alterações nos pesos.
 - Elitismo: quantos melhores agentes passam direto para a próxima geração.
 - Critérios de fitness: como a pontuação é calculada (ex.: vitórias, sobrevivência, dano).
@@ -108,7 +111,7 @@ Quando a curva de desempenho “achatar”, ajuste a taxa de mutação, reinicie
 - Fluxo recomendado:
   1) Abrir uma demo
   2) Ativar modo I.A no painel
-  3) Configurar parâmetros (população, mutação, elites)
+  3) Configurar parâmetros (tamanho da população por geração, quantidade de I.A, mutação, elites)
   4) Rodar gerações e observar o histórico
   5) Ajustar quando estagnar e repetir
 
