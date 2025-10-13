@@ -192,7 +192,19 @@ export class MonitorAprendizado {
     ];
     this.painel.atualizarResumo(linhas.join("\n"));
     this.indicadorQualidade?.atualizar(this.qualidadeScore ?? 0.5, pacote.titulo);
-    
+
+    // Atualiza HUD superior (evolução no topo), se existir
+    try {
+      const g = document.getElementById("evo-geracao");
+      const m = document.getElementById("evo-melhor");
+      const md = document.getElementById("evo-media");
+      const st = document.getElementById("evo-estado");
+      if (g) g.textContent = String(this.infos.geracao ?? 0);
+      if (m) m.textContent = formatarPontos(this.infos.melhorFitness ?? 0);
+      if (md) md.textContent = formatarPontos(this.infos.mediaFitness ?? 0);
+      if (st) st.textContent = String(pacote.titulo ?? "—");
+    } catch {}
+
     // Atualiza o painel com informações do melhor e pior fitness de todas as gerações
     if (this.painel.areaStatus) {
       const melhorFitnessElement = this.painel.areaStatus.querySelector('#melhor-fitness');

@@ -1,3 +1,4 @@
+// Campos de configuração do jogo agrupados por categoria
 const CAMPOS_JOGO = [
   { 
     chave: "gravidade", 
@@ -39,40 +40,9 @@ const CAMPOS_JOGO = [
     titulo: "Vidas",
     descricao: "Número máximo de vidas que o jogador possui. Quando chega a zero, o jogo termina."
   },
-  { 
-    chave: "tempoEntreSpawns", 
-    min: 0.5, 
-    max: 60, 
-    passo: 0.5, 
-    titulo: "Tempo spawn inimigo",
-    descricao: "Intervalo de tempo entre o surgimento de novos inimigos. Valores menores aumentam dificuldade."
-  },
-  { 
-    chave: "agressividade", 
-    min: 0.5, 
-    max: 30, 
-    passo: 0.1, 
-    titulo: "Agressividade inimigo",
-    descricao: "Determina quão ativamente os inimigos perseguem o jogador. Valores mais altos resultam em inimigos mais agressivos."
-  },
-  { 
-    chave: "alturaBase", 
-    min: 30, 
-    max: 150, 
-    passo: 5, 
-    titulo: "Altura inimigos",
-    descricao: "Altura padrão dos inimigos no jogo. Afeta colisões e posicionamento visual."
-  },
-  { 
-    chave: "distanciaAtaqueJogador", 
-    min: 100, 
-    max: 500, 
-    passo: 10, 
-    titulo: "Distancia ataque inimigo",
-    descricao: "Distância máxima na qual os inimigos começam a atacar o jogador. Influencia tática de combate."
-  },
 ];
 
+// Campos de configuração dos inimigos agrupados por categoria
 const CAMPOS_INIMIGOS = [
   { 
     chave: "tempoEntreSpawns", 
@@ -124,11 +94,12 @@ const CAMPOS_INIMIGOS = [
   },
 ];
 
-const CAMPOS_IA = [
+// Campos de configuração da IA agrupados por categoria
+const CAMPOS_IA_GERAL = [
  { 
     chave: "tamanhoPopulacao", 
     min: 1, 
-    max: 320, 
+    max: 2000, 
     passo: 1, 
     titulo: "Tamanho populacao",
     descricao: "Número de agentes na população a cada geração. Valores maiores aumentam diversidade genética mas exigem mais processamento."
@@ -149,6 +120,17 @@ const CAMPOS_IA = [
     titulo: "Velocidade simulacao",
     descricao: "Multiplicador de velocidade para simulações da IA. Valores mais altos aceleram aprendizado mas podem reduzir precisão."
   },
+  { 
+    chave: "elitePercentual", 
+    min: 0.05, 
+    max: 0.8, 
+    passo: 0.01, 
+    titulo: "Elite (%)",
+    descricao: "Percentual de elite preservada por geração. Valores maiores mantêm mais indivíduos de melhor desempenho (0.05 a 0.8)."
+  },
+];
+
+const CAMPOS_IA_PESOS = [
   { 
     chave: "pesoDesvio", 
     min: 0, 
@@ -173,6 +155,33 @@ const CAMPOS_IA = [
     titulo: "Peso exploracao",
     descricao: "Importância dada à exploração de novas estratégias. Valores mais altos incentivam comportamentos ousados e experimentação de ações incomuns."
   },
+  { 
+    chave: "pesoAtaque", 
+    min: 0, 
+    max: 50, 
+    passo: 0.1, 
+    titulo: "Peso do ataque",
+    descricao: "Peso dado à habilidade de atacar. Valores mais altos incentivam comportamentos ofensivos e agressivos (0.0 a 50.0)."
+  },
+  { 
+    chave: "pesoDefesa", 
+    min: 0, 
+    max: 50, 
+    passo: 0.1, 
+    titulo: "Peso da defesa",
+    descricao: "Peso dado à habilidade de defender. Valores mais altos incentivam comportamentos defensivos e cautelosos (0.0 a 50.0)."
+  },
+  { 
+    chave: "pesoCooperacao", 
+    min: 0, 
+    max: 50, 
+    passo: 0.1, 
+    titulo: "Peso da cooperação",
+    descricao: "Peso dado à cooperação entre inimigos. Valores mais altos incentivam comportamentos colaborativos (0.0 a 50.0)."
+  },
+];
+
+const CAMPOS_IA_APRENDIZADO = [
   { 
     chave: "pesoSucesso", 
     min: 0, 
@@ -206,6 +215,49 @@ const CAMPOS_IA = [
     descricao: "Quanto a IA foca em exemplos de falha. Valores mais altos fazem a IA evitar estratégias que levam à derrota (0.0 a 1.0)."
   },
   { 
+    chave: "taxaAprendizado", 
+    min: 0.01, 
+    max: 1, 
+    passo: 0.01, 
+    titulo: "Taxa de aprendizado",
+    descricao: "Taxa de aprendizado da IA. Valores mais altos aceleram o aprendizado mas podem reduzir a precisão (0.01 a 1.0)."
+  },
+  { 
+    chave: "taxaAprendizadoSucesso", 
+    min: 0.01, 
+    max: 1, 
+    passo: 0.01, 
+    titulo: "Taxa aprendizado sucesso",
+    descricao: "Taxa de aprendizado com exemplos de sucesso. Valores mais altos aceleram o aprendizado com estratégias vencedoras (0.01 a 1.0)."
+  },
+  { 
+    chave: "taxaAprendizadoFalha", 
+    min: 0.01, 
+    max: 1, 
+    passo: 0.01, 
+    titulo: "Taxa aprendizado falha",
+    descricao: "Taxa de aprendizado com exemplos de falha. Valores mais altos aceleram o aprendizado com estratégias fracassadas (0.01 a 1.0)."
+  },
+  { 
+    chave: "pesoExemplosSucesso", 
+    min: 0, 
+    max: 5, 
+    passo: 0.1, 
+    titulo: "Peso exemplos de sucesso",
+    descricao: "Peso dado aos exemplos de sucesso na evolução. Valores mais altos fazem a IA seguir mais fortemente estratégias vencedoras (0.0 a 5.0)."
+  },
+  { 
+    chave: "pesoExemplosFalha", 
+    min: 0, 
+    max: 5, 
+    passo: 0.1, 
+    titulo: "Peso exemplos de falha",
+    descricao: "Peso dado aos exemplos de falha na evolução. Valores mais altos fazem a IA evitar estratégias que levam à derrota (0.0 a 5.0)."
+  },
+];
+
+const CAMPOS_IA_CONTROLE = [
+  { 
     chave: "controleMultiInimigos", 
     min: 0, 
     max: 1, 
@@ -216,42 +268,10 @@ const CAMPOS_IA = [
   { 
     chave: "numeroMaximoInimigos", 
     min: 1, 
-    max: 20, 
+    max: 450, 
     passo: 1, 
     titulo: "Número máximo de inimigos",
     descricao: "Número máximo de inimigos que a IA pode controlar simultaneamente. Valores maiores aumentam complexidade."
-  },
-  { 
-    chave: "taxaAprendizado", 
-    min: 0.01, 
-    max: 1, 
-    passo: 0.01, 
-    titulo: "Taxa de aprendizado",
-    descricao: "Taxa de aprendizado da IA. Valores mais altos aceleram o aprendizado mas podem reduzir a precisão (0.01 a 1.0)."
-  },
-  { 
-    chave: "pesoAtaque", 
-    min: 0, 
-    max: 50, 
-    passo: 0.1, 
-    titulo: "Peso do ataque",
-    descricao: "Peso dado à habilidade de atacar. Valores mais altos incentivam comportamentos ofensivos e agressivos (0.0 a 50.0)."
-  },
-  { 
-    chave: "pesoDefesa", 
-    min: 0, 
-    max: 50, 
-    passo: 0.1, 
-    titulo: "Peso da defesa",
-    descricao: "Peso dado à habilidade de defender. Valores mais altos incentivam comportamentos defensivos e cautelosos (0.0 a 50.0)."
-  },
-  { 
-    chave: "pesoCooperacao", 
-    min: 0, 
-    max: 50, 
-    passo: 0.1, 
-    titulo: "Peso da cooperação",
-    descricao: "Peso dado à cooperação entre inimigos. Valores mais altos incentivam comportamentos colaborativos (0.0 a 50.0)."
   },
   { 
     chave: "adaptabilidade", 
@@ -275,40 +295,16 @@ const CAMPOS_IA = [
     max: 1000, 
     passo: 10, 
     titulo: "Memória de longo prazo",
-    descricao: "Número de gerações mantidas na memória de longo prazo. Valores maiores aumentam a memória histórica (10 a 1000)."
+    descricao: "Número de gerações mantidas na memória de longo prazo. Valores maiores aumentam a memória histórica (10 a 100)."
   },
-  { 
-    chave: "pesoExemplosSucesso", 
-    min: 0, 
-    max: 5, 
-    passo: 0.1, 
-    titulo: "Peso exemplos de sucesso",
-    descricao: "Peso dado aos exemplos de sucesso na evolução. Valores mais altos fazem a IA seguir mais fortemente estratégias vencedoras (0.0 a 5.0)."
-  },
-  { 
-    chave: "pesoExemplosFalha", 
-    min: 0, 
-    max: 5, 
-    passo: 0.1, 
-    titulo: "Peso exemplos de falha",
-    descricao: "Peso dado aos exemplos de falha na evolução. Valores mais altos fazem a IA evitar estratégias que levam à derrota (0.0 a 5.0)."
-  },
-  { 
-    chave: "taxaAprendizadoSucesso", 
-    min: 0.01, 
-    max: 1, 
-    passo: 0.01, 
-    titulo: "Taxa aprendizado sucesso",
-    descricao: "Taxa de aprendizado com exemplos de sucesso. Valores mais altos aceleram o aprendizado com estratégias vencedoras (0.01 a 1.0)."
-  },
-  { 
-    chave: "taxaAprendizadoFalha", 
-    min: 0.01, 
-    max: 1, 
-    passo: 0.01, 
-    titulo: "Taxa aprendizado falha",
-    descricao: "Taxa de aprendizado com exemplos de falha. Valores mais altos aceleram o aprendizado com estratégias fracassadas (0.01 a 1.0)."
-  },
+];
+
+// Combinar todos os campos de IA em uma única constante
+const CAMPOS_IA = [
+  ...CAMPOS_IA_GERAL,
+  ...CAMPOS_IA_PESOS,
+  ...CAMPOS_IA_APRENDIZADO,
+  ...CAMPOS_IA_CONTROLE
 ];
 
 export class PainelControles {
@@ -336,21 +332,20 @@ export class PainelControles {
   _adicionarControlesAdicionais() {
     // Adiciona o seletor de performance e botão de ajuste automático ao painel da IA
     if (this.containerIA) {
-      const controleAdicional = document.createElement("div");
-      controleAdicional.className = "bloco-controle";
-      
-      const cabecalho = document.createElement("h2");
-      cabecalho.textContent = "Controles Avançados";
-      controleAdicional.appendChild(cabecalho);
-      
-      // Seletor de performance
-      const seletorPerformance = document.createElement("div");
-      seletorPerformance.className = "entrada-controle";
-      
-      const labelPerformance = document.createElement("label");
-      labelPerformance.textContent = "Tipo de Performance";
-      seletorPerformance.appendChild(labelPerformance);
-      
+      // Secção IA Avançado (melhor distribuído, com colapsável)
+      const secAvancado = document.createElement("section");
+      secAvancado.className = "bloco-controle";
+      secAvancado.dataset.collapsible = "";
+      secAvancado.dataset.title = "IA Avançado";
+
+      // Grupo: Presets de Performance
+      const blocoPerf = document.createElement("div");
+      blocoPerf.className = "entrada-controle";
+      const lblPerf = document.createElement("label");
+      lblPerf.textContent = "Preset de performance";
+      lblPerf.title = "Ajusta automaticamente alguns pesos e taxa de mutação";
+      blocoPerf.appendChild(lblPerf);
+
       const select = document.createElement("select");
       select.id = "tipo-performance";
       select.innerHTML = `
@@ -360,21 +355,24 @@ export class PainelControles {
         <option value="explorador">Explorador</option>
         <option value="sobrevivente">Sobrevivente</option>
       `;
-      seletorPerformance.appendChild(select);
-      
-      controleAdicional.appendChild(seletorPerformance);
-      
-      // Botão de ajuste automático
-      const botaoAjuste = document.createElement("button");
-      botaoAjuste.type = "button";
-      botaoAjuste.textContent = "Ajustar Automaticamente";
-      botaoAjuste.addEventListener("click", () => {
+      blocoPerf.appendChild(select);
+
+      const btnPreset = document.createElement("button");
+      btnPreset.type = "button";
+      btnPreset.textContent = "Aplicar preset";
+      btnPreset.addEventListener("click", () => {
         this._ajustarConfiguracaoAutomatica(select.value);
       });
-      
-      controleAdicional.appendChild(botaoAjuste);
-      
-      // Botão de ajuste automático da IA (liga/desliga)
+      blocoPerf.appendChild(btnPreset);
+
+      // Grupo: Ajuste Automático em tempo real
+      const blocoAuto = document.createElement("div");
+      blocoAuto.className = "entrada-controle";
+      const lblAuto = document.createElement("label");
+      lblAuto.textContent = "Ajuste automático em tempo real";
+      lblAuto.title = "Liga/desliga auto-tuning de pesos com base nos relatórios";
+      blocoAuto.appendChild(lblAuto);
+
       const botaoAjusteIA = document.createElement("button");
       botaoAjusteIA.type = "button";
       botaoAjusteIA.textContent = "Ajuste Automático da IA: Desligado";
@@ -382,8 +380,15 @@ export class PainelControles {
       botaoAjusteIA.addEventListener("click", () => {
         this._alternarAjusteAutomaticoIA(botaoAjusteIA);
       });
-      
-      controleAdicional.appendChild(botaoAjusteIA);
+      blocoAuto.appendChild(botaoAjusteIA);
+
+      // Grupo: Visualização / Modo Desempenho
+      const blocoVisu = document.createElement("div");
+      blocoVisu.className = "entrada-controle";
+      const lblVisu = document.createElement("label");
+      lblVisu.textContent = "Visualizações & Desempenho";
+      lblVisu.title = "Alterna animações e efeitos (melhor FPS em populações grandes)";
+      blocoVisu.appendChild(lblVisu);
 
       const botaoAnimacoes = document.createElement("button");
       botaoAnimacoes.type = "button";
@@ -393,9 +398,60 @@ export class PainelControles {
       });
       this.botaoAnimacoes = botaoAnimacoes;
       this._sincronizarBotaoAnimacoes();
-      controleAdicional.appendChild(botaoAnimacoes);
+      blocoVisu.appendChild(botaoAnimacoes);
 
-      this.containerIA.appendChild(controleAdicional);
+      // Grupo: Tema e Cores (fun!)
+      const blocoTema = document.createElement("div");
+      blocoTema.className = "entrada-controle";
+      const lblTema = document.createElement("label");
+      lblTema.textContent = "Tema de Cores";
+      lblTema.title = "Colorir a interface com as cores dos agentes";
+      blocoTema.appendChild(lblTema);
+
+      const temaSelect = document.createElement("select");
+      temaSelect.id = "tema-cor";
+      temaSelect.innerHTML = `
+        <option value="auto">Automático (melhor agente)</option>
+        <option value="#5be9ff">Azul ciano</option>
+        <option value="#68ff9a">Verde</option>
+        <option value="#ffef5b">Amarelo</option>
+        <option value="#ff9e5b">Laranja</option>
+        <option value="#ff5bd9">Rosa</option>
+        <option value="arco-iris">Arco-íris</option>
+      `;
+      blocoTema.appendChild(temaSelect);
+
+      const aplicarTema = (nome) => {
+        // Guarda override global para o SistemaIA respeitar "auto" quando vazio
+        if (nome === "auto") {
+          window.redeNeuralTemaOverride = null;
+          document.body.classList.remove("tema-arcoiris");
+          document.documentElement.style.removeProperty("--accent-1");
+          document.documentElement.style.removeProperty("--accent-2");
+          return;
+        }
+        if (nome === "arco-iris") {
+          window.redeNeuralTemaOverride = "arco-iris";
+          document.body.classList.add("tema-arcoiris");
+          return;
+        }
+        // Cor fixa
+        window.redeNeuralTemaOverride = nome;
+        document.body.classList.remove("tema-arcoiris");
+        document.documentElement.style.setProperty("--accent-1", nome);
+        document.documentElement.style.setProperty("--accent-2", nome);
+      };
+
+      temaSelect.addEventListener("change", (e) => {
+        aplicarTema(e.target.value);
+      });
+
+      // Montagem da seção IA Avançado
+      secAvancado.appendChild(blocoPerf);
+      secAvancado.appendChild(blocoAuto);
+      secAvancado.appendChild(blocoVisu);
+      secAvancado.appendChild(blocoTema);
+      this.containerIA.appendChild(secAvancado);
     }
     
     // Adiciona o seletor de refresh ao painel de relatórios
@@ -670,7 +726,49 @@ export class PainelControles {
   // Método para atualizar os controles visuais quando os valores mudam
   _atualizarControlesVisuais() {
     // Atualiza os controles da IA
-    for (const campo of CAMPOS_IA) {
+    for (const campo of CAMPOS_IA_GERAL) {
+      const input = document.querySelector(`#${campo.chave}`);
+      if (input) {
+        input.value = this.configuracao.ia[campo.chave];
+        
+        // Atualiza o valor exibido
+        const valorAtual = input.parentElement.parentElement.querySelector('.valor-atual');
+        if (valorAtual) {
+          valorAtual.textContent = this._formatarValor(input.value, campo.passo);
+        }
+      }
+    }
+    
+    // Atualiza os controles de pesos da IA
+    for (const campo of CAMPOS_IA_PESOS) {
+      const input = document.querySelector(`#${campo.chave}`);
+      if (input) {
+        input.value = this.configuracao.ia[campo.chave];
+        
+        // Atualiza o valor exibido
+        const valorAtual = input.parentElement.parentElement.querySelector('.valor-atual');
+        if (valorAtual) {
+          valorAtual.textContent = this._formatarValor(input.value, campo.passo);
+        }
+      }
+    }
+    
+    // Atualiza os controles de aprendizado da IA
+    for (const campo of CAMPOS_IA_APRENDIZADO) {
+      const input = document.querySelector(`#${campo.chave}`);
+      if (input) {
+        input.value = this.configuracao.ia[campo.chave];
+        
+        // Atualiza o valor exibido
+        const valorAtual = input.parentElement.parentElement.querySelector('.valor-atual');
+        if (valorAtual) {
+          valorAtual.textContent = this._formatarValor(input.value, campo.passo);
+        }
+      }
+    }
+    
+    // Atualiza os controles de controle da IA
+    for (const campo of CAMPOS_IA_CONTROLE) {
       const input = document.querySelector(`#${campo.chave}`);
       if (input) {
         input.value = this.configuracao.ia[campo.chave];
@@ -690,9 +788,7 @@ export class PainelControles {
     }
     if (this.containerIA) {
       this._renderizarSecao(this.containerIA, "Parametros IA", CAMPOS_IA, this.configuracao);
-    }
-    // Adiciona uma nova seção para os parâmetros dos inimigos
-    if (this.containerIA) {
+      // Adiciona uma nova seção para os parâmetros dos inimigos após os parâmetros da IA
       this._renderizarSecao(this.containerIA, "Parametros Inimigos", CAMPOS_INIMIGOS, this.configuracao);
     }
     if (this.containerRelatorios) {
@@ -706,8 +802,7 @@ export class PainelControles {
     }
   }
 
-  _renderizarSecao(container, titulo, campos, configuracao) {
-    container.innerHTML = "";
+   _renderizarSecao(container, titulo, campos, configuracao) {
     const bloco = document.createElement("div");
     bloco.className = "bloco-controle";
     const cabecalho = document.createElement("h2");
@@ -721,21 +816,28 @@ export class PainelControles {
       rotulo.textContent = campo.titulo;
       rotulo.setAttribute("for", campo.chave);
       
-      // Adiciona a descrição como um elemento filho do rótulo
+      // Dica via hover (title nativo do navegador)
       if (campo.descricao) {
-        const descricao = document.createElement("div");
-        descricao.className = "descricao-parametro";
-        descricao.textContent = campo.descricao;
-        rotulo.appendChild(descricao);
+        rotulo.title = campo.descricao;
       }
       
       const input = document.createElement("input");
       input.type = "range";
       input.id = campo.chave;
       input.min = campo.min;
-      input.max = campo.max;
+      // Ajuste dinâmico: o máximo de 'quantidadeIAsTreinando' acompanha 'tamanhoPopulacao'
+      const maximoInicial =
+        campo.chave === "quantidadeIAsTreinando"
+          ? (this.configuracao?.ia?.tamanhoPopulacao ?? campo.max)
+          : campo.max;
+      input.max = maximoInicial;
       input.step = campo.passo;
-      input.value = this._obterValor(configuracao, campo.chave);
+      // Garante que o valor inicial não ultrapasse o máximo dinâmico
+      const valorInicial = Math.min(
+        Number(this._obterValor(configuracao, campo.chave)),
+        Number(maximoInicial)
+      );
+      input.value = valorInicial;
       const valor = document.createElement("div");
       valor.className = "valor-range";
       
@@ -759,10 +861,16 @@ export class PainelControles {
       const botaoMais = document.createElement("button");
       botaoMais.textContent = "+";
       botaoMais.addEventListener("click", () => {
-        const novoValor = Math.min(campo.max, Number(input.value) + Number(campo.passo));
-        input.value = novoValor;
+        const limiteMax =
+          campo.chave === "quantidadeIAsTreinando"
+            ? Number(this.configuracao?.ia?.tamanhoPopulacao ?? input.max ?? campo.max)
+            : Number(campo.max);
+        const novoValor = Math.min(limiteMax, Number(input.value) + Number(campo.passo));
         this._atualizarConfiguracao(campo.chave, novoValor);
-        valorAtual.textContent = this._formatarValor(novoValor, campo.passo);
+        // Re-sincroniza o input e o texto com a configuração efetiva (após clamp)
+        const valorEfetivo = this._obterValor(this.configuracao, campo.chave);
+        input.value = valorEfetivo;
+        valorAtual.textContent = this._formatarValor(valorEfetivo, campo.passo);
       });
       
       containerValor.appendChild(botaoMenos);
@@ -771,7 +879,9 @@ export class PainelControles {
       
       const limite = document.createElement("span");
       limite.className = "valor-limite";
-      limite.textContent = `${campo.min} / ${campo.max}`;
+      const maxExibido =
+        campo.chave === "quantidadeIAsTreinando" ? String(maximoInicial) : String(campo.max);
+      limite.textContent = `${campo.min} / ${maxExibido}`;
       
       input.addEventListener("input", (evento) => {
         valorAtual.textContent = this._formatarValor(evento.target.value, campo.passo);

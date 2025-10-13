@@ -33,6 +33,10 @@ export const configuracaoInicial = Object.freeze({
     distanciaAtaqueJogador: 280,
     podeAtirar: false, // Parâmetro para definir se os inimigos podem atirar
     rangeAtaque: 1000, // Range de ataque dos inimigos (1 a 5000)
+    intervaloAtaque: 1.5, // Intervalo entre ataques dos inimigos (0.1 a 10 segundos)
+    velocidadeProjetil: 280, // Velocidade dos projéteis dos inimigos (100 a 1000)
+    dano: 1, // Dano causado pelos projéteis dos inimigos (1 a 10)
+    corProjetil: "#ff4d6d", // Cor dos projéteis dos inimigos (vermelho)
   },
   projeteis: {
     velocidade: 280,
@@ -48,6 +52,7 @@ export const configuracaoInicial = Object.freeze({
    ia: {
     tamanhoPopulacao: 32,
     taxaMutacao: 0.1,
+    elitePercentual: 0.2, // Percentual da elite preservada em cada geração (0.05 a 0.8)
     velocidadeSimulacao: 2.0,
     pesoDesvio: 1.5,
     pesoSobrevivencia: 2.0,
@@ -64,11 +69,25 @@ export const configuracaoInicial = Object.freeze({
     pesoDefesa: 1.0, // Peso dado à habilidade de defender (0.0 a 50.0)
     pesoCooperacao: 1.0, // Peso dado à cooperação entre inimigos (0.0 a 50.0)
     adaptabilidade: 1.0, // Quanto a IA adapta seu comportamento (0.0 a 5.0)
-    memoriaCurtoPrazo: 10, // Número de gerações mantidas na memória de curto prazo (1 a 100)
-    memoriaLongoPrazo: 100, // Número de gerações mantidas na memória de longo prazo (10 a 1000)
+    memoriaCurtoPrazo: 10, // Número de gerações mantidas na memória de curto prazo (1 a 10)
+    memoriaLongoPrazo: 10, // Número de gerações mantidas na memória de longo prazo (10 a 1000)
     pesoExemplosSucesso: 1.0, // Peso dado aos exemplos de sucesso na evolução
     pesoExemplosFalha: 1.0, // Peso dado aos exemplos de falha na evolução
     taxaAprendizadoSucesso: 0.1, // Taxa de aprendizado com exemplos de sucesso
     taxaAprendizadoFalha: 0.1, // Taxa de aprendizado com exemplos de falha
+    taxaAprendizadoIA: 0.1, // Taxa de aprendizado da IA (0.01 a 1.0)
+    pesoSucessoIA: 1.0, // Peso dado aos exemplos de sucesso na IA (0.0 a 5.0)
+    pesoFalhaIA: 1.0, // Peso dado aos exemplos de falha na IA (0.0 a 5.0)
+    focoSucessoIA: 0.7, // Quanto a IA foca em exemplos de sucesso (0.0 a 1.0)
+    focoFalhaIA: 0.3, // Quanto a IA foca em exemplos de falha (0.0 a 1.0)
+    controleMultiInimigosIA: false, // Se a IA pode controlar múltiplos inimigos simultaneamente
+    numeroMaximoInimigosIA: 5, // Número máximo de inimigos que a IA pode controlar simultaneamente (1 a 20)
+    pesoAtaqueIA: 1.0, // Peso dado à habilidade de atacar na IA (0.0 a 50.0)
+    pesoDefesaIA: 1.0, // Peso dado à habilidade de defender na IA (0.0 a 50.0)
+    pesoCooperacaoIA: 1.0, // Peso dado à cooperação entre inimigos na IA (0.0 a 50.0)
+    adaptabilidadeIA: 1.0, // Quanto a IA adapta seu comportamento (0.0 a 5.0)
+    memoriaCurtoPrazoIA: 10, // Número de gerações mantidas na memória de curto prazo da IA (1 a 100)
+    memoriaLongoPrazoIA: 100, // Número de gerações mantidas na memória de longo prazo da IA (10 a 1000)
+    quantidadeIAsTreinando: 10, // Número de IAs treinando simultaneamente (1 a 450)
   },
 });

@@ -14,6 +14,21 @@ const PESOS_CHAVES = Object.freeze([
   "ataqueInimigo",
   "defesaInimigo",
   "cooperacaoInimigo",
+  "sucesso",
+  "falha",
+  "exploracao",
+  "sobrevivencia",
+  "desvio",
+  "pesoAtaque",
+  "pesoDefesa",
+  "pesoCooperacao",
+  "adaptabilidade",
+  "memoriaCurtoPrazo",
+  "memoriaLongoPrazo",
+  "pesoExemplosSucesso",
+  "pesoExemplosFalha",
+  "taxaAprendizadoSucesso",
+  "taxaAprendizadoFalha",
 ]);
 
 function gerarUUID() {
@@ -53,7 +68,8 @@ export class MotorEvolutivo {
     // Aplica pesos de sucesso e falha para ajustar o fitness antes da seleção
     const individuosAjustados = this._ajustarFitness(individuos);
     const ordenados = [...individuosAjustados].sort((a, b) => b.fitness - a.fitness);
-    const elite = ordenados.slice(0, Math.max(1, Math.floor(ordenados.length * 0.2)));
+    const elitePercentual = Math.max(0.05, Math.min(0.8, this.configuracao.elitePercentual ?? 0.2));
+    const elite = ordenados.slice(0, Math.max(1, Math.floor(ordenados.length * elitePercentual)));
     const novaPopulacao = [...elite];
     while (novaPopulacao.length < this.configuracao.tamanhoPopulacao) {
       const paiA = escolherAleatorio(elite) ?? this._gerarCromossomo();
@@ -100,9 +116,11 @@ export class MotorEvolutivo {
   _mutar(pesos) {
     const mutados = { ...pesos };
     const chance = this.configuracao.taxaMutacao;
+    const escalaAdapt = Math.max(0.25, Math.min(2, this.configuracao.adaptabilidade ?? 1));
     for (const chave of PESOS_CHAVES) {
       if (Math.random() < chance) {
-        const amplitude = chave === "memoria" ? 0.25 : 0.5;
+        const base = chave === "memoria" ? 0.25 : 0.5;
+        const amplitude = base * escalaAdapt;
         mutados[chave] = (mutados[chave] ?? 0) + aleatorioIntervalo(-amplitude, amplitude);
       }
     }

@@ -10,6 +10,8 @@ export class SistemaIA {
     this.configuracaoIA = configuracaoIA;
     this.painelControles = painelControles;
     this.monitor = new MonitorAprendizado(painelControles);
+    // Expõe o monitor na configuração para que o PainelControles possa ler estado em tempo real
+    this.configuracaoIA.monitor = this.monitor;
     this.modoObservacao = false;
     this.sombras = [];
     this.simulacoes = [];
@@ -22,6 +24,24 @@ export class SistemaIA {
     this.visualizacao = null;
     this.tempoVisualizacao = 0;
     this.indicePerspectiva = -1;
+    this.cohortsProcessados = 0;
+    this.pesoSucesso = configuracaoIA.pesoSucesso !== undefined ? configuracaoIA.pesoSucesso : 1.0;
+    this.pesoFalha = configuracaoIA.pesoFalha !== undefined ? configuracaoIA.pesoFalha : 1.0;
+    this.focoSucesso = configuracaoIA.focoSucesso !== undefined ? configuracaoIA.focoSucesso : 0.7;
+    this.focoFalha = configuracaoIA.focoFalha !== undefined ? configuracaoIA.focoFalha : 0.3;
+    this.controleMultiInimigos = configuracaoIA.controleMultiInimigos !== undefined ? configuracaoIA.controleMultiInimigos : false;
+    this.numeroMaximoInimigos = configuracaoIA.numeroMaximoInimigos !== undefined ? configuracaoIA.numeroMaximoInimigos : 5;
+    this.taxaAprendizado = configuracaoIA.taxaAprendizado !== undefined ? configuracaoIA.taxaAprendizado : 0.1;
+    this.pesoAtaque = configuracaoIA.pesoAtaque !== undefined ? configuracaoIA.pesoAtaque : 1.0;
+    this.pesoDefesa = configuracaoIA.pesoDefesa !== undefined ? configuracaoIA.pesoDefesa : 1.0;
+    this.pesoCooperacao = configuracaoIA.pesoCooperacao !== undefined ? configuracaoIA.pesoCooperacao : 1.0;
+    this.adaptabilidade = configuracaoIA.adaptabilidade !== undefined ? configuracaoIA.adaptabilidade : 1.0;
+    this.memoriaCurtoPrazo = configuracaoIA.memoriaCurtoPrazo !== undefined ? configuracaoIA.memoriaCurtoPrazo : 10;
+    this.memoriaLongoPrazo = configuracaoIA.memoriaLongoPrazo !== undefined ? configuracaoIA.memoriaLongoPrazo : 100;
+    this.pesoExemplosSucesso = configuracaoIA.pesoExemplosSucesso !== undefined ? configuracaoIA.pesoExemplosSucesso : 1.0;
+    this.pesoExemplosFalha = configuracaoIA.pesoExemplosFalha !== undefined ? configuracaoIA.pesoExemplosFalha : 1.0;
+    this.taxaAprendizadoSucesso = configuracaoIA.taxaAprendizadoSucesso !== undefined ? configuracaoIA.taxaAprendizadoSucesso : 0.1;
+    this.taxaAprendizadoFalha = configuracaoIA.taxaAprendizadoFalha !== undefined ? configuracaoIA.taxaAprendizadoFalha : 0.1;
   }
 
   definirContexto(contexto) {
@@ -46,11 +66,20 @@ export class SistemaIA {
     if (!this.modoObservacao) {
       return;
     }
-    const renderAtivo = this.contexto?.obterDado("efeitosVisuaisAtivos") !== false;
-    const velocidade = this.modoObservacao ? 1 : this.configuracaoIA.velocidadeSimulacao;
-    const passo = delta * velocidade;
-    this.sombras.forEach((sombra, indice) => {
-      const simulacao = this.simulacoes[indice];
+const renderAtivo = this.contexto?.obterDado("efeitosVisuaisAtivos") !== false;
+const velocidade = this.modoObservacao ? (this.configuracaoIA.velocidadeSimulacao ?? 1) : 1;
+const passo = delta * velocidade;
+
+const quantidadeAtivas = this._calcularTamanhoCoorte();
+
+// Treinamento por coortes: processa blocos sequenciais até cobrir toda a população
+const inicio = this.cohortsProcessados * quantidadeAtivas;
+const fim = Math.min(this.sombras.length, inicio + quantidadeAtivas);
+
+// Atualiza apenas as IAs da coorte atual
+for (let idx = inicio; idx < fim; idx++) {
+  const sombra = this.sombras[idx];
+  const simulacao = this.simulacoes[idx];
       const percepcao = simulacao?.atualizar(passo, sombra) ?? { projeteis: [], inimigos: [] };
       sombra.atualizar(
         passo,
@@ -60,9 +89,15 @@ export class SistemaIA {
         this.configuracaoPlataforma,
         percepcao.inimigos ?? []
       );
-    });
+    }
 
-    const vivos = this.sombras.filter((sombra) => !sombra.morto).length;
+    // Conta apenas as IAs ativas da coorte atual
+    let vivos = 0;
+    for (let idx = inicio; idx < fim; idx++) {
+      if (!this.sombras[idx].morto) {
+        vivos += 1;
+      }
+    }
     this.tempoVisualizacao += passo;
     this.tempoDesdeRelatorio += passo;
     if (renderAtivo && this.tempoVisualizacao >= 0.25) {
@@ -82,10 +117,29 @@ export class SistemaIA {
       this.tempoDesdeRelatorio = 0;
     }
     this.tempoSimulacao += passo;
+    
+    // Quando toda a coorte atual morrer, avança para a próxima.
     if (vivos === 0) {
-      this._avaliarGeracao();
-      this.tempoSimulacao = 0;
-      this.tempoDesdeRelatorio = 0;
+      this.cohortsProcessados += 1;
+      // Se todas as coortes foram processadas, avalia a geração inteira
+      if (this.cohortsProcessados * quantidadeAtivas >= this.sombras.length) {
+        this._avaliarGeracao();
+        this.cohortsProcessados = 0;
+        this.tempoSimulacao = 0;
+        this.tempoDesdeRelatorio = 0;
+      } else {
+        // Prepara a próxima coorte (reset de estado para iniciar novo subciclo)
+        const proxInicio = this.cohortsProcessados * quantidadeAtivas;
+        const proxFim = Math.min(this.sombras.length, proxInicio + quantidadeAtivas);
+        const largura = this.contexto?.canvas.width ?? 960;
+        const altura = this.contexto?.canvas.height ?? 540;
+        for (let i = proxInicio; i < proxFim; i++) {
+          const sombra = this.sombras[i];
+          sombra.resetar(largura, altura, this.configuracaoPlataforma, this.configuracaoJogador);
+          const sim = this.simulacoes[i];
+          sim?.resetar(sombra);
+        }
+      }
     }
   }
 
@@ -93,11 +147,17 @@ export class SistemaIA {
     if (!this.modoObservacao) {
       return;
     }
-    this.sombras.forEach((sombra, indice) => {
+    const quantidadeAtivas = this._calcularTamanhoCoorte();
+
+    // Desenha apenas as IAs da coorte atual
+    const inicio = this.cohortsProcessados * quantidadeAtivas;
+    const fim = Math.min(this.sombras.length, inicio + quantidadeAtivas);
+    for (let idx = inicio; idx < fim; idx++) {
+      const sombra = this.sombras[idx];
       sombra.desenhar(contextoCanvas);
-      const simulacao = this.simulacoes[indice];
+      const simulacao = this.simulacoes[idx];
       if (!simulacao) {
-        return;
+        continue;
       }
       if (simulacao.inimigos?.length) {
         simulacao.inimigos.forEach((inimigo) =>
@@ -107,15 +167,20 @@ export class SistemaIA {
       if (simulacao.projeteis?.length) {
         this._desenharProjeteisFantasma(contextoCanvas, simulacao.projeteis, sombra.cor);
       }
-      if (indice === this.indicePerspectiva) {
+      if (idx === this.indicePerspectiva) {
         this._desenharSensores(contextoCanvas, sombra);
       }
-    });
+    }
   }
 
   aplicarConfiguracao(configuracaoIA) {
     this.configuracaoIA = configuracaoIA;
     this.motor.configuracao = configuracaoIA;
+
+    // Saneamento e clamps de parâmetros críticos
+    const tp = Math.max(1, Math.floor(this.configuracaoIA.tamanhoPopulacao ?? 1));
+    this.configuracaoIA.tamanhoPopulacao = tp;
+
     this.relatorioIntervalo = configuracaoIA.relatorioIntervalo || 3; // Atualiza o intervalo de relatório com base na configuração
     this.pesoSucesso = configuracaoIA.pesoSucesso !== undefined ? configuracaoIA.pesoSucesso : 1.0;
     this.pesoFalha = configuracaoIA.pesoFalha !== undefined ? configuracaoIA.pesoFalha : 1.0;
@@ -140,7 +205,7 @@ export class SistemaIA {
     if (this.sombras.length !== configuracaoIA.tamanhoPopulacao) {
       this._inicializarSombras();
     }
-  }
+ }
 
   definirConfiguracaoJogador(configuracaoJogador, configuracaoPlataforma) {
     this.configuracaoJogador = configuracaoJogador;
@@ -204,6 +269,7 @@ export class SistemaIA {
   _inicializarSombras() {
     const largura = this.contexto?.canvas.width ?? 960;
     const altura = this.contexto?.canvas.height ?? 540;
+    // Cria a população completa com base no tamanho definido
     this.sombras = this.motor.criarPopulacao().map((cromossomo, indice) => {
       const cor = PALETA[indice % PALETA.length];
       const sombra = new AgenteSombra({
@@ -220,6 +286,7 @@ export class SistemaIA {
       simulacao.resetar(sombra);
       return simulacao;
     });
+    this.cohortsProcessados = 0;
     if (this.indicePerspectiva >= this.sombras.length) {
       this.indicePerspectiva = -1;
     }
@@ -232,6 +299,7 @@ export class SistemaIA {
         fitness: melhor.cromossomo.fitness,
       });
     }
+    this._aplicarTemaPorAgente(melhor?.cor);
   }
 
   _avaliarGeracao() {
@@ -254,6 +322,7 @@ export class SistemaIA {
           fitness: melhor.cromossomo.fitness,
         });
       }
+      this._aplicarTemaPorAgente(melhor.cor);
     }
     const cromossomos = this.sombras.map((sombra) => sombra.cromossomo);
     const novaGeracao = this.motor.proximaGeracao(cromossomos);
@@ -340,6 +409,31 @@ export class SistemaIA {
       this.indicePerspectiva += 1;
     }
     return this.indicePerspectiva;
+  }
+
+  _calcularTamanhoCoorte() {
+    const tp = this.sombras?.length || Math.max(1, Math.floor(this.configuracaoIA?.tamanhoPopulacao ?? 1));
+    const renderAtivo = this.contexto?.obterDado("efeitosVisuaisAtivos") !== false;
+    // Quando renderiza, coortes menores para preservar FPS; sem render, coortes maiores para acelerar aprendizado
+    const base = Math.ceil(tp / (renderAtivo ? 12 : 4));
+    const tamanho = Math.max(8, Math.min(base, 256));
+    return Math.min(tamanho, tp);
+  }
+
+  _aplicarTemaPorAgente(cor) {
+    try {
+      // Respeita override manual (tema fixo ou arco-íris)
+      const override = globalThis?.window?.redeNeuralTemaOverride;
+      if (override) {
+        return;
+      }
+      if (!cor) {
+        return;
+      }
+      document.documentElement.style.setProperty("--accent-1", cor);
+    } catch {
+      // Ambiente sem DOM; ignorar
+    }
   }
 
   _criarSimulacao(sombra) {

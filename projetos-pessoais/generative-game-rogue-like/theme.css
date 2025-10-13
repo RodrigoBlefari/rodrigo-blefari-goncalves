@@ -1,0 +1,281 @@
+/* UI v2 — Sistema de Temas e Identidade Visual
+   - Tipografia moderna (Inter / Space Grotesk / Fira Code)
+   - 3 temas: Neon Noir, Cyber Sunset, Mono Clean
+   - Overrides específicos com seletor .ui-v2 para não quebrar o original
+   - Integração com variáveis existentes (--accent-1 / --accent-2)
+*/
+
+/* Base UI v2 */
+body.ui-v2 {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color-scheme: dark;
+
+  /* fallback tokens (sobrepostos por tema) */
+  --bg-0: radial-gradient(1200px 800px at 15% 10%, #0d1022 0%, #070812 55%, #05060c 100%);
+  --bg-1: rgba(14, 16, 32, 0.92);
+  --bg-2: rgba(9, 12, 24, 0.94);
+  --stroke: rgba(136, 170, 255, 0.28);
+  --text: #eaf2ff;
+  --muted: #b6c5e6;
+  --accent-1: #7ab7ff;
+  --accent-2: #9ad4ff;
+  --glow: 0 0 24px color-mix(in srgb, var(--accent-1), #ffffff 20%);
+}
+
+/* Tema: Neon Noir — ciano/azul com brilho frio */
+body.ui-v2[data-theme="neon"] {
+  --bg-0: radial-gradient(1200px 800px at 10% 0%, #0a0e20 0%, #060812 55%, #04050a 100%);
+  --bg-1: linear-gradient(180deg, rgba(10, 14, 30, 0.92), rgba(8, 10, 22, 0.96));
+  --bg-2: linear-gradient(180deg, rgba(14, 18, 40, 0.95), rgba(8, 10, 22, 0.98));
+  --stroke: rgba(118, 187, 255, 0.35);
+  --text: #e7f4ff;
+  --muted: #a8bff2;
+  --accent-1: #65e0ff;
+  --accent-2: #7aa0ff;
+  --glow: 0 0 28px rgba(101, 224, 255, 0.45), 0 0 56px rgba(101, 224, 255, 0.15);
+}
+
+/* Tema: Cyber Sunset — magenta/laranja quente com gradiente */
+body.ui-v2[data-theme="cyber"] {
+  --bg-0: radial-gradient(1200px 800px at 85% -10%, #2a0e1e 0%, #110814 45%, #0a0810 100%);
+  --bg-1: linear-gradient(180deg, rgba(24, 10, 26, 0.92), rgba(12, 8, 22, 0.96));
+  --bg-2: linear-gradient(180deg, rgba(34, 14, 36, 0.95), rgba(18, 10, 28, 0.98));
+  --stroke: rgba(255, 140, 190, 0.38);
+  --text: #ffeef7;
+  --muted: #ffc9de;
+  --accent-1: #ff6ad5;
+  --accent-2: #ffb86b;
+  --glow: 0 0 28px rgba(255, 106, 213, 0.45), 0 0 56px rgba(255, 106, 213, 0.15);
+}
+
+/* Tema: Mono Clean — minimalista, alto contraste e neutro */
+body.ui-v2[data-theme="mono"] {
+  --bg-0: radial-gradient(1200px 800px at 50% -10%, #0f1114 0%, #0a0b0e 50%, #08090b 100%);
+  --bg-1: linear-gradient(180deg, rgba(18, 20, 24, 0.92), rgba(10, 12, 16, 0.96));
+  --bg-2: linear-gradient(180deg, rgba(22, 24, 28, 0.95), rgba(12, 14, 18, 0.98));
+  --stroke: rgba(200, 210, 228, 0.25);
+  --text: #f4f6f9;
+  --muted: #c9ced7;
+  --accent-1: #7cffca; /* acento sutil menta */
+  --accent-2: #c2ffe9;
+  --glow: 0 0 18px rgba(124, 255, 202, 0.25);
+}
+
+/* Bridge para o sistema de acento existente no styles.css */
+body.ui-v2 {
+  --accent-1: var(--accent-1);
+  --accent-2: var(--accent-2);
+}
+
+/* Canvas e superfícies principais */
+body.ui-v2 {
+  background: var(--bg-0) !important;
+  color: var(--text);
+}
+
+body.ui-v2 #painel-jogo {
+  background: var(--bg-2) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+body.ui-v2 .painel-controle {
+  background: var(--bg-1) !important;
+  border: 1px solid var(--stroke) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+}
+
+body.ui-v2 #painel-relatorios,
+body.ui-v2 #painel-visualizacoes canvas,
+body.ui-v2 .entrada-controle {
+  background: color-mix(in srgb, var(--bg-2), #000 10%) !important;
+  border: 1px solid color-mix(in srgb, var(--stroke), #000 10%) !important;
+}
+
+/* Cabeçalho / Título */
+body.ui-v2 .cabecalho-v2 {
+  display: grid;
+  gap: 8px;
+}
+
+body.ui-v2 .cabecalho-v2__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+body.ui-v2 .titulo-jogo {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem);
+  line-height: 1.1;
+  color: var(--text);
+}
+
+body.ui-v2[data-theme="neon"] .titulo-jogo,
+body.ui-v2[data-theme="cyber"] .titulo-jogo {
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: var(--glow);
+}
+
+body.ui-v2[data-theme="mono"] .titulo-jogo {
+  color: var(--text);
+  text-shadow: 0 0 0 transparent;
+}
+
+body.ui-v2 .descricao-jogo {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Preferências (seletor de tema) */
+body.ui-v2 .ui-preferencias {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.ui-v2 .ui-select {
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  color: #0b1024;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 8px 14px;
+  border: 1px solid var(--stroke);
+  cursor: pointer;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-1), #4f7cff 35%), color-mix(in srgb, var(--accent-2), #7aa0ff 15%));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+
+body.ui-v2 .ui-select:hover { transform: translateY(-1px); }
+body.ui-v2 .ui-select:active { transform: translateY(0); }
+
+/* Botões */
+body.ui-v2 .painel-controle button,
+body.ui-v2 .botao-toggle {
+  border-color: color-mix(in srgb, var(--accent-1), #4f7cff 30%) !important;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--accent-1), #4f7cff 40%),
+    color-mix(in srgb, var(--accent-2), #7aa0ff 15%)
+  ) !important;
+  color: #07122a !important;
+  font-weight: 800 !important;
+  border-radius: 12px !important;
+  letter-spacing: .2px;
+  transition: transform .15s ease, box-shadow .2s ease !important;
+}
+
+body.ui-v2 .painel-controle button:hover,
+body.ui-v2 .botao-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent-1), #000 20%);
+}
+
+/* Colapsáveis */
+body.ui-v2 .collapsible__toggle {
+  background: color-mix(in srgb, var(--bg-2), #000 6%) !important;
+  border: 1px solid color-mix(in srgb, var(--stroke), #fff 10%) !important;
+  color: var(--text) !important;
+}
+
+body.ui-v2 [data-collapsible].is-open .collapsible__toggle {
+  border-color: color-mix(in srgb, var(--accent-1), #ffffff 25%) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-1), #ffffff 15%), var(--glow);
+}
+
+/* HUD / Evolução topo */
+body.ui-v2 #evolucao-topo {
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--accent-1), #0e1220 14%),
+    color-mix(in srgb, var(--bg-1), #000 8%)
+  ) !important;
+  border: 1px solid color-mix(in srgb, var(--accent-1), #7ab7ff 35%) !important;
+}
+
+body.ui-v2 .evo-item strong {
+  color: color-mix(in srgb, var(--accent-1), #ffffff 20%) !important;
+}
+
+/* Canvas do jogo */
+body.ui-v2 #area-canvas {
+  background: radial-gradient(60% 60% at 50% 20%,
+    color-mix(in srgb, var(--accent-1), #000 85%) 0%,
+    color-mix(in srgb, var(--bg-2), #000 10%) 70%) !important;
+}
+
+body.ui-v2 #tela-jogo {
+  border-color: color-mix(in srgb, var(--accent-1), #82aaff 35%) !important;
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.6),
+    0 0 0 1px color-mix(in srgb, var(--accent-1), #ffffff 25%),
+    inset 0 2px 12px color-mix(in srgb, var(--accent-1), #000 85%) !important;
+}
+
+/* Comandos */
+body.ui-v2 #comandos-jogo {
+  background: color-mix(in srgb, var(--bg-1), #000 8%) !important;
+  border: 1px dashed color-mix(in srgb, var(--stroke), #fff 10%) !important;
+  color: var(--muted) !important;
+}
+
+body.ui-v2 #comandos-jogo kbd {
+  background: color-mix(in srgb, var(--accent-1), #4f7cff 25%) !important;
+  border-color: color-mix(in srgb, var(--accent-1), #7ab7ff 35%) !important;
+  color: #07122a !important;
+  font-family: var(--font-mono) !important;
+}
+
+/* Docs */
+body.ui-v2 .game-docs {
+  background: color-mix(in srgb, var(--bg-1), #000 4%) !important;
+  border: 1px solid var(--stroke) !important;
+}
+
+body.ui-v2 .game-docs__card code {
+  background: color-mix(in srgb, var(--accent-1), #4f7cff 12%) !important;
+  font-family: var(--font-mono) !important;
+}
+
+/* Modal introdutório */
+body.ui-v2 .game-intro-modal__content {
+  background: var(--bg-2) !important;
+  border: 1px solid color-mix(in srgb, var(--accent-1), #ffffff 20%) !important;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45), var(--glow) !important;
+}
+
+body.ui-v2 .game-intro-modal__action {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2)) !important;
+  color: #0b1024 !important;
+}
+
+/* Estados de foco/acessibilidade */
+body.ui-v2 *:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent-1), #ffffff 20%);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  body.ui-v2 * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
