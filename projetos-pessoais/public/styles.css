@@ -129,11 +129,13 @@ body {
 #coluna-esquerda {
   grid-area: esquerda;
   overflow: auto;
+  height: fit-content;
 }
 
 #coluna-direita {
   grid-area: direita;
   overflow: auto;
+  height: fit-content;
 }
 
 #painel-inferior {
