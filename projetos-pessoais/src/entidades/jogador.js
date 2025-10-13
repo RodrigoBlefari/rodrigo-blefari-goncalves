@@ -21,6 +21,7 @@ export class Jogador extends EntidadeBase {
     this.entrada = null;
     this.controladorIA = null;
     this.sombras = [];
+    this.inputCooldown = 0;
   }
 
   definirEntrada(entrada) {
@@ -50,12 +51,14 @@ export class Jogador extends EntidadeBase {
       if (this.controladorIA && this.estado === ESTADO_JOGADOR.OBSERVANDO) {
         this.controladorIA.atualizarJogador(delta, this, contexto);
       }
+      if (this.inputCooldown > 0) {
+        this.inputCooldown = Math.max(0, this.inputCooldown - delta);
+      }
       if (this.entrada) {
         this._aplicarEntrada(delta);
       }
       this.velY += gravidade * delta;
-      this.x += this.velX * delta;
-      this.y += this.velY * delta;
+      // Posição já integrada por EntidadeBase; aqui apenas resolvemos colisões após integração
       this._resolverColisoes(contexto);
       this.velX *= this.configuracao.atritoAr;
     }
@@ -73,7 +76,7 @@ export class Jogador extends EntidadeBase {
     } else if (this.entrada.estaAtivo("direita")) {
       this.velX = this.configuracao.velocidadeHorizontal;
     }
-    if (this.entrada.estaAtivo("pulo") && this.noChao) {
+    if (this.entrada.estaAtivo("pulo") && this.noChao && this.inputCooldown <= 0) {
       this.velY = -this.configuracao.impulsoPulo;
       this.noChao = false;
     }
@@ -120,6 +123,8 @@ export class Jogador extends EntidadeBase {
     }
     this.velX = 0;
     this.velY = 0;
+    this.noChao = true;
+    this.inputCooldown = 0.25;
   }
 
   _obterTopoPlataforma(contexto) {

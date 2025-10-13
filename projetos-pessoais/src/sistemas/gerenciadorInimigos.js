@@ -41,6 +41,7 @@ export class GerenciadorInimigos {
 
   limpar() {
     this.inimigos = [];
+    this.tempoDesdeSpawn = 0;
   }
 
   obterAtivos() {

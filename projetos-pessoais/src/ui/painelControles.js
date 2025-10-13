@@ -104,6 +104,14 @@ const CAMPOS_IA_GERAL = [
     titulo: "Tamanho populacao",
     descricao: "Número de agentes na população a cada geração. Valores maiores aumentam diversidade genética mas exigem mais processamento."
   },
+    { 
+    chave: "numeroMaximoInimigos", 
+    min: 1, 
+    max: 450, 
+    passo: 1, 
+    titulo: "Número máximo de inimigos",
+    descricao: "Número máximo de inimigos que a IA pode controlar simultaneamente. Valores maiores aumentam complexidade."
+  },
   { 
     chave: "taxaMutacao", 
     min: 0, 
@@ -264,14 +272,6 @@ const CAMPOS_IA_CONTROLE = [
     passo: 1, 
     titulo: "Controle multi-inimigos",
     descricao: "Se a IA pode controlar múltiplos inimigos simultaneamente. 0 = Não, 1 = Sim."
-  },
-  { 
-    chave: "numeroMaximoInimigos", 
-    min: 1, 
-    max: 450, 
-    passo: 1, 
-    titulo: "Número máximo de inimigos",
-    descricao: "Número máximo de inimigos que a IA pode controlar simultaneamente. Valores maiores aumentam complexidade."
   },
   { 
     chave: "adaptabilidade", 
@@ -458,6 +458,8 @@ export class PainelControles {
     if (this.containerRelatorios) {
       const controleRefresh = document.createElement("div");
       controleRefresh.className = "bloco-controle";
+      controleRefresh.dataset.collapsible = "";
+      controleRefresh.dataset.title = "Controles de Atualização";
       
       const cabecalho = document.createElement("h2");
       cabecalho.textContent = "Controles de Atualização";
@@ -805,6 +807,8 @@ export class PainelControles {
    _renderizarSecao(container, titulo, campos, configuracao) {
     const bloco = document.createElement("div");
     bloco.className = "bloco-controle";
+    bloco.dataset.collapsible = "";
+    bloco.dataset.title = titulo;
     const cabecalho = document.createElement("h2");
     cabecalho.textContent = titulo;
     bloco.appendChild(cabecalho);

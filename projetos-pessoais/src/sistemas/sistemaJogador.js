@@ -59,6 +59,7 @@ export class SistemaJogador {
       y: topo - altura,
       configuracao: this.configuracaoJogador,
     });
+    this.jogador.reiniciar(this.contexto);
     if (this.entrada) {
       this.jogador.definirEntrada(this.entrada);
     }

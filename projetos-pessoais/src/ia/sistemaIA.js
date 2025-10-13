@@ -266,6 +266,38 @@ for (let idx = inicio; idx < fim; idx++) {
     this.tempoDesdeRelatorio = 0;
   }
 
+  resetarTudo() {
+    try {
+      const largura = this.contexto?.canvas.width ?? 960;
+      const altura = this.contexto?.canvas.height ?? 540;
+      // Reset de todas as sombras para a posição base/solo
+      for (let i = 0; i < this.sombras.length; i++) {
+        const sombra = this.sombras[i];
+        sombra?.resetar(largura, altura, this.configuracaoPlataforma, this.configuracaoJogador);
+      }
+      // Reset das simulações independentes mantendo configurações atuais
+      this.simulacoes = this.simulacoes.map((sim, i) => {
+        if (!sim) return sim;
+        sim.configuracaoInimigos = this.contexto?.configuracao?.inimigos ?? sim.configuracaoInimigos;
+        sim.configuracaoProjeteis = this.contexto?.configuracao?.projeteis ?? sim.configuracaoProjeteis;
+        sim.configuracaoPlataforma = this.contexto?.configuracao?.plataforma ?? sim.configuracaoPlataforma;
+        sim.resetar(this.sombras[i]);
+        return sim;
+      });
+      // Zera contadores/temporizadores
+      this.cohortsProcessados = 0;
+      this.tempoSimulacao = 0;
+      this.tempoDesdeRelatorio = 0;
+      this.tempoVisualizacao = 0;
+      // Atualiza monitor/visualização
+      this.monitor?.registrarEvento?.("Reset global do sistema IA");
+      this.monitor?.atualizar?.(this._gerarResumo(), { instantaneo: true });
+      this.visualizacao?.limpar?.();
+    } catch (e) {
+      try { this.monitor?.registrarEvento?.("Falha ao resetar IA: " + (e?.message ?? String(e))); } catch {}
+    }
+  }
+
   _inicializarSombras() {
     const largura = this.contexto?.canvas.width ?? 960;
     const altura = this.contexto?.canvas.height ?? 540;

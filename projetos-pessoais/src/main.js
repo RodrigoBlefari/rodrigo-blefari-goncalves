@@ -252,6 +252,8 @@ const loop = new LoopJogo({
   taxaQuadros: configuracaoAtual.jogo.taxaQuadros,
 });
 
+reiniciarPartida();
+
 loop.iniciar();
 
 window.addEventListener("focus", () => {
@@ -306,6 +308,7 @@ function verificarEstadoJogador() {
 function reiniciarPartida() {
   gerenciadorInimigos.limpar();
   gerenciadorProjeteis.limpar();
+  sistemaIA.resetarTudo();
   sistemaJogador.reiniciar();
   partidaAtiva = true;
   telaDerrota.ocultar();
