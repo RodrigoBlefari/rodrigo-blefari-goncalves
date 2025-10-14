@@ -60,11 +60,12 @@ body {
   margin: 0;
 }
 
+/* Botões de lista principal - cor azul */
 .collapsible__toggle {
   width: 100%;
-  background: rgba(16, 22, 42, 0.95);
-  border: 1px solid rgba(118, 187, 255, 0.25);
-  color: #dfe7ff;
+  background: linear-gradient(135deg, rgba(67, 102, 209, 0.85), rgba(111, 144, 226, 0.75));
+  border: 2px solid rgba(118, 187, 255, 0.4);
+  color: #ffffff;
   border-radius: 12px;
   padding: 12px 16px;
   display: flex;
@@ -75,13 +76,57 @@ body {
   font-size: 0.95rem;
   font-weight: 600;
   text-align: left;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(67, 102, 209, 0.3);
 }
 
 .collapsible__toggle:hover {
-  border-color: rgba(118, 187, 255, 0.45);
-  background: rgba(26, 32, 62, 0.95);
-  transform: translateY(-1px);
+  border-color: rgba(118, 187, 255, 0.7);
+  background: linear-gradient(135deg, rgba(87, 122, 229, 0.95), rgba(131, 164, 246, 0.85));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(67, 102, 209, 0.4);
+}
+
+/* Botões de sublista - cor verde/turquesa */
+.bloco-controle .bloco-controle .collapsible__toggle,
+#historico-ia.bloco-controle .collapsible__toggle {
+  background: linear-gradient(135deg, rgba(64, 156, 120, 0.85), rgba(88, 180, 144, 0.75));
+  border: 2px solid rgba(102, 198, 168, 0.4);
+  box-shadow: 0 4px 12px rgba(64, 156, 120, 0.3);
+}
+
+.bloco-controle .bloco-controle .collapsible__toggle:hover,
+#historico-ia.bloco-controle .collapsible__toggle:hover {
+  border-color: rgba(102, 198, 168, 0.7);
+  background: linear-gradient(135deg, rgba(84, 176, 140, 0.95), rgba(108, 200, 164, 0.85));
+  box-shadow: 0 6px 18px rgba(64, 156, 120, 0.4);
+}
+
+/* Estados expandido/minimizado - indicação clara */
+[data-collapsible] .collapsible__toggle {
+  border-left: 4px solid rgba(255, 193, 7, 0.8);
+}
+
+[data-collapsible].is-open .collapsible__toggle {
+  border-left: 4px solid rgba(40, 167, 69, 0.8);
+  background: linear-gradient(135deg, rgba(67, 102, 209, 0.9), rgba(111, 144, 226, 0.8));
+}
+
+[data-collapsible].is-closed .collapsible__toggle {
+  border-left: 4px solid rgba(255, 193, 7, 0.8);
+  background: linear-gradient(135deg, rgba(108, 117, 125, 0.7), rgba(134, 142, 150, 0.6));
+  opacity: 0.8;
+}
+
+/* Animações especiais para modo performance */
+body.modo-desempenho .collapsible__toggle {
+  transition: none;
+  box-shadow: none;
+}
+
+body.modo-desempenho .collapsible__toggle:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .collapsible__icon {
@@ -181,7 +226,13 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     0 10px 24px rgba(0, 0, 0, 0.4);
   min-width: 300px;
-  max-height: 150px;
+  max-height: 400px;
+}
+
+#historico-ia .collapsible__content {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #painel-jogo {
@@ -989,7 +1040,7 @@ select:focus {
   display: none !important;
 }
 .bloco-controle.is-open .collapsible__content {
-  display: block;
+  display: block !important;
 }
 .collapsible__toggle {
   background: rgba(16, 22, 42, 0.6);
@@ -1334,4 +1385,75 @@ body.modal-open {
   .game-intro-modal__content {
     padding: 20px;
   }
+}
+
+/* ULTRA PERFORMANCE MODE - Desabilitado quando animações IA estão off */
+body.modo-desempenho {
+  background: #090b12;
+  animation: none;
+}
+
+body.modo-desempenho * {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+}
+
+body.modo-desempenho .painel-controle {
+  background: rgba(22, 28, 52, 0.7);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.modo-desempenho #tela-jogo {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+body.modo-desempenho .btn:hover,
+body.modo-desempenho .painel-controle button:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+body.modo-desempenho #painel-visualizacoes canvas {
+  box-shadow: none;
+  border: 1px solid rgba(98, 158, 255, 0.15);
+}
+
+body.modo-desempenho .game-docs {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Adiciona indicador visual de modo performance */
+body.modo-desempenho::before {
+  content: "⚡ ULTRA PERFORMANCE";
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  z-index: 9999;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+}
+
+/* Otimizações específicas para canvas no modo performance */
+body.modo-desempenho canvas {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Remove gradientes complexos no modo performance */
+body.modo-desempenho .painel-controle,
+body.modo-desempenho #painel-jogo,
+body.modo-desempenho .collapsible__toggle {
+  background: rgba(22, 28, 52, 0.8) !important;
 }

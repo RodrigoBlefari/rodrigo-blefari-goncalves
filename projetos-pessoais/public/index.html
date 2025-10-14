@@ -45,12 +45,12 @@
           <h1>Rede Neural Rogue</h1>
           <div id="barra-presets" class="barra-presets"></div>
           <div id="status-relatorios-top" class="status-relatorios status-top"></div>
+          <div id="comandos-jogo" class="comandos-jogo"></div>
         </header>
         <div id="area-canvas">
           <canvas id="tela-jogo" width="960" height="540"></canvas>
           <div id="tela-derrota" class="oculto"></div>
         </div>
-        <div id="comandos-jogo" class="comandos-jogo"></div>
         <div id="hud">
           <div id="info-jogador">
             <div id="hp-jogador">
@@ -69,9 +69,10 @@
               </div>
               <div id="qualidade-estado">Aguardando avaliacao</div>
             </div>
-            <div id="historico-ia">
-              <div class="historico-label">Histórico da I.A</div>
-              <div id="historico-lista"></div>
+            <div id="historico-ia" class="bloco-controle" data-collapsible data-title="Histórico da I.A">
+              <div class="collapsible__content">
+                <div id="historico-lista"></div>
+              </div>
             </div>
           </div>
         </div>

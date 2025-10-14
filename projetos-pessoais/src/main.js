@@ -183,14 +183,14 @@ document.addEventListener("click", (ev) => {
   const botao = ev.target?.closest?.(".collapsible__toggle");
   if (!botao) return;
 
-  // Evita que outro handler (legado) também processe
-  ev.preventDefault();
-  ev.stopPropagation();
-
   // Se o botão pertence ao cabeçalho legado (inserido por bloco-controle.js), deixa o script antigo cuidar
   if (botao.closest?.(".collapsible__header")) {
     return;
   }
+
+  // Evita que outro handler (legado) também processe apenas para BLOCOS NOVOS
+  ev.preventDefault();
+  ev.stopPropagation();
 
   // Obtém alvo pelo aria-controls; fallback: procura conteúdo dentro do bloco
   const alvoId = botao.getAttribute("aria-controls");
@@ -209,7 +209,7 @@ document.addEventListener("click", (ev) => {
   // Aplica múltiplas formas de ocultação para robustez
   conteudo.hidden = !proximo;
   conteudo.setAttribute("aria-hidden", proximo ? "false" : "true");
-  conteudo.style.display = proximo ? "" : "none";
+  conteudo.style.display = proximo ? "block" : "none";
 
   // Alterna classe visual no bloco pai, se existir (CSS reage a is-open/is-closed)
   if (bloco) {
@@ -305,30 +305,68 @@ botaoVisibilidadeAgentes.addEventListener("click", () => {
 const hud = new HudVida(hudElemento);
 const telaDerrota = new TelaDerrota(telaDerrotaElemento, () => reiniciarPartida());
 
+// Declara o loop antes de usar em outras funções
+let loop = null;
+
 const aplicarModoDesempenho = (ativo) => {
   efeitosVisuaisAtivos = !!ativo;
   contexto.armazenarDado("efeitosVisuaisAtivos", efeitosVisuaisAtivos);
+  
   if (!efeitosVisuaisAtivos) {
+    // Limpa canvas e otimiza para performance
     const ctx = contexto.contexto;
     if (ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Define configurações de performance extrema
+      ctx.imageSmoothingEnabled = false;
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    
+    // Ajusta taxa de quadros para ultra performance
+    if (loop) {
+      loop.definirTaxaQuadros(15); // Reduz FPS drasticamente em modo performance
+    }
+  } else {
+    // Restaura configurações visuais normais
+    const ctx = contexto.contexto;
+    if (ctx) {
+      ctx.imageSmoothingEnabled = true;
+    }
+    
+    // Restaura taxa de quadros normal
+    if (loop) {
+      loop.definirTaxaQuadros(configuracaoAtual.jogo.taxaQuadros);
     }
   }
+  
   document.body.classList.toggle(BODY_CLASS_MODO_DESEMPENHO, !efeitosVisuaisAtivos);
+  
   if (avisoDesempenho) {
     avisoDesempenho.hidden = efeitosVisuaisAtivos;
+    avisoDesempenho.textContent = efeitosVisuaisAtivos 
+      ? "Modo desempenho ativo: simulacao continua em segundo plano."
+      : "⚡ ULTRA PERFORMANCE: Animações desabilitadas, FPS reduzido para máxima eficiência";
   }
+  
   try {
     sessionStorage.setItem(PERFORMANCE_SESSION_KEY, efeitosVisuaisAtivos ? "on" : "off");
   } catch {
     // Ignorado: navegadores podem bloquear sessionStorage em alguns contextos.
   }
+  
+  // Configura sistemas para modo performance
   visualizacaoIA?.definirAnimacoesAtivas(efeitosVisuaisAtivos);
+  sistemaIA?.definirModoPerformance?.(!efeitosVisuaisAtivos);
+  gerenciadorInimigos?.definirModoPerformance?.(!efeitosVisuaisAtivos);
+  gerenciadorProjeteis?.definirModoPerformance?.(!efeitosVisuaisAtivos);
+  
   if (efeitosVisuaisAtivos) {
     atualizarHud();
     cenaPrincipal.desenhar();
   }
   atualizarBotaoEfeitos();
+  
+  console.log(efeitosVisuaisAtivos ? "Modo visual normal ativado" : "⚡ ULTRA PERFORMANCE ativado - FPS reduzido para máxima eficiência");
 };
 
 botaoEfeitosVisuais = document.createElement("button");
@@ -349,7 +387,7 @@ aplicarModoDesempenho(efeitosVisuaisAtivos);
 
 let partidaAtiva = true;
 
-const loop = new LoopJogo({
+loop = new LoopJogo({
   atualizar: (delta) => {
     atualizarJogo(delta);
   },

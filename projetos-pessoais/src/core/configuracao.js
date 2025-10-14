@@ -31,7 +31,7 @@ export const configuracaoInicial = Object.freeze({
     variacaoAltura: 140,
     alturaBase: 90,
     distanciaAtaqueJogador: 280,
-    podeAtirar: false, // Parâmetro para definir se os inimigos podem atirar
+    podeAtirar: true, // Parâmetro para definir se os inimigos podem atirar
     rangeAtaque: 1000, // Range de ataque dos inimigos (1 a 5000)
     intervaloAtaque: 1.5, // Intervalo entre ataques dos inimigos (0.1 a 10 segundos)
     velocidadeProjetil: 280, // Velocidade dos projéteis dos inimigos (100 a 1000)

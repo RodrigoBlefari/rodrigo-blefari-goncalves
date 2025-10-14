@@ -10,6 +10,11 @@ export class LoopJogo {
     this.instanteAnterior = 0;
   }
 
+  definirTaxaQuadros(novaTaxa) {
+    this.taxaQuadros = novaTaxa;
+    this.deltaIdeal = 1 / this.taxaQuadros;
+  }
+
   iniciar() {
     if (this.rodando) {
       return;

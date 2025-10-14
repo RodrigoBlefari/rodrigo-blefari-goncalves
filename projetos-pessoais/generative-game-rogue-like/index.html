@@ -48,13 +48,10 @@
         <header id="cabecalho" class="cabecalho-v2">
           <div class="cabecalho-v2__top">
             <h1 class="titulo-jogo">Rede Neural Rogue</h1>
-            <div id="ui-preferencias" class="ui-preferencias" role="group" aria-label="Preferências de interface">
-              <label for="themeSelect" class="visually-hidden">Tema</label>
-              <select id="themeSelect" class="ui-select" aria-label="Selecionar tema">
-                <option value="neon">Neon Noir</option>
-                <option value="cyber">Cyber Sunset</option>
-                <option value="mono">Mono Clean</option>
-              </select>
+            <div id="status-basico" class="status-basico">
+              <span>Geração: <span id="gen-count">0</span></span>
+              <span>•</span>
+              <span>IA: <span id="ia-status">Aguardando</span></span>
             </div>
           </div>
           <p id="descricao" class="descricao-jogo">
@@ -66,11 +63,20 @@
           <div id="tela-derrota" class="oculto"></div>
         </div>
         <div id="hud">
-          <div id="evolucao-topo" aria-live="polite">
-            <span class="evo-item"><strong>Geração:</strong> <span id="evo-geracao">0</span></span>
-            <span class="evo-item"><strong>Melhor:</strong> <span id="evo-melhor">0</span></span>
-            <span class="evo-item"><strong>Média:</strong> <span id="evo-media">0</span></span>
-            <span class="evo-item"><strong>Estado:</strong> <span id="evo-estado">aquecendo</span></span>
+          <div id="status-relatorios-top" class="status-relatorios status-top">
+            <div id="evolucao-topo" aria-live="polite">
+              <span class="evo-item"><strong>Geração:</strong> <span id="evo-geracao">0</span></span>
+              <span class="evo-item"><strong>Melhor:</strong> <span id="evo-melhor">0</span></span>
+              <span class="evo-item"><strong>Média:</strong> <span id="evo-media">0</span></span>
+              <span class="evo-item"><strong>Estado:</strong> <span id="evo-estado">aquecendo</span></span>
+            </div>
+          </div>
+          <div id="comandos-jogo" class="comandos-jogo">
+            <div class="cmd"><kbd>←</kbd><kbd>→</kbd> ou <kbd>A</kbd><kbd>D</kbd> mover</div>
+            <div class="cmd"><kbd>Espaço</kbd> pular</div>
+            <div class="cmd"><kbd>R</kbd> reiniciar</div>
+            <div class="cmd"><kbd>P</kbd> pausar</div>
+            <div class="cmd"><kbd>M</kbd> modo desempenho (toggle efeitos)</div>
           </div>
           <div id="info-jogador">
             <div id="hp-jogador">
@@ -89,17 +95,11 @@
               </div>
               <div id="qualidade-estado">Aguardando avaliacao</div>
             </div>
-            <div id="historico-ia">
-              <div class="historico-label">Histórico da I.A</div>
-              <div id="historico-lista"></div>
+            <div id="historico-ia" class="bloco-controle" data-collapsible data-title="Histórico da I.A">
+              <div class="collapsible__content">
+                <div id="historico-lista"></div>
+              </div>
             </div>
-        </div>
-        <div id="comandos-jogo">
-          <div class="cmd"><kbd>←</kbd><kbd>→</kbd> ou <kbd>A</kbd><kbd>D</kbd> mover</div>
-          <div class="cmd"><kbd>Espaço</kbd> pular</div>
-          <div class="cmd"><kbd>R</kbd> reiniciar</div>
-          <div class="cmd"><kbd>P</kbd> pausar</div>
-          <div class="cmd"><kbd>M</kbd> modo desempenho (toggle efeitos)</div>
         </div>
       </div>
       <section id="painel-visualizacoes" class="bloco-controle" data-collapsible>
@@ -187,6 +187,5 @@
 
     <script type="module" src="../src/main.js"></script>
     <script src="./scripts/bloco-controle.js"></script>
-    <script type="module" src="./scripts/tema-ui.js"></script>
   </body>
 </html>

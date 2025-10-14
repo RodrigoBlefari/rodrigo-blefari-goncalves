@@ -463,15 +463,6 @@ export class PainelControles {
       cabecalhoAvancado.setAttribute("aria-controls", idAvancado);
       cabecalhoAvancado.setAttribute("aria-expanded", "true");
       cabecalhoAvancado.innerHTML = `<span>IA Avançado</span><span class="collapsible__icon" aria-hidden="true"></span>`;
-      cabecalhoAvancado.addEventListener("click", () => {
-        const expanded = cabecalhoAvancado.getAttribute("aria-expanded") === "true";
-        cabecalhoAvancado.setAttribute("aria-expanded", String(!expanded));
-        const alvo = secAvancado.querySelector(`#${idAvancado}`);
-        if (alvo) {
-          alvo.hidden = expanded;
-        }
-        secAvancado.classList.toggle("is-open", !expanded);
-      });
       secAvancado.appendChild(cabecalhoAvancado);
 
       const conteudoAvancado = document.createElement("div");
@@ -501,15 +492,6 @@ export class PainelControles {
       cabecalho.setAttribute("aria-controls", idRefresh);
       cabecalho.setAttribute("aria-expanded", "true");
       cabecalho.innerHTML = `<span>Controles de Atualização</span><span class="collapsible__icon" aria-hidden="true"></span>`;
-      cabecalho.addEventListener("click", () => {
-        const expanded = cabecalho.getAttribute("aria-expanded") === "true";
-        cabecalho.setAttribute("aria-expanded", String(!expanded));
-        const alvo = controleRefresh.querySelector(`#${idRefresh}`);
-        if (alvo) {
-          alvo.hidden = expanded;
-        }
-        controleRefresh.classList.toggle("is-open", !expanded);
-      });
       controleRefresh.appendChild(cabecalho);
 
       const conteudoRefresh = document.createElement("div");
@@ -987,16 +969,6 @@ export class PainelControles {
     cabecalho.setAttribute("aria-controls", contentId);
     cabecalho.setAttribute("aria-expanded", "true");
     cabecalho.innerHTML = `<span>${titulo}</span><span class="collapsible__icon" aria-hidden="true"></span>`;
-    cabecalho.addEventListener("click", () => {
-      const expanded = cabecalho.getAttribute("aria-expanded") === "true";
-      cabecalho.setAttribute("aria-expanded", String(!expanded));
-      // Esconde ou revela apenas este conteúdo alvo
-      const alvo = bloco.querySelector(`#${contentId}`);
-      if (alvo) {
-        alvo.hidden = expanded;
-      }
-      bloco.classList.toggle("is-open", !expanded);
-    });
     bloco.appendChild(cabecalho);
 
     const conteudo = document.createElement("div");
