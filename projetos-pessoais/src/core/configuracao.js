@@ -51,6 +51,7 @@ export const configuracaoInicial = Object.freeze({
   },
    ia: {
     tamanhoPopulacao: 32,
+    quantidadeIAsTreinando: 10, // Número de IAs treinando simultaneamente (1 a tamanhoPopulacao)
     taxaMutacao: 0.1,
     elitePercentual: 0.2, // Percentual da elite preservada em cada geração (0.05 a 0.8)
     velocidadeSimulacao: 2.0,
@@ -88,6 +89,5 @@ export const configuracaoInicial = Object.freeze({
     adaptabilidadeIA: 1.0, // Quanto a IA adapta seu comportamento (0.0 a 5.0)
     memoriaCurtoPrazoIA: 10, // Número de gerações mantidas na memória de curto prazo da IA (1 a 100)
     memoriaLongoPrazoIA: 100, // Número de gerações mantidas na memória de longo prazo da IA (10 a 1000)
-    quantidadeIAsTreinando: 10, // Número de IAs treinando simultaneamente (1 a 450)
   },
 });

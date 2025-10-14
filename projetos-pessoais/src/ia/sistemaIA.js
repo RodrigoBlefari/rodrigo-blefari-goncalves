@@ -42,6 +42,8 @@ export class SistemaIA {
     this.pesoExemplosFalha = configuracaoIA.pesoExemplosFalha !== undefined ? configuracaoIA.pesoExemplosFalha : 1.0;
     this.taxaAprendizadoSucesso = configuracaoIA.taxaAprendizadoSucesso !== undefined ? configuracaoIA.taxaAprendizadoSucesso : 0.1;
     this.taxaAprendizadoFalha = configuracaoIA.taxaAprendizadoFalha !== undefined ? configuracaoIA.taxaAprendizadoFalha : 0.1;
+    // Adiciona a propriedade para controlar a quantidade de IAs treinando simultaneamente (clamp 1..1000)
+    this.quantidadeIAsTreinando = Math.max(1, Math.min(1000, configuracaoIA.quantidadeIAsTreinando ?? 10));
   }
 
   definirContexto(contexto) {
@@ -181,6 +183,13 @@ for (let idx = inicio; idx < fim; idx++) {
     const tp = Math.max(1, Math.floor(this.configuracaoIA.tamanhoPopulacao ?? 1));
     this.configuracaoIA.tamanhoPopulacao = tp;
 
+    // Atualiza a quantidade de IAs treinando (clamp 1..1000) e auto-expande população quando necessário
+    const requestedQty = Math.max(1, Math.min(1000, configuracaoIA.quantidadeIAsTreinando ?? this.quantidadeIAsTreinando ?? 10));
+    this.quantidadeIAsTreinando = requestedQty;
+    if (requestedQty > this.configuracaoIA.tamanhoPopulacao) {
+      this.configuracaoIA.tamanhoPopulacao = requestedQty;
+    }
+
     this.relatorioIntervalo = configuracaoIA.relatorioIntervalo || 3; // Atualiza o intervalo de relatório com base na configuração
     this.pesoSucesso = configuracaoIA.pesoSucesso !== undefined ? configuracaoIA.pesoSucesso : 1.0;
     this.pesoFalha = configuracaoIA.pesoFalha !== undefined ? configuracaoIA.pesoFalha : 1.0;
@@ -202,7 +211,7 @@ for (let idx = inicio; idx < fim; idx++) {
     if (this.contexto) {
       this.configuracaoPlataforma = this.contexto.configuracao.plataforma;
     }
-    if (this.sombras.length !== configuracaoIA.tamanhoPopulacao) {
+    if (this.sombras.length !== this.configuracaoIA.tamanhoPopulacao) {
       this._inicializarSombras();
     }
  }
@@ -444,12 +453,10 @@ for (let idx = inicio; idx < fim; idx++) {
   }
 
   _calcularTamanhoCoorte() {
+    // Tamanho da coorte controlado diretamente por quantidadeIAsTreinando (com clamp pela população)
+    const quantidadeTreinando = Math.max(1, Math.floor(this.configuracaoIA?.quantidadeIAsTreinando ?? this.quantidadeIAsTreinando ?? 10));
     const tp = this.sombras?.length || Math.max(1, Math.floor(this.configuracaoIA?.tamanhoPopulacao ?? 1));
-    const renderAtivo = this.contexto?.obterDado("efeitosVisuaisAtivos") !== false;
-    // Quando renderiza, coortes menores para preservar FPS; sem render, coortes maiores para acelerar aprendizado
-    const base = Math.ceil(tp / (renderAtivo ? 12 : 4));
-    const tamanho = Math.max(8, Math.min(base, 256));
-    return Math.min(tamanho, tp);
+    return Math.min(quantidadeTreinando, tp);
   }
 
   _aplicarTemaPorAgente(cor) {

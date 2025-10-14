@@ -181,6 +181,7 @@ body {
 
 /* Game panel specific styles */
 #painel-jogo {
+  height: fit-content;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);

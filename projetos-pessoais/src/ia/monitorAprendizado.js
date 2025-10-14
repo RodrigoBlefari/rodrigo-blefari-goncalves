@@ -115,6 +115,10 @@ export class MonitorAprendizado {
     this.melhorFitnessGeral = 0;
     this.piorFitnessGeral = Infinity;
     this.geracaoMelhorFitness = 0;
+
+    // Controle de atualização apenas no front (throttle de render)
+    this.intervaloFront = 1; // segundos (padrão)
+    this._ultimoRender = 0;  // timestamp do último render (ms)
   }
 
   definirIndicadorQualidade(indicador) {
@@ -181,6 +185,15 @@ export class MonitorAprendizado {
     if (!this.painel) {
       return;
     }
+    // Throttle: respeita apenas o intervalo do FRONT-END para atualizar DOM
+    try {
+      const agora = (globalThis.performance?.now?.() ?? Date.now());
+      const limite = (this.intervaloFront ?? 1) * 1000;
+      if (this._ultimoRender && (agora - this._ultimoRender) < limite) {
+        return;
+      }
+      this._ultimoRender = agora;
+    } catch {}
     const pacote = this._obterPacoteEstado(this.estadoAtual);
     const tendencia = this._descreverTendencia(this.deltaMelhor, this.deltaMedia);
     const linhas = [

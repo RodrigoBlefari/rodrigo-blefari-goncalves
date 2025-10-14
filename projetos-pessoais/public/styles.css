@@ -216,6 +216,26 @@ body {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
+/* Barra de presets no topo do painel do jogo */
+#barra-presets {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+#barra-presets .lbl-preset-topo {
+  font-size: 12px;
+  color: #9ad4ff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#barra-presets select {
+  width: auto;
+  min-width: 180px;
+}
+
 #area-canvas {
   width: 100%;
   max-width: 100%;
@@ -766,15 +786,15 @@ select:focus {
 .painel-controle button {
   padding: 10px 14px;
   border-radius: 8px;
-  border: 1px solid rgba(122, 183, 255, 0.4);
-  background: rgba(18, 25, 46, 0.82);
-  color: #9ad4ff;
+  border: 1px solid rgba(122, 183, 255, 0.28);
+  background: rgba(18, 25, 46, 0.72);
+  color: #cfe3ff;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 5px 14px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .painel-controle button:hover {
@@ -817,6 +837,98 @@ select:focus {
   color: #9ad4ff;
   box-shadow: inset 0 0 18px rgba(18, 26, 46, 0.65);
   overflow-y: auto;
+}
+
+/* Status de relatórios ancorado acima do canvas */
+.status-relatorios {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 10px 12px;
+  margin: 4px 0 6px 0;
+  border-radius: 10px;
+  background: rgba(12, 16, 28, 0.65);
+  border: 1px solid rgba(122, 183, 255, 0.25);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.status-relatorios .status-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.status-relatorios .status-label {
+  color: #a6c8ff;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.status-relatorios .status-valor {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.status-top {
+  order: -1;
+}
+
+/* Comandos do jogo abaixo do canvas */
+#comandos-jogo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 0 0;
+}
+
+/* Estilos de botões por papel */
+.btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(122, 183, 255, 0.4);
+  background: rgba(18, 25, 46, 0.82);
+  color: #e8f4ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+.btn-primary {
+  background: linear-gradient(135deg, #4366d1, #6f90e2);
+  color: #0b1126;
+  border-color: rgba(122, 183, 255, 0.35);
+}
+.btn-secondary {
+  background: linear-gradient(135deg, #3a4663, #54678f);
+  color: #e3ecff;
+  border-color: rgba(98, 140, 210, 0.32);
+}
+.btn-danger {
+  background: linear-gradient(135deg, #ff5a78, #ff8aa0);
+  color: #ffffff;
+  border-color: rgba(255, 120, 150, 0.42);
+  box-shadow: 0 10px 22px rgba(255, 90, 120, 0.22);
+}
+.btn-toggle {
+  background: linear-gradient(135deg, #4766c8, #6f93df);
+  color: #0b1126;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 183, 255, 0.3);
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+.btn-toggle.is-off {
+  background: linear-gradient(135deg, #2a3044, #1a2233);
+  color: #d6e2ff;
+  border-color: rgba(88, 120, 188, 0.35);
 }
 
 .resumo-relatorios {
@@ -870,6 +982,25 @@ select:focus {
 
 .oculto {
   display: none;
+}
+
+/* Colapsáveis: suporte também para blocos novos (sem data-collapsible) */
+.bloco-controle.is-closed .collapsible__content {
+  display: none !important;
+}
+.bloco-controle.is-open .collapsible__content {
+  display: block;
+}
+.collapsible__toggle {
+  background: rgba(16, 22, 42, 0.6);
+  border: 1px solid rgba(118, 187, 255, 0.22);
+  color: #e1ebff;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.collapsible__toggle:hover {
+  filter: brightness(1.06);
+  border-color: rgba(118, 187, 255, 0.36);
 }
 
 @media (max-width: 1400px) {

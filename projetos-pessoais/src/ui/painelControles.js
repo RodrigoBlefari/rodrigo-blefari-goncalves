@@ -104,7 +104,15 @@ const CAMPOS_IA_GERAL = [
     titulo: "Tamanho populacao",
     descricao: "Número de agentes na população a cada geração. Valores maiores aumentam diversidade genética mas exigem mais processamento."
   },
-    { 
+  { 
+    chave: "quantidadeIAsTreinando", 
+    min: 1, 
+    max: 1000, 
+    passo: 1, 
+    titulo: "Quantidade de IA",
+    descricao: "Número de IAs treinando simultaneamente na tela. Controla quantos agentes são visíveis e ativos na simulação (máx 1000; será limitado à população)."
+  },
+  { 
     chave: "numeroMaximoInimigos", 
     min: 1, 
     max: 450, 
@@ -320,6 +328,8 @@ export class PainelControles {
     this.visualizacao = null;
     this.animacoesAtivas = true;
     this.botaoAnimacoes = null;
+    // Sequenciador para IDs únicos de submenus colapsáveis
+    this._seqCollapsiveis = 0;
     this._renderizar();
     this._adicionarControlesAdicionais();
   }
@@ -335,8 +345,6 @@ export class PainelControles {
       // Secção IA Avançado (melhor distribuído, com colapsável)
       const secAvancado = document.createElement("section");
       secAvancado.className = "bloco-controle";
-      secAvancado.dataset.collapsible = "";
-      secAvancado.dataset.title = "IA Avançado";
 
       // Grupo: Presets de Performance
       const blocoPerf = document.createElement("div");
@@ -446,11 +454,38 @@ export class PainelControles {
         aplicarTema(e.target.value);
       });
 
-      // Montagem da seção IA Avançado
-      secAvancado.appendChild(blocoPerf);
-      secAvancado.appendChild(blocoAuto);
-      secAvancado.appendChild(blocoVisu);
-      secAvancado.appendChild(blocoTema);
+      // Montagem da seção IA Avançado (colapsável)
+      // Cabeçalho colapsável acessível (IA Avançado)
+      const idAvancado = "ia-avancado-conteudo";
+      const cabecalhoAvancado = document.createElement("button");
+      cabecalhoAvancado.type = "button";
+      cabecalhoAvancado.className = "collapsible__toggle";
+      cabecalhoAvancado.setAttribute("aria-controls", idAvancado);
+      cabecalhoAvancado.setAttribute("aria-expanded", "true");
+      cabecalhoAvancado.innerHTML = `<span>IA Avançado</span><span class="collapsible__icon" aria-hidden="true"></span>`;
+      cabecalhoAvancado.addEventListener("click", () => {
+        const expanded = cabecalhoAvancado.getAttribute("aria-expanded") === "true";
+        cabecalhoAvancado.setAttribute("aria-expanded", String(!expanded));
+        const alvo = secAvancado.querySelector(`#${idAvancado}`);
+        if (alvo) {
+          alvo.hidden = expanded;
+        }
+        secAvancado.classList.toggle("is-open", !expanded);
+      });
+      secAvancado.appendChild(cabecalhoAvancado);
+
+      const conteudoAvancado = document.createElement("div");
+      conteudoAvancado.className = "collapsible__content";
+      conteudoAvancado.id = idAvancado;
+      conteudoAvancado.hidden = false;
+      secAvancado.classList.add("is-open");
+
+      conteudoAvancado.appendChild(blocoPerf);
+      conteudoAvancado.appendChild(blocoAuto);
+      conteudoAvancado.appendChild(blocoVisu);
+      conteudoAvancado.appendChild(blocoTema);
+      secAvancado.appendChild(conteudoAvancado);
+
       this.containerIA.appendChild(secAvancado);
     }
     
@@ -458,19 +493,37 @@ export class PainelControles {
     if (this.containerRelatorios) {
       const controleRefresh = document.createElement("div");
       controleRefresh.className = "bloco-controle";
-      controleRefresh.dataset.collapsible = "";
-      controleRefresh.dataset.title = "Controles de Atualização";
       
-      const cabecalho = document.createElement("h2");
-      cabecalho.textContent = "Controles de Atualização";
+      const idRefresh = "controles-atualizacao-conteudo";
+      const cabecalho = document.createElement("button");
+      cabecalho.type = "button";
+      cabecalho.className = "collapsible__toggle";
+      cabecalho.setAttribute("aria-controls", idRefresh);
+      cabecalho.setAttribute("aria-expanded", "true");
+      cabecalho.innerHTML = `<span>Controles de Atualização</span><span class="collapsible__icon" aria-hidden="true"></span>`;
+      cabecalho.addEventListener("click", () => {
+        const expanded = cabecalho.getAttribute("aria-expanded") === "true";
+        cabecalho.setAttribute("aria-expanded", String(!expanded));
+        const alvo = controleRefresh.querySelector(`#${idRefresh}`);
+        if (alvo) {
+          alvo.hidden = expanded;
+        }
+        controleRefresh.classList.toggle("is-open", !expanded);
+      });
       controleRefresh.appendChild(cabecalho);
-      
+
+      const conteudoRefresh = document.createElement("div");
+      conteudoRefresh.className = "collapsible__content";
+      conteudoRefresh.id = idRefresh;
+      conteudoRefresh.hidden = false;
+      controleRefresh.classList.add("is-open");
+
       // Seletor de intervalo de atualização
       const seletorRefresh = document.createElement("div");
       seletorRefresh.className = "entrada-controle";
       
       const labelRefresh = document.createElement("label");
-      labelRefresh.textContent = "Intervalo de atualização (segundos)";
+      labelRefresh.textContent = "Intervalo de atualização dos relatórios (segundos)";
       seletorRefresh.appendChild(labelRefresh);
       
       const selectRefresh = document.createElement("select");
@@ -484,22 +537,28 @@ export class PainelControles {
         <option value="10">10 segundos</option>
       `;
       seletorRefresh.appendChild(selectRefresh);
-      
+
+      conteudoRefresh.appendChild(seletorRefresh);
+
       // Adiciona evento para alterar o intervalo de atualização
       selectRefresh.addEventListener("change", (evento) => {
         const novoIntervalo = parseFloat(evento.target.value);
-        this.configuracao.ia.relatorioIntervalo = novoIntervalo;
-        this.registrarEventoRelatorio(`Intervalo de atualização alterado para ${novoIntervalo} segundos`);
+        // Intervalo é apenas para o FRONT (throttle de render no MonitorAprendizado)
+        try {
+          if (this.configuracao?.ia?.monitor) {
+            this.configuracao.ia.monitor.intervaloFront = novoIntervalo;
+          }
+        } catch {}
+        this.registrarEventoRelatorio(`Intervalo (front) alterado para ${novoIntervalo}s`);
       });
       
-      controleRefresh.appendChild(seletorRefresh);
-      
+      controleRefresh.appendChild(conteudoRefresh);
+
       this.containerRelatorios.appendChild(controleRefresh);
       
-      // Adiciona área para mostrar o melhor e pior resultado
-      this.areaStatus = document.createElement("div");
-      this.areaStatus.className = "status-relatorios";
-      this.areaStatus.innerHTML = `
+      // Adiciona área para mostrar o melhor e pior resultado (prioriza topo do jogo)
+      const topoStatus = document.getElementById("status-relatorios-top");
+      const markupStatus = `
         <h3>Evolução Histórica</h3>
         <div class="status-item">
           <span class="status-label">Melhor Fitness:</span>
@@ -514,31 +573,84 @@ export class PainelControles {
           <span id="geracao-melhor" class="status-valor">0</span>
         </div>
       `;
-      this.containerRelatorios.appendChild(this.areaStatus);
+      if (topoStatus) {
+        topoStatus.innerHTML = markupStatus;
+        this.areaStatus = topoStatus;
+      } else {
+        this.areaStatus = document.createElement("div");
+        this.areaStatus.className = "status-relatorios";
+        this.areaStatus.innerHTML = markupStatus;
+        this.containerRelatorios.appendChild(this.areaStatus);
+      }
     }
   }
 
   _alternarAjusteAutomaticoIA(botao) {
-    // Alternar estado do ajuste automático da IA
+    // Alterna apenas o preset automaticamente; ranges sincronizam via preset
     this.ajusteAutomaticoIaAtivo = !this.ajusteAutomaticoIaAtivo;
-    
-    // Atualizar o texto do botão
-    botao.textContent = this.ajusteAutomaticoIaAtivo 
-      ? "Ajuste Automático da IA: Ligado" 
+
+    botao.textContent = this.ajusteAutomaticoIaAtivo
+      ? "Ajuste Automático da IA: Ligado"
       : "Ajuste Automático da IA: Desligado";
-    
-    // Se estiver ativando, iniciar o intervalo de ajuste
-    if (this.ajusteAutomaticoIaAtivo) {
-      this.intervaloAjuste = setInterval(() => {
-        this._ajustarPesosIaComBaseEmRelatorios();
-      }, 1000); // Ajustar a cada 1 segundo
-      
-      this.registrarEventoRelatorio("Ajuste automático da IA ativado");
-    } else {
-      // Se estiver desativando, limpar o intervalo
-      clearInterval(this.intervaloAjuste);
+
+    // Limpa ciclo anterior
+    clearInterval(this.intervaloAjuste);
+
+    if (!this.ajusteAutomaticoIaAtivo) {
       this.registrarEventoRelatorio("Ajuste automático da IA desativado");
+      return;
     }
+
+    this.registrarEventoRelatorio("Ajuste automático da IA ativado");
+    this._ultimoPresetAuto = null;
+
+    const aplicarPreset = (preset) => {
+      if (!preset || preset === this._ultimoPresetAuto) {
+        return;
+      }
+      // Sincroniza selects topo e lateral
+      const selectTopo = document.getElementById("global-preset-select");
+      const selectLateral = document.getElementById("tipo-performance");
+      if (selectTopo) selectTopo.value = preset;
+      if (selectLateral) selectLateral.value = preset;
+
+      this._ajustarConfiguracaoAutomatica(preset);
+      this._ultimoPresetAuto = preset;
+    };
+
+    const escolherPreset = () => {
+      const monitor = this.configuracao.ia.monitor;
+      const estado = monitor?.estadoAtual ?? "homeostase controlada";
+      let preset = "equilibrado";
+      switch (estado) {
+        case "regressivo":
+          preset = "defensivo";
+          break;
+        case "estagnado":
+          preset = "explorador";
+          break;
+        case "homeostase controlada":
+          preset = "equilibrado";
+          break;
+        case "melhora gradual":
+          preset = "equilibrado";
+          break;
+        case "plasticidade acelerada":
+          preset = "agressivo";
+          break;
+        case "hiperplastico (ganho explosivo)":
+          preset = "sobrevivente";
+          break;
+        default:
+          preset = "equilibrado";
+      }
+      aplicarPreset(preset);
+    };
+
+    // Aplica já e respeita o intervalo de relatórios para checagens seguintes
+    escolherPreset();
+    // Agendamento do auto-preset (independente do intervalo de UI do front)
+    this.intervaloAjuste = setInterval(escolherPreset, 1000);
   }
 
   _alternarAnimacoesIA() {
@@ -660,42 +772,77 @@ export class PainelControles {
 
   _ajustarConfiguracaoAutomatica(tipoPerformance) {
     let novaConfiguracao = { ...this.configuracao.ia };
-    
+
+    // Perfis abrangentes (inclui novos parâmetros)
+    const clampQty = (v) => Math.max(1, Math.min(1000, Math.round(v)));
+
     switch (tipoPerformance) {
       case "agressivo":
         novaConfiguracao = {
           ...this.configuracao.ia,
-          taxaMutacao: 0.15,
+          taxaMutacao: 0.2,
+          velocidadeSimulacao: 2.5,
+          elitePercentual: 0.15,
+          quantidadeIAsTreinando: clampQty(64),
+          numeroMaximoInimigos: 8,
           pesoDesvio: 0.8,
-          pesoSobrevivencia: 1.0,
-          pesoExploracao: 1.5,
+          pesoSobrevivencia: 0.8,
+          pesoExploracao: 2.5,
+          pesoAtaque: 2.0,
+          pesoDefesa: 0.7,
+          pesoCooperacao: 0.6,
+          adaptabilidade: 1.2,
         };
         break;
       case "defensivo":
         novaConfiguracao = {
           ...this.configuracao.ia,
           taxaMutacao: 0.08,
+          velocidadeSimulacao: 1.5,
+          elitePercentual: 0.25,
+          quantidadeIAsTreinando: clampQty(32),
+          numeroMaximoInimigos: 5,
           pesoDesvio: 2.5,
-          pesoSobrevivencia: 2.5,
+          pesoSobrevivencia: 3.2,
           pesoExploracao: 0.3,
+          pesoAtaque: 0.6,
+          pesoDefesa: 2.0,
+          pesoCooperacao: 1.0,
+          adaptabilidade: 0.9,
         };
         break;
       case "explorador":
         novaConfiguracao = {
           ...this.configuracao.ia,
-          taxaMutacao: 0.25,
+          taxaMutacao: 0.28,
+          velocidadeSimulacao: 3.0,
+          elitePercentual: 0.1,
+          quantidadeIAsTreinando: clampQty(96),
+          numeroMaximoInimigos: 6,
           pesoDesvio: 1.0,
           pesoSobrevivencia: 1.0,
-          pesoExploracao: 3.0,
+          pesoExploracao: 3.5,
+          pesoAtaque: 1.2,
+          pesoDefesa: 0.8,
+          pesoCooperacao: 0.8,
+          adaptabilidade: 1.4,
         };
         break;
       case "sobrevivente":
         novaConfiguracao = {
           ...this.configuracao.ia,
           taxaMutacao: 0.05,
-          pesoDesvio: 2.0,
-          pesoSobrevivencia: 3.0,
+          velocidadeSimulacao: 1.2,
+          elitePercentual: 0.3,
+          quantidadeIAsTreinando: clampQty(24),
+          numeroMaximoInimigos: 4,
+          pesoDesvio: 2.2,
+          pesoSobrevivencia: 3.8,
           pesoExploracao: 0.2,
+          pesoAtaque: 0.5,
+          pesoDefesa: 2.2,
+          pesoCooperacao: 1.2,
+          adaptabilidade: 0.8,
         };
         break;
       case "equilibrado":
@@ -703,24 +850,32 @@ export class PainelControles {
         novaConfiguracao = {
           ...this.configuracao.ia,
           taxaMutacao: 0.1,
+          velocidadeSimulacao: 2.0,
+          elitePercentual: 0.2,
+          quantidadeIAsTreinando: clampQty(48),
+          numeroMaximoInimigos: 5,
           pesoDesvio: 1.5,
           pesoSobrevivencia: 2.0,
-          pesoExploracao: 0.5,
+          pesoExploracao: 0.8,
+          pesoAtaque: 1.2,
+          pesoDefesa: 1.2,
+          pesoCooperacao: 1.0,
+          adaptabilidade: 1.0,
         };
         break;
     }
-    
+
     // Atualiza a configuração
     this.configuracao.ia = novaConfiguracao;
-    
+
     // Notifica a alteração
     if (this.aoAlterar) {
       this.aoAlterar(this.configuracao);
     }
-    
+
     // Atualiza os controles visuais para refletir as mudanças
     this._atualizarControlesVisuais();
-    
+
     // Registra o evento
     this.registrarEventoRelatorio(`Configuração ajustada para modo: ${tipoPerformance}`);
   }
@@ -731,8 +886,12 @@ export class PainelControles {
     for (const campo of CAMPOS_IA_GERAL) {
       const input = document.querySelector(`#${campo.chave}`);
       if (input) {
+        // Garante limite visual de 1000 para quantidadeIAsTreinando
+        if (campo.chave === "quantidadeIAsTreinando") {
+          input.max = 1000;
+        }
         input.value = this.configuracao.ia[campo.chave];
-        
+
         // Atualiza o valor exibido
         const valorAtual = input.parentElement.parentElement.querySelector('.valor-atual');
         if (valorAtual) {
@@ -786,11 +945,15 @@ export class PainelControles {
 
   _renderizar() {
     if (this.containerJogo) {
+      // Lado esquerdo: parâmetros de jogo + IA (Treinamento subdividido)
       this._renderizarSecao(this.containerJogo, "Parametros jogo", CAMPOS_JOGO, this.configuracao);
+      this._renderizarSecao(this.containerJogo, "IA - Treinamento • Geral", CAMPOS_IA_GERAL, this.configuracao);
+      this._renderizarSecao(this.containerJogo, "IA - Treinamento • Aprendizado", CAMPOS_IA_APRENDIZADO, this.configuracao);
     }
     if (this.containerIA) {
-      this._renderizarSecao(this.containerIA, "Parametros IA", CAMPOS_IA, this.configuracao);
-      // Adiciona uma nova seção para os parâmetros dos inimigos após os parâmetros da IA
+      // Lado direito: IA (Comportamento subdividido) + Inimigos
+      this._renderizarSecao(this.containerIA, "IA - Comportamento • Pesos", CAMPOS_IA_PESOS, this.configuracao);
+      this._renderizarSecao(this.containerIA, "IA - Comportamento • Controle", CAMPOS_IA_CONTROLE, this.configuracao);
       this._renderizarSecao(this.containerIA, "Parametros Inimigos", CAMPOS_INIMIGOS, this.configuracao);
     }
     if (this.containerRelatorios) {
@@ -807,11 +970,40 @@ export class PainelControles {
    _renderizarSecao(container, titulo, campos, configuracao) {
     const bloco = document.createElement("div");
     bloco.className = "bloco-controle";
-    bloco.dataset.collapsible = "";
-    bloco.dataset.title = titulo;
-    const cabecalho = document.createElement("h2");
-    cabecalho.textContent = titulo;
+
+    // Gera ID único e acessível para o conteúdo colapsável deste bloco
+    const slug = String(titulo || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    const contentId = `${slug}-${++this._seqCollapsiveis}-conteudo`;
+
+    // Botão acessível para controlar apenas este conteúdo (scoped)
+    const cabecalho = document.createElement("button");
+    cabecalho.type = "button";
+    cabecalho.className = "collapsible__toggle";
+    cabecalho.setAttribute("aria-controls", contentId);
+    cabecalho.setAttribute("aria-expanded", "true");
+    cabecalho.innerHTML = `<span>${titulo}</span><span class="collapsible__icon" aria-hidden="true"></span>`;
+    cabecalho.addEventListener("click", () => {
+      const expanded = cabecalho.getAttribute("aria-expanded") === "true";
+      cabecalho.setAttribute("aria-expanded", String(!expanded));
+      // Esconde ou revela apenas este conteúdo alvo
+      const alvo = bloco.querySelector(`#${contentId}`);
+      if (alvo) {
+        alvo.hidden = expanded;
+      }
+      bloco.classList.toggle("is-open", !expanded);
+    });
     bloco.appendChild(cabecalho);
+
+    const conteudo = document.createElement("div");
+    conteudo.className = "collapsible__content";
+    conteudo.id = contentId;
+    conteudo.hidden = false;
+    bloco.classList.add("is-open");
 
     for (const campo of campos) {
       const entrada = document.createElement("div");
@@ -832,7 +1024,7 @@ export class PainelControles {
       // Ajuste dinâmico: o máximo de 'quantidadeIAsTreinando' acompanha 'tamanhoPopulacao'
       const maximoInicial =
         campo.chave === "quantidadeIAsTreinando"
-          ? (this.configuracao?.ia?.tamanhoPopulacao ?? campo.max)
+          ? 1000
           : campo.max;
       input.max = maximoInicial;
       input.step = campo.passo;
@@ -867,7 +1059,7 @@ export class PainelControles {
       botaoMais.addEventListener("click", () => {
         const limiteMax =
           campo.chave === "quantidadeIAsTreinando"
-            ? Number(this.configuracao?.ia?.tamanhoPopulacao ?? input.max ?? campo.max)
+            ? 1000
             : Number(campo.max);
         const novoValor = Math.min(limiteMax, Number(input.value) + Number(campo.passo));
         this._atualizarConfiguracao(campo.chave, novoValor);
@@ -900,8 +1092,9 @@ export class PainelControles {
       valor.appendChild(containerValor);
       valor.appendChild(limite);
       entrada.appendChild(valor);
-      bloco.appendChild(entrada);
+      conteudo.appendChild(entrada);
     }
+    bloco.appendChild(conteudo);
     container.appendChild(bloco);
   }
 

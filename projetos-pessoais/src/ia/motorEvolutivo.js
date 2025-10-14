@@ -11,6 +11,12 @@ const PESOS_CHAVES = Object.freeze([
   "alturaInimigo",
   "anguloInimigo",
   "densidadeProjetil",
+  // Novos sensores para aumentar a "rede" em ~1/3
+  "velJogadorX",
+  "proximidadeBordas",
+  "velocidadeProjetil",
+  "direcaoProjetilX",
+  // Pesos auxiliares já existentes (não diretamente usados nos sensores atuais)
   "ataqueInimigo",
   "defesaInimigo",
   "cooperacaoInimigo",

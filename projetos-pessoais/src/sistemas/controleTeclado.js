@@ -15,8 +15,16 @@ export class ControleTeclado {
     this._aoSoltar = this._aoSoltar.bind(this);
   }
 
+  _alvoTexto(elemento) {
+    if (!elemento) return false;
+    const tag = (elemento.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea" || tag === "select") return true;
+    if (elemento.isContentEditable) return true;
+    return false;
+  }
+
   iniciar(escopo = window) {
-    escopo.addEventListener("keydown", this._aoPressionar);
+    escopo.addEventListener("keydown", this._aoPressionar, { passive: false });
     escopo.addEventListener("keyup", this._aoSoltar);
   }
 
@@ -43,6 +51,17 @@ export class ControleTeclado {
 
   _aoPressionar(evento) {
     const codigo = evento.code;
+
+    // Evita que a barra de espaço/teclas de navegação desçam a página
+    // quando estiver jogando (fora de campos de texto)
+    const deveBloquearScroll =
+      (codigo === "Space" || codigo === "ArrowUp" || codigo === "ArrowDown" || codigo === "PageDown" || codigo === "PageUp") &&
+      !this._alvoTexto(evento.target);
+
+    if (deveBloquearScroll) {
+      try { evento.preventDefault(); } catch {}
+    }
+
     this.pressionadas.add(codigo);
     this.disparos.add(codigo);
   }

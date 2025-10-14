@@ -79,6 +79,8 @@ export class Jogador extends EntidadeBase {
     if (this.entrada.estaAtivo("pulo") && this.noChao && this.inputCooldown <= 0) {
       this.velY = -this.configuracao.impulsoPulo;
       this.noChao = false;
+      // Pequeno cooldown para evitar multi-disparo na mesma pressão
+      this.inputCooldown = 0.12;
     }
     if (this.estado !== ESTADO_JOGADOR.OBSERVANDO) {
       if (this.entrada.foiDisparado("modoObservacao")) {
@@ -124,7 +126,8 @@ export class Jogador extends EntidadeBase {
     this.velX = 0;
     this.velY = 0;
     this.noChao = true;
-    this.inputCooldown = 0.25;
+    // Resposta mais ágil ao iniciar (permite pulo imediato)
+    this.inputCooldown = 0.05;
   }
 
   _obterTopoPlataforma(contexto) {

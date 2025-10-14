@@ -32,6 +32,31 @@ const indicadorQualidadeElemento = document.getElementById("indicador-qualidade"
 const indicadorQualidade = new IndicadorQualidade(indicadorQualidadeElemento);
 const historicoIA = new HistoricoIA(document.getElementById("historico-ia"));
 const areaCanvas = document.getElementById("area-canvas");
+const barraPresets = document.getElementById("barra-presets");
+const comandosJogo = document.getElementById("comandos-jogo");
+
+// Reposiciona o painel-inferior (footer) para dentro do HUD e ajusta o grid
+try {
+  const painelInferiorAntigo = document.getElementById("painel-inferior");
+  const hudContainer = document.getElementById("hud");
+  if (painelInferiorAntigo && hudContainer) {
+    const novoPainelInferior = document.createElement("div");
+    novoPainelInferior.id = "painel-inferior";
+    novoPainelInferior.className = "painel-controle";
+    // Move as seções internas para o novo container dentro do HUD
+    Array.from(painelInferiorAntigo.children).forEach((child) => {
+      novoPainelInferior.appendChild(child);
+    });
+    hudContainer.appendChild(novoPainelInferior);
+    painelInferiorAntigo.remove();
+    // Ajusta o grid para remover a linha 'inferior'
+    const interfaceEl = document.getElementById("interface");
+    if (interfaceEl) {
+      interfaceEl.style.gridTemplateAreas = '"esquerda jogo direita"';
+      interfaceEl.style.gridTemplateRows = 'auto';
+    }
+  }
+} catch {}
 
 const PERFORMANCE_SESSION_KEY = "redeNeuralRogue_visuals";
 const AGENTES_SESSION_KEY = "redeNeuralRogue_agentes_visiveis";
@@ -139,10 +164,93 @@ sistemaIA.monitor.definirIndicadorQualidade(indicadorQualidade);
 sistemaIA.monitor.definirHistoricoIA(historicoIA);
 sistemaJogador.jogador.definirControladorIA(sistemaIA);
 
-// O botão do modo IA já está implementado corretamente
+const cenaPrincipal = new CenaPrincipal(contexto);
+
+/**
+ * Ativa modo IA (observação) ao iniciar para as sombras aparecerem
+ * e insere a barra global de presets no topo (inicia com Equilibrado)
+ */
+try { sistemaJogador.jogador.definirModoObservacao(true); } catch {}
+try { sistemaIA.definirModoObservacao(true); } catch {}
+painelControles.registrarEventoRelatorio("Modo IA ativado no início");
+
+/**
+ * Delegação global para colapsar sublistas dos blocos NOVOS (sem data-collapsible).
+ * Evita conflito com o script legado (bloco-controle.js), que já controla elementos com [data-collapsible].
+ * Robusta: funciona mesmo se o ID do conteúdo não estiver presente ou se elementos forem realocados.
+ */
+document.addEventListener("click", (ev) => {
+  const botao = ev.target?.closest?.(".collapsible__toggle");
+  if (!botao) return;
+
+  // Evita que outro handler (legado) também processe
+  ev.preventDefault();
+  ev.stopPropagation();
+
+  // Se o botão pertence ao cabeçalho legado (inserido por bloco-controle.js), deixa o script antigo cuidar
+  if (botao.closest?.(".collapsible__header")) {
+    return;
+  }
+
+  // Obtém alvo pelo aria-controls; fallback: procura conteúdo dentro do bloco
+  const alvoId = botao.getAttribute("aria-controls");
+  let conteudo = alvoId ? document.getElementById(alvoId) : null;
+  const bloco = botao.closest(".bloco-controle");
+  if (!conteudo && bloco) {
+    conteudo = bloco.querySelector(".collapsible__content");
+  }
+  if (!conteudo) return;
+
+  const expanded = botao.getAttribute("aria-expanded") === "true";
+  const proximo = !expanded;
+
+  botao.setAttribute("aria-expanded", String(proximo));
+
+  // Aplica múltiplas formas de ocultação para robustez
+  conteudo.hidden = !proximo;
+  conteudo.setAttribute("aria-hidden", proximo ? "false" : "true");
+  conteudo.style.display = proximo ? "" : "none";
+
+  // Alterna classe visual no bloco pai, se existir (CSS reage a is-open/is-closed)
+  if (bloco) {
+    bloco.classList.toggle("is-open", proximo);
+    bloco.classList.toggle("is-closed", !proximo);
+  }
+});
+
+// Barra de presets no topo (inicia com Equilibrado)
+if (barraPresets) {
+  const label = document.createElement("label");
+  label.htmlFor = "global-preset-select";
+  label.textContent = "Preset de performance:";
+  label.className = "lbl-preset-topo";
+  const selectTop = document.createElement("select");
+  selectTop.id = "global-preset-select";
+  selectTop.innerHTML = `
+    <option value="equilibrado">Equilibrado</option>
+    <option value="agressivo">Agressivo</option>
+    <option value="defensivo">Defensivo</option>
+    <option value="explorador">Explorador</option>
+    <option value="sobrevivente">Sobrevivente</option>
+  `;
+  selectTop.addEventListener("change", () => {
+    painelControles._ajustarConfiguracaoAutomatica(selectTop.value);
+    const lateral = document.getElementById("tipo-performance");
+    if (lateral) lateral.value = selectTop.value;
+  });
+  barraPresets.appendChild(label);
+  barraPresets.appendChild(selectTop);
+  // Inicia com equilibrado
+  selectTop.value = "equilibrado";
+  painelControles._ajustarConfiguracaoAutomatica("equilibrado");
+}
+
+// O botão do modo IA
 const botaoModoIA = document.createElement("button");
 botaoModoIA.type = "button";
-botaoModoIA.textContent = "Ativar modo IA";
+botaoModoIA.className = "btn btn-primary";
+const jogador = sistemaJogador.jogador;
+botaoModoIA.textContent = jogador.estado === ESTADO_JOGADOR.OBSERVANDO ? "Desativar modo IA" : "Ativar modo IA";
 botaoModoIA.addEventListener("click", () => {
   const jogador = sistemaJogador.jogador;
   const ativo = jogador.estado === ESTADO_JOGADOR.OBSERVANDO;
@@ -150,28 +258,31 @@ botaoModoIA.addEventListener("click", () => {
   botaoModoIA.textContent = ativo ? "Ativar modo IA" : "Desativar modo IA";
   painelControles.registrarEventoRelatorio(ativo ? "Modo IA desativado" : "Modo IA ativado");
 });
-containerControlesIA.appendChild(botaoModoIA);
+(comandosJogo || containerControlesIA)?.appendChild(botaoModoIA);
 
 const botaoGeracao = document.createElement("button");
 botaoGeracao.type = "button";
+botaoGeracao.className = "btn btn-danger";
 botaoGeracao.textContent = "Forcar nova geracao";
 botaoGeracao.addEventListener("click", () => {
   sistemaIA.forcarGeracao();
 });
-containerControlesIA.appendChild(botaoGeracao);
+(comandosJogo || containerControlesIA)?.appendChild(botaoGeracao);
 
 const botaoPerspectiva = document.createElement("button");
 botaoPerspectiva.type = "button";
+botaoPerspectiva.className = "btn btn-secondary";
 botaoPerspectiva.textContent = "Visualizar sensores IA";
 botaoPerspectiva.addEventListener("click", () => {
   const indice = sistemaIA.alternarPerspectiva();
   botaoPerspectiva.textContent =
     indice === -1 ? "Visualizar sensores IA" : `Sensores IA #${indice + 1}`;
 });
-containerControlesIA.appendChild(botaoPerspectiva);
+(comandosJogo || containerControlesIA)?.appendChild(botaoPerspectiva);
 
 botaoVisibilidadeAgentes = document.createElement("button");
 botaoVisibilidadeAgentes.type = "button";
+botaoVisibilidadeAgentes.className = "btn btn-toggle";
 botaoVisibilidadeAgentes.title = "Oculta o jogador e os inimigos para focar nas sombras da IA";
 botaoVisibilidadeAgentes.addEventListener("click", () => {
   agentesVisiveis = !agentesVisiveis;
@@ -189,11 +300,10 @@ botaoVisibilidadeAgentes.addEventListener("click", () => {
     cenaPrincipal.desenhar();
   }
 });
-containerControlesIA.appendChild(botaoVisibilidadeAgentes);
+(comandosJogo || containerControlesIA)?.appendChild(botaoVisibilidadeAgentes);
 
 const hud = new HudVida(hudElemento);
 const telaDerrota = new TelaDerrota(telaDerrotaElemento, () => reiniciarPartida());
-const cenaPrincipal = new CenaPrincipal(contexto);
 
 const aplicarModoDesempenho = (ativo) => {
   efeitosVisuaisAtivos = !!ativo;
@@ -223,7 +333,7 @@ const aplicarModoDesempenho = (ativo) => {
 
 botaoEfeitosVisuais = document.createElement("button");
 botaoEfeitosVisuais.type = "button";
-botaoEfeitosVisuais.className = "botao-efeitos-visuais";
+botaoEfeitosVisuais.className = "btn btn-toggle botao-efeitos-visuais";
 botaoEfeitosVisuais.title = "Alternar renderizacao e modo desempenho";
 botaoEfeitosVisuais.addEventListener("click", () => {
   const proximo = !efeitosVisuaisAtivos;
@@ -232,7 +342,7 @@ botaoEfeitosVisuais.addEventListener("click", () => {
     proximo ? "Efeitos visuais ligados" : "Efeitos visuais desligados (modo desempenho)"
   );
 });
-containerControlesIA.appendChild(botaoEfeitosVisuais);
+(comandosJogo || containerControlesIA)?.appendChild(botaoEfeitosVisuais);
 
 atualizarBotaoAgentes();
 aplicarModoDesempenho(efeitosVisuaisAtivos);
@@ -356,7 +466,9 @@ function sincronizarConfiguracao() {
   gerenciadorInimigos.ajustarConfiguracao(configuracaoAtual.inimigos);
   sistemaIA.aplicarConfiguracao(configuracaoAtual.ia);
   sistemaIA.definirConfiguracaoJogador(configuracaoAtual.jogador, configuracaoAtual.plataforma);
-  cenaPrincipal.fundo.configuracao = configuracaoAtual.efeitos;
+  if (cenaPrincipal?.fundo) {
+    cenaPrincipal.fundo.configuracao = configuracaoAtual.efeitos;
+  }
 }
 
 function inicializarModalApresentacao() {

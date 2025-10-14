@@ -225,6 +225,22 @@ export class AgenteSombra {
       return densidade * 2 - 1;
     })();
 
+    // Sensores adicionais para rede expandida (~+1/3)
+    const velocidadeAlvo = this.configuracaoJogador?.velocidadeHorizontal ?? 220;
+    const velJogadorX = limitar(velocidadeAlvo ? this.velX / velocidadeAlvo : 0, -1, 1);
+    const distAEsquerda = this.x;
+    const distADireita = canvas.width - this.x;
+    const menorBorda = Math.min(distAEsquerda, distADireita);
+    const proximidadeBordas = 1 - Math.min(1, (menorBorda / (canvas.width / 2))) * 2; // ~1 nas bordas, ~-1 no centro
+    let velocidadeProjetil = -1;
+    let direcaoProjetilX = 0;
+    if (projetil) {
+      const v = Math.hypot(projetil.velX, projetil.velY);
+      const norm = Math.min(1, v / 600);
+      velocidadeProjetil = norm * 2 - 1;
+      direcaoProjetilX = limitar(projetil.velX / 400, -1, 1);
+    }
+
     return {
       posicaoX,
       distanciaProjetil,
@@ -235,6 +251,10 @@ export class AgenteSombra {
       alturaInimigo,
       anguloInimigo,
       densidadeProjetil,
+      velJogadorX,
+      proximidadeBordas,
+      velocidadeProjetil,
+      direcaoProjetilX,
     };
   }
 
@@ -251,6 +271,10 @@ export class AgenteSombra {
       (pesos.alturaInimigo ?? 0) * sensores.alturaInimigo +
       (pesos.anguloInimigo ?? 0) * sensores.anguloInimigo +
       (pesos.densidadeProjetil ?? 0) * sensores.densidadeProjetil +
+      (pesos.velJogadorX ?? 0) * (sensores.velJogadorX ?? 0) +
+      (pesos.proximidadeBordas ?? 0) * (sensores.proximidadeBordas ?? 0) +
+      (pesos.velocidadeProjetil ?? 0) * (sensores.velocidadeProjetil ?? 0) +
+      (pesos.direcaoProjetilX ?? 0) * (sensores.direcaoProjetilX ?? 0) +
       pesos.memoria * memoria;
     let evadiu = false;
     if (Math.abs(sensores.distanciaProjetil) < 0.08 && sensores.alturaProjetil > -0.05) {
@@ -301,8 +325,13 @@ export class AgenteSombra {
     const penalidade = this.colisoes * 30;
     const bonusDesvio = this.desvios * 6;
     const sobrevivente = this.morto ? 0 : 40;
+    // O cálculo de fitness agora é baseado em tempo e desempenho, não em velocidade
+    // Isso corrige o problema onde IAs mais rápidas tinham vantagem injusta
     const base = tempo * 80 + distancia * 0.4 + bonusDesvio + sobrevivente - penalidade;
-    this.cromossomo.fitness = Math.max(0, base);
+    // Aplica um fator de tempo para evitar que IAs que morrem cedo tenham fitness alto devido a distância
+    const fatorTempo = Math.min(1.0, tempo / 0.5); // Normaliza o impacto da distância com base no tempo
+    const fitness = (tempo * 80 + bonusDesvio + sobrevivente - penalidade) + (distancia * 0.4 * fatorTempo);
+    this.cromossomo.fitness = Math.max(0, fitness);
   }
 
   _obterTopoPlataforma(alturaCanvas, plataforma = {}) {
