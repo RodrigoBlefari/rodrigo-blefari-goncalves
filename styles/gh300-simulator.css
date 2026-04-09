@@ -421,12 +421,27 @@ body.lang-pt .text-translation {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
+  flex-wrap: wrap;
 }
 
 .option:hover {
   background: var(--card-bg);
   border-color: var(--primary-light);
   transform: translateX(4px);
+}
+
+.option.option-correct {
+  background: rgba(22, 163, 74, 0.08);
+  border-color: var(--success);
+}
+
+.option.option-wrong {
+  background: rgba(190, 18, 60, 0.08);
+  border-color: var(--error);
+}
+
+.option.option-selected {
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 .option input[type="radio"] {
@@ -443,15 +458,34 @@ body.lang-pt .text-translation {
   user-select: none;
 }
 
-.option.correct-option {
-  background: rgba(22, 163, 74, 0.12);
-  border-color: var(--success);
+.option-feedback {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-light);
+  width: 100%;
+  flex-basis: 100%;
 }
 
-.option.correct-option .option-content {
-  color: var(--success);
-  font-weight: 600;
+.feedback-title {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  color: var(--text);
 }
+
+.feedback-text {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.feedback-translation {
+  font-size: 12px;
+  color: var(--primary);
+  margin-top: 4px;
+}
+
 
 /* ===== TIPS SECTION ===== */
 .tips-section {

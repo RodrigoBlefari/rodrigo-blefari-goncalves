@@ -334,7 +334,6 @@ class GH300Simulator {
     if (this.showAnswers) {
       setTimeout(() => {
         this.renderAnswer();
-        this.renderWrongOptions();
       }, 50);
     }
   }
@@ -451,6 +450,7 @@ class GH300Simulator {
     engOptions.forEach((opt, index) => {
       const label = document.createElement('label');
       label.className = 'option';
+      label.dataset.optionIndex = String(index);
 
       const input = document.createElement('input');
       input.type = 'radio';
@@ -475,8 +475,14 @@ class GH300Simulator {
       optionWrapper.appendChild(textMain);
       optionWrapper.appendChild(textTranslation);
 
+      // Feedback inline (resposta/erro) - preenchido quando Show Answer estiver ativo
+      const feedback = document.createElement('div');
+      feedback.className = 'option-feedback';
+      feedback.style.display = 'none';
+
       label.appendChild(input);
       label.appendChild(optionWrapper);
+      label.appendChild(feedback);
       optionsContainer.appendChild(label);
 
       // Permite clicar em qualquer lugar da label, nÃ£o sÃ³ no radio
@@ -490,6 +496,11 @@ class GH300Simulator {
         this.saveExamState(); // Salvar estado completo da prova
       });
     });
+
+    // Se Show Answer ativo, aplica feedback imediatamente
+    if (this.showAnswers) {
+      this.applyAnswerFeedback();
+    }
   }
 
   /**
@@ -520,14 +531,11 @@ class GH300Simulator {
   toggleAnswer() {
     this.showAnswers = !this.showAnswers;
     storageService.setUIPreference('showAnswers', this.showAnswers);
-    const answerSection = document.getElementById('answerSection');
-    
+    // Novo UX: feedback aparece nas próprias opções
     if (this.showAnswers) {
-      if (answerSection) answerSection.style.display = 'block';
       this.renderAnswer();
-      this.renderWrongOptions();
     } else {
-      if (answerSection) answerSection.style.display = 'none';
+      this.clearAnswerFeedback();
     }
 
     this.updateUILabels();
@@ -597,116 +605,59 @@ class GH300Simulator {
 
     const correctIndex = question.correct; // Qual Ã© a resposta correta (Ã­ndice)
 
-    // Destacar opÃ§Ã£o correta com verde
-    document.querySelectorAll('.option').forEach((opt, idx) => {
-      if (idx === correctIndex) {
-        opt.classList.add('correct-option');
-      } else {
-        opt.classList.remove('correct-option');
-      }
-    });
-
-    // Mostrar resposta completa (EN)
-    const answerTextENEl = document.getElementById('correctAnswerEN');
-    if (answerTextENEl && question.answer) {
-      answerTextENEl.innerHTML = this.escapeHtml(this.getText(question.answer, 'en'));
-    }
-
-    // Mostrar resposta em PT (aparece embaixo em verde com CSS)
-    const answerTextPTEl = document.getElementById('correctAnswerPT');
-    if (answerTextPTEl && question.answer) {
-      answerTextPTEl.innerHTML = this.escapeHtml(this.getText(question.answer, 'pt'));
-    }
-
-    // Mostrar explicaÃ§Ã£o (por quÃª estÃ¡ correta)
-    const explanationSection = document.getElementById('explanationSection');
-    if (explanationSection) {
-      explanationSection.style.display = 'block';
-    }
-
-    const explanationENEl = document.getElementById('explanationEN');
-    if (explanationENEl && question.explanation) {
-      explanationENEl.innerHTML = this.escapeHtml(this.getText(question.explanation, 'en'));
-    }
-
-    const explanationPTEl = document.getElementById('explanationPT');
-    if (explanationPTEl && question.explanation) {
-      explanationPTEl.innerHTML = this.escapeHtml(this.getText(question.explanation, 'pt'));
-    }
+    this.applyAnswerFeedback();
   }
 
-  /**
-   * FUNÃ‡ÃƒO: renderWrongOptions()
-   * DESCRIÃ‡ÃƒO: Renderiza anÃ¡lise das opÃ§Ãµes ERRADAS com modelo overlay EN + PT
-   * - Para cada opÃ§Ã£o que NÃƒO Ã© a correta:
-   *   â€¢ Mostra o texto da opÃ§Ã£o (EN + PT embaixo)
-   *   â€¢ Explica POR QUÃŠ estÃ¡ errada (EN + PT embaixo)
-   * - Tudo sempre com ambos idiomas visÃ­veis = overlay model
-   */
-  renderWrongOptions() {
+  applyAnswerFeedback() {
     const question = this.questions[this.currentQuestionIndex];
     if (!question) return;
 
     const correctIndex = question.correct;
-    const engOptions = Array.isArray(question.options) ? question.options : [];
     const wrongReasons = Array.isArray(question.wrongReasons) ? question.wrongReasons : [];
+    const userAnswer = this.answers[question.id];
 
-    const container = document.getElementById('wrongOptionsAnalysis');
-    if (!container) return;
+    document.querySelectorAll('.option').forEach((optEl) => {
+      const idx = Number(optEl.dataset.optionIndex || -1);
+      const feedbackEl = optEl.querySelector('.option-feedback');
+      if (!feedbackEl || idx < 0) return;
 
-    container.innerHTML = '';
+      optEl.classList.remove('option-correct', 'option-wrong', 'option-neutral', 'option-selected');
+      feedbackEl.innerHTML = '';
+      feedbackEl.style.display = 'none';
 
-    // Para cada opÃ§Ã£o, se nÃ£o for correta, mostra motivo dela estar errada
-    engOptions.forEach((opt, idx) => {
-      if (idx !== correctIndex) {
-        const wrongDiv = document.createElement('div');
-        wrongDiv.className = 'wrong-option';
+      if (!this.showAnswers) return;
 
-        const engReason = wrongReasons[idx]?.en || 'This option is incorrect.';
-        const ptReason = wrongReasons[idx]?.pt || engReason;
-        const engOption = this.getOptionText(opt, 'en');
-        const ptOption = this.getOptionText(opt, 'pt') || engOption;
+      const isCorrect = idx === correctIndex;
+      const isSelected = userAnswer === idx;
+      if (isSelected) optEl.classList.add('option-selected');
 
-        // TÃ­tulo com overlay
-        const titleDiv = document.createElement('div');
-        titleDiv.className = 'wrong-option-title';
+      if (isCorrect) {
+        optEl.classList.add('option-correct');
+        feedbackEl.innerHTML =
+          `<div class="feedback-title">${isSelected ? '✔ Correct' : '✔ Correct Answer'}</div>` +
+          `<div class="feedback-text">${this.escapeHtml(this.getText(question.answer, 'en'))}</div>` +
+          `<div class="feedback-translation">${this.escapeHtml(this.getText(question.answer, 'pt'))}</div>`;
+        feedbackEl.style.display = 'block';
+      } else {
+        optEl.classList.add('option-wrong');
+        const reason = wrongReasons[idx]?.en || 'This option is incorrect.';
+        const reasonPt = wrongReasons[idx]?.pt || reason;
+        feedbackEl.innerHTML =
+          `<div class="feedback-title">${isSelected ? '✖ Your Answer' : 'Why not'}</div>` +
+          `<div class="feedback-text">${this.escapeHtml(reason)}</div>` +
+          `<div class="feedback-translation">${this.escapeHtml(reasonPt)}</div>`;
+        feedbackEl.style.display = 'block';
+      }
+    });
+  }
 
-        const titleMain = document.createElement('span');
-        titleMain.className = 'text-main';
-        titleMain.textContent = `Option ${idx + 1} - Why not?`;
-
-        const titleTrans = document.createElement('span');
-        titleTrans.className = 'text-translation';
-        titleTrans.textContent = `Opção ${idx + 1} - Por que não?`;
-
-        titleDiv.appendChild(titleMain);
-        titleDiv.appendChild(titleTrans);
-
-        // ConteÃºdo simples da opÃ§Ã£o
-        const optionMain = document.createElement('div');
-        optionMain.className = 'text-main';
-        optionMain.innerHTML = this.escapeHtml(this.getOptionText(opt, 'en'));
-
-        const optionTrans = document.createElement('div');
-        optionTrans.className = 'text-translation';
-        optionTrans.innerHTML = this.escapeHtml(ptOption);
-
-        // Motivo
-        const reasonMain = document.createElement('div');
-        reasonMain.className = 'text-main';
-        reasonMain.style.color = 'var(--error)';
-        reasonMain.innerHTML = this.escapeHtml(engReason);
-
-        const reasonTrans = document.createElement('div');
-        reasonTrans.className = 'text-translation';
-        reasonTrans.innerHTML = this.escapeHtml(ptReason);
-
-        wrongDiv.appendChild(titleDiv);
-        wrongDiv.appendChild(optionMain);
-        wrongDiv.appendChild(optionTrans);
-        wrongDiv.appendChild(reasonMain);
-        wrongDiv.appendChild(reasonTrans);
-        container.appendChild(wrongDiv);
+  clearAnswerFeedback() {
+    document.querySelectorAll('.option').forEach((optEl) => {
+      const feedbackEl = optEl.querySelector('.option-feedback');
+      optEl.classList.remove('option-correct', 'option-wrong', 'option-neutral', 'option-selected');
+      if (feedbackEl) {
+        feedbackEl.innerHTML = '';
+        feedbackEl.style.display = 'none';
       }
     });
   }
