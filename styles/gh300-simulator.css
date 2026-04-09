@@ -244,16 +244,6 @@ html, body {
   overflow-y: auto;
 }
 
-.top-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 14px;
-}
-
-.top-actions .btn {
-  flex: 0 1 auto;
-}
 
 .mini-dot {
   width: 24px;
@@ -339,6 +329,18 @@ html, body {
   margin-bottom: 24px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.question-actions-inline {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.question-actions-inline .btn {
+  padding: 8px 12px;
 }
 
 .question-number {
@@ -1011,15 +1013,20 @@ body.lang-pt .text-translation {
     justify-content: center;
   }
 
-  .top-actions {
-    flex-direction: column;
+  .question-actions-inline {
+    width: 100%;
+    justify-content: space-between;
   }
 
-  .top-actions .btn {
-    width: 100%;
+  .question-actions-inline .btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
     justify-content: center;
-    padding: 10px 12px;
-    min-height: 40px;
+  }
+
+  .question-actions-inline .btn span {
+    display: none;
   }
 
   .question-actions {

@@ -1044,6 +1044,11 @@ class GH300Simulator {
    * - Usado ao navegar para nova questÃ£o
    */
   scrollToTop() {
+    const target = document.querySelector('.question-card') || document.querySelector('.question-container');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
