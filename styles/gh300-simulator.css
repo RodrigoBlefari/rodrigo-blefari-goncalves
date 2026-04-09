@@ -480,11 +480,6 @@ body.lang-pt .text-translation {
   color: var(--text);
 }
 
-.feedback-translation {
-  font-size: 12px;
-  color: var(--primary);
-  margin-top: 4px;
-}
 
 
 /* ===== TIPS SECTION ===== */

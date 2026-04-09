@@ -636,7 +636,7 @@ class GH300Simulator {
         feedbackEl.innerHTML =
           `<div class="feedback-title">${isSelected ? '✔ Correct' : '✔ Correct Answer'}</div>` +
           `<div class="feedback-text">${this.escapeHtml(this.getText(question.answer, 'en'))}</div>` +
-          `<div class="feedback-translation">${this.escapeHtml(this.getText(question.answer, 'pt'))}</div>`;
+          `<div class="text-translation">${this.escapeHtml(this.getText(question.answer, 'pt'))}</div>`;
         feedbackEl.style.display = 'block';
       } else {
         optEl.classList.add('option-wrong');
@@ -645,7 +645,7 @@ class GH300Simulator {
         feedbackEl.innerHTML =
           `<div class="feedback-title">${isSelected ? '✖ Your Answer' : 'Why not'}</div>` +
           `<div class="feedback-text">${this.escapeHtml(reason)}</div>` +
-          `<div class="feedback-translation">${this.escapeHtml(reasonPt)}</div>`;
+          `<div class="text-translation">${this.escapeHtml(reasonPt)}</div>`;
         feedbackEl.style.display = 'block';
       }
     });
@@ -1502,6 +1502,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   new GH300Simulator(exam);
 });
+
 
 
 
