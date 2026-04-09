@@ -5,24 +5,6 @@
 
 class StorageService {
   constructor() {
-    this.STORAGE_KEYS = {
-      // User Preferences
-      THEME: 'gh300_theme',
-      LANGUAGE: 'gh300_language',
-      SHOW_TIPS: 'gh300_show_tips',
-      SHOW_ANSWERS: 'gh300_show_answers',
-      SHOW_DOTS: 'gh300_show_dots',
-      
-      // Current Exam Progress
-      CURRENT_EXAM_ID: 'gh300_current_exam_id',
-      CURRENT_EXAM_STATE: 'gh300_current_exam_state',
-      CURRENT_QUESTION: 'gh300_current_question',
-      ANSWERS: 'gh300_answers',
-      
-      // Exam History
-      EXAM_HISTORY: 'gh300_exam_history',
-    };
-
     this.DEFAULTS = {
       THEME: 'light',
       LANGUAGE: 'en',
@@ -30,6 +12,46 @@ class StorageService {
       SHOW_ANSWERS: false,
       SHOW_DOTS: true,
     };
+
+    this.setNamespace('gh300');
+  }
+
+  /**
+   * FUNÇÃO: buildKeys()
+   * Gera chaves de storage com prefixo por prova
+   * @param {string} prefix - prefixo da prova (ex: gh300)
+   * @returns {object} chaves de storage
+   */
+  buildKeys(prefix) {
+    return {
+      // User Preferences
+      THEME: `${prefix}_theme`,
+      LANGUAGE: `${prefix}_language`,
+      SHOW_TIPS: `${prefix}_show_tips`,
+      SHOW_ANSWERS: `${prefix}_show_answers`,
+      SHOW_DOTS: `${prefix}_show_dots`,
+
+      // Current Exam Progress
+      CURRENT_EXAM_ID: `${prefix}_current_exam_id`,
+      CURRENT_EXAM_STATE: `${prefix}_current_exam_state`,
+      CURRENT_QUESTION: `${prefix}_current_question`,
+      ANSWERS: `${prefix}_answers`,
+
+      // Exam History
+      EXAM_HISTORY: `${prefix}_exam_history`,
+      EXAM_VERSION: `${prefix}_exam_version`,
+    };
+  }
+
+  /**
+   * FUNÇÃO: setNamespace()
+   * Define prefixo para isolar dados por prova
+   * @param {string} prefix - prefixo da prova
+   */
+  setNamespace(prefix) {
+    const safePrefix = (prefix || 'gh300').toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    this.namespace = safePrefix || 'gh300';
+    this.STORAGE_KEYS = this.buildKeys(this.namespace);
   }
 
   /**
@@ -92,7 +114,7 @@ class StorageService {
 
   /**
    * FUNÇÃO: clear()
-   * Limpa TODOS os dados GH300 armazenados
+   * Limpa TODOS os dados armazenados da prova atual
    * @returns {boolean} true se sucesso
    */
   clear() {
@@ -205,11 +227,48 @@ class StorageService {
    * @returns {boolean} true se sucesso
    */
   setCurrentQuestion(index) {
-    if (typeof index !== 'number' || index < 0 || index > 49) {
+    if (typeof index !== 'number' || index < 0) {
       console.warn('Invalid question index');
       return false;
     }
     return this.set(this.STORAGE_KEYS.CURRENT_QUESTION, index);
+  }
+
+  /**
+   * FUNÇÃO: getExamVersion()
+   * Retorna versão/hash da prova armazenada
+   * @returns {string|null}
+   */
+  getExamVersion() {
+    return this.get(this.STORAGE_KEYS.EXAM_VERSION, null);
+  }
+
+  /**
+   * FUNÇÃO: setExamVersion()
+   * Salva versão/hash da prova atual
+   * @param {string} version
+   * @returns {boolean}
+   */
+  setExamVersion(version) {
+    return this.set(this.STORAGE_KEYS.EXAM_VERSION, version);
+  }
+
+  /**
+   * FUNÇÃO: resetExamData()
+   * Limpa dados dependentes do conteúdo da prova
+   * @returns {boolean}
+   */
+  resetExamData() {
+    try {
+      this.remove(this.STORAGE_KEYS.CURRENT_EXAM_STATE);
+      this.remove(this.STORAGE_KEYS.CURRENT_QUESTION);
+      this.remove(this.STORAGE_KEYS.ANSWERS);
+      this.remove(this.STORAGE_KEYS.EXAM_HISTORY);
+      return true;
+    } catch (e) {
+      console.warn('StorageService.resetExamData() error:', e);
+      return false;
+    }
   }
 
   /**

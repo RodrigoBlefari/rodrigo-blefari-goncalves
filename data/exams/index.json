@@ -1,0 +1,18 @@
+{
+  "exams": [
+    {
+      "id": "gh300",
+      "label": "🎓 Certificação Copilot",
+      "title": "GH-300 Exam Simulator",
+      "subtitle": "GitHub Copilot Certification Practice",
+      "file": "gh300.json"
+    },
+    {
+      "id": "angular2026",
+      "label": "🅰️ Certificação Angular",
+      "title": "Angular 2026 Exam Simulator",
+      "subtitle": "Angular Certification-Style Practice",
+      "file": "angular2026.json"
+    }
+  ]
+}

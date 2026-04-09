@@ -1,17 +1,45 @@
-/**
- * Hub simples: CV padrão + Projetos com dropdown
+﻿/**
+ * Hub simples: CV padrao + Projetos com dropdown
  */
 
 const CONFIG = {
   defaultCV: "template-moderno",
-  projects: [
-    { id: "ia-rogue", name: "🤖 I.A (Rogue-Like)", url: "projetos-pessoais/generative-game-rogue-like/index.html" },
-    { id: "gh300", name: "🎓 Certificação Copilot", url: "gh300-simulator.html" }
+  examsIndexUrl: "data/exams/index.json",
+  examPage: "gh300-simulator.html",
+  staticProjects: [
+    { id: "ia-rogue", name: "🤖 I.A (Rogue-Like)", url: "projetos-pessoais/generative-game-rogue-like/index.html" }
   ]
 };
 
 const IFRAME_ID = "templateFrame";
 const STORAGE_KEY = "currentPage";
+
+let PROJECTS = [];
+
+async function loadProjects() {
+  const projects = [...CONFIG.staticProjects];
+
+  try {
+    const res = await fetch(new URL(CONFIG.examsIndexUrl, window.location.href).href, { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      const exams = Array.isArray(data?.exams) ? data.exams : [];
+
+      exams.forEach((exam) => {
+        if (!exam || !exam.id) return;
+        projects.push({
+          id: `exam:${exam.id}`,
+          name: exam.label || exam.title || exam.id,
+          url: `${CONFIG.examPage}?exam=${encodeURIComponent(exam.id)}`,
+        });
+      });
+    }
+  } catch (err) {
+    console.warn("Falha ao carregar lista de provas:", err);
+  }
+
+  PROJECTS = projects;
+}
 
 function setPage(type, id) {
   const iframe = document.getElementById(IFRAME_ID);
@@ -21,7 +49,7 @@ function setPage(type, id) {
   if (type === "cv") {
     url = `templates/${id}/index.html`;
   } else if (type === "project") {
-    const project = CONFIG.projects.find(p => p.id === id);
+    const project = PROJECTS.find(p => p.id === id);
     url = project?.url;
   }
 
@@ -41,7 +69,7 @@ function updateBreadcrumb(type, id) {
   if (type === "cv") {
     breadcrumb.textContent = "📄 Meu CV";
   } else if (type === "project") {
-    const project = CONFIG.projects.find(p => p.id === id);
+    const project = PROJECTS.find(p => p.id === id);
     if (project) breadcrumb.textContent = project.name;
   }
 }
@@ -50,7 +78,7 @@ function buildDropdown() {
   const container = document.getElementById("projectNav");
   if (!container) return;
 
-  // Botão CV
+  // Botao CV
   const cvBtn = document.createElement("button");
   cvBtn.className = "nav-item active";
   cvBtn.id = "cvBtn";
@@ -81,7 +109,7 @@ function buildDropdown() {
   dropdown.id = "projectsDropdown";
   dropdown.className = "dropdown-menu";
 
-  CONFIG.projects.forEach(proj => {
+  PROJECTS.forEach((proj) => {
     const item = document.createElement("button");
     item.className = "dropdown-item";
     item.innerHTML = proj.name;
@@ -98,10 +126,31 @@ function buildDropdown() {
   container.appendChild(dropdownWrapper);
 }
 
-function bootHub() {
+async function bootHub() {
+  await loadProjects();
   buildDropdown();
 
-  // Carregar último ou padrão
+  // Deep link: index.html?exam=gh300 or ?project=exam:gh300
+  const params = new URLSearchParams(window.location.search);
+  const examId = params.get('exam');
+  const projectId = params.get('project');
+  if (examId) {
+    const target = `exam:${examId}`;
+    const exists = PROJECTS.find(p => p.id === target);
+    if (exists) {
+      setPage('project', target);
+      return;
+    }
+  }
+  if (projectId) {
+    const exists = PROJECTS.find(p => p.id === projectId);
+    if (exists) {
+      setPage('project', projectId);
+      return;
+    }
+  }
+
+  // Carregar ultimo ou padrao
   let saved;
   try {
     saved = JSON.parse(localStorage.getItem(STORAGE_KEY));

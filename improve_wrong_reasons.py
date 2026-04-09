@@ -1,20 +1,16 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
-Improve wrongReasons in gh300-questions.js with fact-based arguments
+Improve wrongReasons in data/exams/gh300.json with fact-based arguments.
+(Atualmente apenas imprime sugestões para edição manual.)
 """
 
 import json
-import re
 
 # Load the questions file
-with open('data/gh300-questions.js', 'r', encoding='utf-8') as f:
-    content = f.read()
+with open('data/exams/gh300.json', 'r', encoding='utf-8') as f:
+    exam = json.load(f)
 
-# Extract questions array
-match = re.search(r'const GH300_QUESTIONS = \[(.*?)\];', content, re.DOTALL)
-if not match:
-    print("ERROR: Could not find GH300_QUESTIONS array")
-    exit(1)
+questions = exam.get('questions', [])
 
 # My improvements mapping - Q_ID -> (EN_improvements, PT_improvements)
 improvements = {
@@ -92,7 +88,7 @@ improvements = {
     ),
 }
 
-# Generate improved version
+print(f"Loaded {len(questions)} questions")
 print(f"Improvements planned for {len(improvements)} questions")
 print("Implementation note: Use file editor to apply one question at a time\n")
 

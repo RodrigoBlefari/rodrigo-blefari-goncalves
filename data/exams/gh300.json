@@ -1,0 +1,2708 @@
+{
+  "id": "gh300",
+  "label": "🎓 Certificação Copilot",
+  "title": "GH-300 Exam Simulator",
+  "subtitle": "GitHub Copilot Certification Practice",
+  "questions": [
+    {
+      "id": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is the difference between GitHub Copilot Business and GitHub Copilot Enterprise?",
+        "pt": "Qual é a diferença entre GitHub Copilot Business e GitHub Copilot Enterprise?"
+      },
+      "answer": {
+        "en": "GitHub Copilot Enterprise adds an extra layer of personalization by using an organization's internal knowledge, such as code and documentation, to provide more contextual suggestions.",
+        "pt": "O GitHub Copilot Enterprise adiciona uma camada extra de personalização ao usar o conhecimento interno da organização, como código e documentação, para fornecer sugestões mais contextualizadas."
+      },
+      "explanation": {
+        "en": "This question tests whether you understand the value of Enterprise in organizational scenarios. Business already supports team usage, but Enterprise goes further by grounding assistance in internal context, which makes answers and suggestions more relevant to that company.",
+        "pt": "Essa questão testa se você entende o valor do Enterprise em cenários corporativos. O Business já atende equipes, mas o Enterprise vai além ao apoiar as respostas no contexto interno da empresa, deixando as sugestões mais relevantes para aquela organização."
+      },
+      "mnemonic": {
+        "en": "🏢 Enterprise = extra organizational context",
+        "pt": "🏢 Enterprise = contexto extra da organização"
+      },
+      "options": [
+        {
+          "en": "Enterprise has extra personalization using your own codebase",
+          "pt": "O Enterprise oferece personalização extra usando a própria base de código da organização"
+        },
+        {
+          "en": "Business is only for individuals",
+          "pt": "O Business é voltado apenas para indivíduos"
+        },
+        {
+          "en": "There is no difference",
+          "pt": "Não existe diferença"
+        },
+        {
+          "en": "Enterprise is cheaper",
+          "pt": "O Enterprise é mais barato"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Business is designed for organizations, not just individuals.",
+          "pt": "O Business é voltado para organizações, não apenas para indivíduos."
+        },
+        {
+          "en": "There is a real difference between the plans, especially around organizational context and personalization.",
+          "pt": "Existe diferença real entre os planos, especialmente em personalização e uso de contexto organizacional."
+        },
+        {
+          "en": "The point of the Enterprise plan is added capability, not lower price.",
+          "pt": "O diferencial do plano Enterprise está nos recursos adicionais, não em ser mais barato."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 2,
+      "difficulty": "easy",
+      "question": {
+        "en": "After enforcing GitHub Copilot for Business, where do you enable it for all users?",
+        "pt": "Depois de aplicar a política do GitHub Copilot Business, onde você habilita o recurso para todos os usuários?"
+      },
+      "answer": {
+        "en": "You enable it from 'Your organizations' in the profile dropdown menu.",
+        "pt": "Você habilita o recurso em 'Suas organizações', no menu suspenso do perfil."
+      },
+      "explanation": {
+        "en": "This is an administration question. The exam expects you to know that organization-wide Copilot management happens at the organization level, not at the repository or personal account level.",
+        "pt": "Essa é uma questão de administração. A prova espera que você saiba que o gerenciamento do Copilot para toda a organização acontece no nível da organização, e não no nível do repositório ou da conta pessoal."
+      },
+      "mnemonic": {
+        "en": "🧭 Profile → Organizations → Manage access",
+        "pt": "🧭 Perfil → Organizações → Gerenciar acesso"
+      },
+      "options": [
+        {
+          "en": "Your organizations in the profile dropdown",
+          "pt": "Suas organizações no menu de perfil"
+        },
+        {
+          "en": "GitHub Settings",
+          "pt": "Configurações gerais do GitHub"
+        },
+        {
+          "en": "Repository Settings",
+          "pt": "Configurações do repositório"
+        },
+        {
+          "en": "Copilot Dashboard",
+          "pt": "Dashboard do Copilot"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "General settings are tied to the account, not to organization-wide Copilot enablement.",
+          "pt": "As configurações gerais estão ligadas à conta, não à habilitação do Copilot para toda a organização."
+        },
+        {
+          "en": "Repository settings affect a repository, but this question is about enabling for all users in the organization.",
+          "pt": "As configurações do repositório afetam um repositório, mas a questão fala em habilitar para todos os usuários da organização."
+        },
+        {
+          "en": "A dashboard may show information, but it is not the main place for organization-wide enablement.",
+          "pt": "Um dashboard pode exibir informações, mas não é o local principal para habilitação em toda a organização."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 3,
+      "difficulty": "medium",
+      "question": {
+        "en": "What do GitHub Copilot Enterprise pull request summaries do?",
+        "pt": "O que os resumos de pull request do GitHub Copilot Enterprise fazem?"
+      },
+      "answer": {
+        "en": "They automatically generate concise summaries of pull requests to help reviewers understand the changes more quickly.",
+        "pt": "Eles geram automaticamente resumos concisos dos pull requests para ajudar revisores a entenderem as mudanças mais rapidamente."
+      },
+      "explanation": {
+        "en": "The important idea here is assistance, not replacement. PR summaries speed up code review by giving a quick overview of the change, but they do not replace human judgment.",
+        "pt": "A ideia importante aqui é assistência, não substituição. Os resumos de PR aceleram a revisão ao fornecer uma visão rápida das mudanças, mas não substituem o julgamento humano."
+      },
+      "mnemonic": {
+        "en": "📋 PR summary = quick understanding for review",
+        "pt": "📋 Resumo de PR = entendimento rápido para revisão"
+      },
+      "options": [
+        {
+          "en": "Generate concise pull request overviews",
+          "pt": "Geram resumos concisos de pull requests"
+        },
+        {
+          "en": "Automatically merge all pull requests",
+          "pt": "Fazem merge automático de todos os pull requests"
+        },
+        {
+          "en": "Prevent pull requests from being created",
+          "pt": "Impedem a criação de pull requests"
+        },
+        {
+          "en": "Work only in private repositories",
+          "pt": "Funcionam apenas em repositórios privados"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Copilot summaries help with review, but they do not merge code automatically.",
+          "pt": "Os resumos do Copilot ajudam na revisão, mas não fazem merge automático."
+        },
+        {
+          "en": "PR summaries are used after a pull request exists; they do not block or prevent creation.",
+          "pt": "Os resumos de PR são usados depois que o pull request existe; eles não impedem sua criação."
+        },
+        {
+          "en": "The feature is not defined by being limited only to private repositories in the way this option suggests.",
+          "pt": "O recurso não é definido por funcionar apenas em repositórios privados da forma como essa alternativa sugere."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 4,
+      "difficulty": "medium",
+      "question": {
+        "en": "How do organizations use docsets in Copilot Enterprise?",
+        "pt": "Como as organizações usam docsets no Copilot Enterprise?"
+      },
+      "answer": {
+        "en": "Organizations use docsets to create curated collections of internal code and documentation so Copilot can provide more relevant, context-aware assistance.",
+        "pt": "As organizações usam docsets para criar coleções selecionadas de código e documentação internos, permitindo que o Copilot forneça ajuda mais relevante e contextualizada."
+      },
+      "explanation": {
+        "en": "Docsets matter because they give Copilot access to structured internal knowledge. In practice, this helps the model answer in a way that is closer to the company's stack, standards, and terminology.",
+        "pt": "Docsets importam porque dão ao Copilot acesso a conhecimento interno estruturado. Na prática, isso ajuda o modelo a responder de forma mais próxima da stack, dos padrões e da terminologia da empresa."
+      },
+      "mnemonic": {
+        "en": "📚 Docsets = curated internal knowledge",
+        "pt": "📚 Docsets = conhecimento interno organizado"
+      },
+      "options": [
+        {
+          "en": "Create custom collections of internal code and docs",
+          "pt": "Criar coleções personalizadas de código e documentação internos"
+        },
+        {
+          "en": "Delete documentation",
+          "pt": "Excluir documentação"
+        },
+        {
+          "en": "Prevent access to documentation",
+          "pt": "Impedir acesso à documentação"
+        },
+        {
+          "en": "They are not supported",
+          "pt": "Eles não são suportados"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Deleting documentation would reduce available knowledge rather than improve Copilot assistance.",
+          "pt": "Excluir documentação reduziria o conhecimento disponível em vez de melhorar a assistência do Copilot."
+        },
+        {
+          "en": "The purpose of docsets is to provide useful context, not to block access to it.",
+          "pt": "O objetivo dos docsets é fornecer contexto útil, não bloquear o acesso a ele."
+        },
+        {
+          "en": "Docsets are a supported part of the Enterprise value proposition.",
+          "pt": "Docsets fazem parte dos recursos suportados do Enterprise."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 5,
+      "difficulty": "medium",
+      "question": {
+        "en": "How does Copilot Chat improve class modularity?",
+        "pt": "Como o Copilot Chat ajuda a melhorar a modularidade de uma classe?"
+      },
+      "answer": {
+        "en": "It can suggest refactoring based on the code context to improve separation of concerns and structure.",
+        "pt": "Ele pode sugerir refatorações com base no contexto do código para melhorar a separação de responsabilidades e a estrutura."
+      },
+      "explanation": {
+        "en": "This is really about refactoring support. If a class is doing too much, Copilot Chat can help identify opportunities to split responsibilities and make the design cleaner.",
+        "pt": "No fundo, essa questão é sobre apoio à refatoração. Se uma classe estiver fazendo coisas demais, o Copilot Chat pode ajudar a identificar oportunidades para dividir responsabilidades e deixar o design mais limpo."
+      },
+      "mnemonic": {
+        "en": "🔨 Refactor = improve structure without changing purpose",
+        "pt": "🔨 Refatorar = melhorar a estrutura sem mudar o propósito"
+      },
+      "options": [
+        {
+          "en": "Suggests refactoring based on context",
+          "pt": "Sugere refatoração com base no contexto"
+        },
+        {
+          "en": "Deletes classes",
+          "pt": "Exclui classes"
+        },
+        {
+          "en": "Prevents class creation",
+          "pt": "Impede a criação de classes"
+        },
+        {
+          "en": "Cannot help with modularity",
+          "pt": "Não consegue ajudar com modularidade"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Deleting a class is not the same as improving modularity.",
+          "pt": "Excluir uma classe não é a mesma coisa que melhorar modularidade."
+        },
+        {
+          "en": "The tool does not improve design by blocking development actions like class creation.",
+          "pt": "A ferramenta não melhora o design bloqueando ações de desenvolvimento, como criar classes."
+        },
+        {
+          "en": "Helping with refactoring and code understanding is one of the strengths of Copilot Chat.",
+          "pt": "Ajudar com refatoração e entendimento de código é um dos pontos fortes do Copilot Chat."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 6,
+      "difficulty": "easy",
+      "question": {
+        "en": "How does Copilot Chat propose bug fixes?",
+        "pt": "Como o Copilot Chat propõe correções para bugs?"
+      },
+      "answer": {
+        "en": "It analyzes the error context and suggests relevant fixes or code changes.",
+        "pt": "Ele analisa o contexto do erro e sugere correções ou alterações de código relevantes."
+      },
+      "explanation": {
+        "en": "The key idea is context. Copilot Chat is not guessing randomly; it uses the surrounding code, the problem description, and the error details to suggest likely fixes.",
+        "pt": "A ideia principal é contexto. O Copilot Chat não está chutando aleatoriamente; ele usa o código ao redor, a descrição do problema e os detalhes do erro para sugerir correções prováveis."
+      },
+      "mnemonic": {
+        "en": "🐛 Error + context = better fix suggestions",
+        "pt": "🐛 Erro + contexto = sugestões melhores de correção"
+      },
+      "options": [
+        {
+          "en": "Suggests code snippets based on the error",
+          "pt": "Sugere trechos de código com base no erro"
+        },
+        {
+          "en": "Generates random fixes",
+          "pt": "Gera correções aleatórias"
+        },
+        {
+          "en": "Deletes buggy code automatically",
+          "pt": "Exclui automaticamente o código com bug"
+        },
+        {
+          "en": "Cannot help fix bugs",
+          "pt": "Não consegue ajudar a corrigir bugs"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Bug fixing support is contextual, not random.",
+          "pt": "O suporte à correção de bugs é contextual, não aleatório."
+        },
+        {
+          "en": "Automatically deleting code is not the point of the feature and would often be unsafe.",
+          "pt": "Excluir código automaticamente não é o objetivo do recurso e muitas vezes seria inseguro."
+        },
+        {
+          "en": "Helping explain and suggest fixes for bugs is a common Copilot Chat use case.",
+          "pt": "Ajudar a explicar e sugerir correções para bugs é um caso de uso comum do Copilot Chat."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 7,
+      "difficulty": "easy",
+      "question": {
+        "en": "How does Copilot Chat explain unfamiliar code?",
+        "pt": "Como o Copilot Chat explica código desconhecido?"
+      },
+      "answer": {
+        "en": "It analyzes the code and generates human-readable explanations of what the code does.",
+        "pt": "Ele analisa o código e gera explicações em linguagem natural sobre o que aquele código faz."
+      },
+      "explanation": {
+        "en": "This is one of the most practical Copilot use cases. When you work with legacy or unfamiliar code, Copilot Chat can summarize purpose, logic, and flow in a much more readable way.",
+        "pt": "Esse é um dos casos de uso mais práticos do Copilot. Quando você trabalha com código legado ou desconhecido, o Copilot Chat pode resumir o propósito, a lógica e o fluxo de um jeito muito mais legível."
+      },
+      "mnemonic": {
+        "en": "📖 Unknown code → natural language explanation",
+        "pt": "📖 Código desconhecido → explicação em linguagem natural"
+      },
+      "options": [
+        {
+          "en": "Generates natural language descriptions",
+          "pt": "Gera descrições em linguagem natural"
+        },
+        {
+          "en": "Refuses to explain the code",
+          "pt": "Se recusa a explicar o código"
+        },
+        {
+          "en": "Modifies the code instead of explaining it",
+          "pt": "Modifica o código em vez de explicá-lo"
+        },
+        {
+          "en": "Cannot explain code",
+          "pt": "Não consegue explicar código"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Explaining code is one of the expected strengths of Copilot Chat.",
+          "pt": "Explicar código é uma das capacidades esperadas do Copilot Chat."
+        },
+        {
+          "en": "The question is about explanation, not automatic code modification.",
+          "pt": "A questão fala sobre explicação, não sobre modificação automática de código."
+        },
+        {
+          "en": "Copilot Chat can absolutely help explain unfamiliar code.",
+          "pt": "O Copilot Chat pode sim ajudar a explicar código desconhecido."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 8,
+      "difficulty": "easy",
+      "question": {
+        "en": "How does Copilot Chat assist when you encounter an error in code?",
+        "pt": "Como o Copilot Chat ajuda quando você encontra um erro no código?"
+      },
+      "answer": {
+        "en": "It can explain the cause of the error and suggest ways to fix it.",
+        "pt": "Ele pode explicar a causa do erro e sugerir maneiras de corrigi-lo."
+      },
+      "explanation": {
+        "en": "The exam often distinguishes between understanding and action. Copilot Chat helps with both: it explains the likely cause and also proposes next steps to resolve the issue.",
+        "pt": "A prova costuma diferenciar entendimento e ação. O Copilot Chat ajuda nos dois pontos: explica a causa provável e também propõe próximos passos para resolver o problema."
+      },
+      "mnemonic": {
+        "en": "⚠️ Error → cause + fix",
+        "pt": "⚠️ Erro → causa + correção"
+      },
+      "options": [
+        {
+          "en": "It explains the cause and suggests fixes",
+          "pt": "Ele explica a causa e sugere correções"
+        },
+        {
+          "en": "It ignores the error",
+          "pt": "Ele ignora o erro"
+        },
+        {
+          "en": "It deletes the file",
+          "pt": "Ele exclui o arquivo"
+        },
+        {
+          "en": "It cannot help",
+          "pt": "Ele não consegue ajudar"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Ignoring the error would not help the developer move forward.",
+          "pt": "Ignorar o erro não ajudaria o desenvolvedor a avançar."
+        },
+        {
+          "en": "Deleting the file is destructive and unrelated to the intended support behavior.",
+          "pt": "Excluir o arquivo é destrutivo e não tem relação com o comportamento esperado do recurso."
+        },
+        {
+          "en": "Helping with troubleshooting is one of the practical uses of Copilot Chat.",
+          "pt": "Ajudar com troubleshooting é um dos usos práticos do Copilot Chat."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 9,
+      "difficulty": "easy",
+      "question": {
+        "en": "How does Copilot Chat generate inline code documentation?",
+        "pt": "Como o Copilot Chat gera documentação inline no código?"
+      },
+      "answer": {
+        "en": "It analyzes the code and produces comments or documentation from natural language prompts.",
+        "pt": "Ele analisa o código e produz comentários ou documentação a partir de prompts em linguagem natural."
+      },
+      "explanation": {
+        "en": "This is useful when you want to add comments, explain functions, or generate documentation blocks like JSDoc more quickly and consistently.",
+        "pt": "Isso é útil quando você quer adicionar comentários, explicar funções ou gerar blocos de documentação, como JSDoc, com mais rapidez e consistência."
+      },
+      "mnemonic": {
+        "en": "📝 Prompt + code = inline docs",
+        "pt": "📝 Prompt + código = documentação inline"
+      },
+      "options": [
+        {
+          "en": "Generates comments from natural language prompts",
+          "pt": "Gera comentários a partir de prompts em linguagem natural"
+        },
+        {
+          "en": "Removes comments",
+          "pt": "Remove comentários"
+        },
+        {
+          "en": "Prevents documentation",
+          "pt": "Impede a documentação"
+        },
+        {
+          "en": "Cannot generate documentation",
+          "pt": "Não consegue gerar documentação"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Removing comments is the opposite of generating inline documentation.",
+          "pt": "Remover comentários é o oposto de gerar documentação inline."
+        },
+        {
+          "en": "The feature is meant to help produce documentation, not block it.",
+          "pt": "O recurso existe para ajudar a produzir documentação, não para impedi-la."
+        },
+        {
+          "en": "Generating inline documentation is a standard assistance scenario for Copilot Chat.",
+          "pt": "Gerar documentação inline é um cenário comum de assistência do Copilot Chat."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 10,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is ghost text in GitHub Copilot?",
+        "pt": "O que é ghost text no GitHub Copilot?"
+      },
+      "answer": {
+        "en": "Ghost text is the faded suggestion that appears inline in the editor as you type and can be accepted with Tab.",
+        "pt": "Ghost text é a sugestão esmaecida que aparece inline no editor enquanto você digita e pode ser aceita com Tab."
+      },
+      "explanation": {
+        "en": "This concept appears a lot because it is central to the Copilot experience. The important part is that ghost text is an inline preview, not a permanent change. You see it first, then decide whether to accept it.",
+        "pt": "Esse conceito aparece bastante porque é central na experiência do Copilot. O ponto importante é que ghost text é uma prévia inline, não uma mudança permanente. Você vê a sugestão primeiro e depois decide se quer aceitá-la."
+      },
+      "mnemonic": {
+        "en": "👻 Ghost text = faded inline preview",
+        "pt": "👻 Ghost text = prévia inline esmaecida"
+      },
+      "options": [
+        {
+          "en": "Options when typing",
+          "pt": "Opções ao digitar"
+        },
+        {
+          "en": "Faded suggestions as you type",
+          "pt": "Sugestões esmaecidas enquanto você digita"
+        },
+        {
+          "en": "Hidden uneditable code",
+          "pt": "Código oculto e não editável"
+        },
+        {
+          "en": "Deleted recoverable code",
+          "pt": "Código excluído que pode ser recuperado"
+        }
+      ],
+      "wrongReasons": [
+        {
+          "en": "That description is too generic. Ghost text is specifically the faded inline suggestion.",
+          "pt": "Essa descrição é genérica demais. Ghost text é especificamente a sugestão inline esmaecida."
+        },
+        null,
+        {
+          "en": "Ghost text is visible and previewed in the editor; it is not hidden uneditable code.",
+          "pt": "Ghost text é visível e aparece como prévia no editor; não é código oculto e não editável."
+        },
+        {
+          "en": "It has nothing to do with deleted code. It is about live suggestions during typing.",
+          "pt": "Isso não tem relação com código excluído. Trata-se de sugestões em tempo real durante a digitação."
+        }
+      ],
+      "correct": 1
+    },
+    {
+      "id": 11,
+      "difficulty": "easy",
+      "question": {
+        "en": "How do you access Copilot's inline chat?",
+        "pt": "Como você acessa o chat inline do Copilot?"
+      },
+      "answer": {
+        "en": "Use Ctrl+I on Windows or Cmd+I on Mac to open inline chat directly in the editor.",
+        "pt": "Use Ctrl+I no Windows ou Cmd+I no Mac para abrir o chat inline diretamente no editor."
+      },
+      "explanation": {
+        "en": "The key distinction in the exam is between inline chat and sidebar chat. Inline chat appears inside your coding context, allowing you to interact without leaving the file.",
+        "pt": "A prova diferencia chat inline e chat da sidebar. O chat inline aparece dentro do contexto do código, permitindo interação sem sair do arquivo."
+      },
+      "mnemonic": {
+        "en": "⌨️ I = Inline → Ctrl+I",
+        "pt": "⌨️ I = Inline → Ctrl+I"
+      },
+      "options": [
+        {
+          "en": "Click the chat icon in the sidebar",
+          "pt": "Clicar no ícone de chat da sidebar"
+        },
+        {
+          "en": "Ctrl+I (Windows) or Cmd+I (Mac)",
+          "pt": "Ctrl+I (Windows) ou Cmd+I (Mac)"
+        },
+        {
+          "en": "Ctrl+J",
+          "pt": "Ctrl+J"
+        },
+        {
+          "en": "Ctrl+K",
+          "pt": "Ctrl+K"
+        }
+      ],
+      "wrongReasons": [
+        {
+          "en": "The sidebar icon opens the chat panel, not inline chat.",
+          "pt": "O ícone da sidebar abre o painel de chat, não o chat inline."
+        },
+        null,
+        {
+          "en": "This shortcut is unrelated to Copilot inline chat.",
+          "pt": "Esse atalho não tem relação com o chat inline do Copilot."
+        },
+        {
+          "en": "This shortcut is typically used for other editor actions, not inline chat.",
+          "pt": "Esse atalho normalmente é usado para outras ações do editor."
+        }
+      ],
+      "correct": 1
+    },
+    {
+      "id": 12,
+      "difficulty": "medium",
+      "question": {
+        "en": "What do agents like '@terminal' or '@workspace' provide?",
+        "pt": "O que agentes como '@terminal' ou '@workspace' fornecem?"
+      },
+      "answer": {
+        "en": "They allow you to ask questions within a specific context, improving response accuracy.",
+        "pt": "Eles permitem fazer perguntas dentro de um contexto específico, melhorando a precisão das respostas."
+      },
+      "explanation": {
+        "en": "Agents are about context targeting. Instead of asking generic questions, you guide Copilot to focus on a specific scope, like your project or terminal.",
+        "pt": "Agentes servem para direcionar contexto. Em vez de perguntas genéricas, você guia o Copilot para focar em um escopo específico, como o projeto ou o terminal."
+      },
+      "mnemonic": {
+        "en": "🎯 Agent = Focused context",
+        "pt": "🎯 Agente = Contexto direcionado"
+      },
+      "options": [
+        {
+          "en": "Questions within specific context",
+          "pt": "Perguntas em contexto específico"
+        },
+        {
+          "en": "Debugging only",
+          "pt": "Apenas debugging"
+        },
+        {
+          "en": "Prevent Copilot usage",
+          "pt": "Impedem o uso do Copilot"
+        },
+        {
+          "en": "Not supported",
+          "pt": "Não são suportados"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Agents are not limited to debugging scenarios.",
+          "pt": "Agentes não são limitados apenas a cenários de debugging."
+        },
+        {
+          "en": "Agents enhance Copilot, they do not block it.",
+          "pt": "Agentes melhoram o uso do Copilot, não o impedem."
+        },
+        {
+          "en": "Agents are supported features in Copilot Chat.",
+          "pt": "Agentes são recursos suportados no Copilot Chat."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 13,
+      "difficulty": "medium",
+      "question": {
+        "en": "What are the benefits of implicit prompts with slash commands in inline chat?",
+        "pt": "Quais são os benefícios de prompts implícitos com comandos /slash no chat inline?"
+      },
+      "answer": {
+        "en": "They provide better responses quickly without requiring long prompts.",
+        "pt": "Eles fornecem respostas melhores rapidamente sem exigir prompts longos."
+      },
+      "explanation": {
+        "en": "Slash commands encode intent. Instead of describing everything, you trigger a predefined behavior like /fix or /explain.",
+        "pt": "Comandos slash já carregam intenção. Em vez de descrever tudo, você ativa um comportamento específico como /fix ou /explain."
+      },
+      "mnemonic": {
+        "en": "🚀 Slash = shortcut to intent",
+        "pt": "🚀 Slash = atalho para intenção"
+      },
+      "options": [
+        {
+          "en": "Better responses without long prompts",
+          "pt": "Melhores respostas sem prompts longos"
+        },
+        {
+          "en": "They are deprecated",
+          "pt": "São descontinuados"
+        },
+        {
+          "en": "They make usage harder",
+          "pt": "Tornam o uso mais difícil"
+        },
+        {
+          "en": "They have no benefits",
+          "pt": "Não possuem benefícios"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Slash commands are actively used and supported.",
+          "pt": "Comandos slash são ativos e suportados."
+        },
+        {
+          "en": "They simplify interaction instead of making it harder.",
+          "pt": "Eles simplificam a interação, não dificultam."
+        },
+        {
+          "en": "They provide clear productivity benefits.",
+          "pt": "Eles trazem benefícios claros de produtividade."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 14,
+      "difficulty": "easy",
+      "question": {
+        "en": "What functionality is not supported in Copilot for Individuals?",
+        "pt": "Qual funcionalidade não é suportada no Copilot para uso individual?"
+      },
+      "answer": {
+        "en": "Support for VPN proxy with self-signed certificates.",
+        "pt": "Suporte a proxy VPN com certificados autoassinados."
+      },
+      "explanation": {
+        "en": "This is an enterprise-level networking and security feature, not part of the individual developer experience.",
+        "pt": "Esse é um recurso de rede e segurança em nível corporativo, não faz parte da experiência de uso individual."
+      },
+      "mnemonic": {
+        "en": "🔐 Advanced network = enterprise feature",
+        "pt": "🔐 Rede avançada = recurso enterprise"
+      },
+      "options": [
+        {
+          "en": "VPN proxy with self-signed certificates",
+          "pt": "Proxy VPN com certificados autoassinados"
+        },
+        {
+          "en": "Ghost text",
+          "pt": "Ghost text"
+        },
+        {
+          "en": "Chat",
+          "pt": "Chat"
+        },
+        {
+          "en": "Code completion",
+          "pt": "Autocompletar código"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Ghost text is a core Copilot feature available to individuals.",
+          "pt": "Ghost text é um recurso principal disponível para usuários individuais."
+        },
+        {
+          "en": "Chat is part of the Copilot experience for individuals.",
+          "pt": "Chat faz parte da experiência do Copilot para indivíduos."
+        },
+        {
+          "en": "Code completion is the core feature of Copilot.",
+          "pt": "Autocompletar código é o recurso principal do Copilot."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 15,
+      "difficulty": "easy",
+      "question": {
+        "en": "How do you accept Copilot suggestions?",
+        "pt": "Como você aceita sugestões do Copilot?"
+      },
+      "answer": {
+        "en": "Press the Tab key.",
+        "pt": "Pressione a tecla Tab."
+      },
+      "explanation": {
+        "en": "This is one of the most common exam questions. Tab is the default and expected way to accept inline suggestions.",
+        "pt": "Essa é uma das perguntas mais comuns da prova. Tab é a forma padrão de aceitar sugestões inline."
+      },
+      "mnemonic": {
+        "en": "⌨️ Tab = Accept",
+        "pt": "⌨️ Tab = Aceitar"
+      },
+      "options": [
+        {
+          "en": "Press Tab",
+          "pt": "Pressionar Tab"
+        },
+        {
+          "en": "Press Enter",
+          "pt": "Pressionar Enter"
+        },
+        {
+          "en": "Press Space",
+          "pt": "Pressionar Espaço"
+        },
+        {
+          "en": "Click suggestion",
+          "pt": "Clicar na sugestão"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Enter is not the standard key for accepting suggestions.",
+          "pt": "Enter não é a tecla padrão para aceitar sugestões."
+        },
+        {
+          "en": "Space continues typing but does not accept suggestions.",
+          "pt": "Espaço continua a digitação, mas não aceita a sugestão."
+        },
+        {
+          "en": "Clicking is possible in some contexts but not the standard expected answer.",
+          "pt": "Clicar pode funcionar em alguns casos, mas não é a resposta padrão esperada."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 16,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is GitHub Copilot?",
+        "pt": "O que é o GitHub Copilot?"
+      },
+      "answer": {
+        "en": "An AI-powered pair programmer that provides code suggestions.",
+        "pt": "Um programador parceiro com IA que fornece sugestões de código."
+      },
+      "explanation": {
+        "en": "The exam expects you to understand Copilot as an assistant, not a replacement for developers.",
+        "pt": "A prova espera que você entenda o Copilot como um assistente, não como substituto do desenvolvedor."
+      },
+      "mnemonic": {
+        "en": "👥 AI pair programmer",
+        "pt": "👥 Programador parceiro com IA"
+      },
+      "options": [
+        {
+          "en": "AI pair programmer",
+          "pt": "Programador parceiro com IA"
+        },
+        {
+          "en": "Version control system",
+          "pt": "Sistema de controle de versão"
+        },
+        {
+          "en": "Project planning tool",
+          "pt": "Ferramenta de planejamento"
+        },
+        {
+          "en": "Bug tracker",
+          "pt": "Rastreador de bugs"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Version control is handled by Git and GitHub.",
+          "pt": "Controle de versão é feito pelo Git e GitHub."
+        },
+        {
+          "en": "Copilot is not designed for project planning.",
+          "pt": "Copilot não é uma ferramenta de planejamento."
+        },
+        {
+          "en": "It can help with debugging but is not a bug tracking system.",
+          "pt": "Ele ajuda com debugging, mas não é um sistema de rastreamento."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 17,
+      "difficulty": "easy",
+      "question": {
+        "en": "How does Copilot determine its suggestions?",
+        "pt": "Como o Copilot determina suas sugestões?"
+      },
+      "answer": {
+        "en": "Based on the context of your code, including surrounding code and comments.",
+        "pt": "Com base no contexto do código, incluindo o código ao redor e comentários."
+      },
+      "explanation": {
+        "en": "Context is one of the most important concepts in the exam. Better context leads to better suggestions.",
+        "pt": "Contexto é um dos conceitos mais importantes da prova. Quanto melhor o contexto, melhores as sugestões."
+      },
+      "mnemonic": {
+        "en": "📖 Context = quality",
+        "pt": "📖 Contexto = qualidade"
+      },
+      "options": [
+        {
+          "en": "Code context",
+          "pt": "Contexto do código"
+        },
+        {
+          "en": "Random generation",
+          "pt": "Geração aleatória"
+        },
+        {
+          "en": "Last word typed",
+          "pt": "Última palavra digitada"
+        },
+        {
+          "en": "File size",
+          "pt": "Tamanho do arquivo"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Suggestions are not random.",
+          "pt": "As sugestões não são aleatórias."
+        },
+        {
+          "en": "A single word is not enough context.",
+          "pt": "Uma única palavra não fornece contexto suficiente."
+        },
+        {
+          "en": "File size is irrelevant.",
+          "pt": "O tamanho do arquivo é irrelevante."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 18,
+      "difficulty": "medium",
+      "question": {
+        "en": "How does Copilot use an organization's codebase?",
+        "pt": "Como o Copilot usa a base de código de uma organização?"
+      },
+      "answer": {
+        "en": "It tailors suggestions to align with organizational standards and practices.",
+        "pt": "Ele adapta sugestões para alinhar com padrões e práticas da organização."
+      },
+      "explanation": {
+        "en": "This is a key Enterprise concept: aligning AI suggestions with internal patterns improves consistency and productivity.",
+        "pt": "Esse é um conceito central do Enterprise: alinhar sugestões com padrões internos melhora consistência e produtividade."
+      },
+      "mnemonic": {
+        "en": "🏢 Org context = aligned suggestions",
+        "pt": "🏢 Contexto da empresa = sugestões alinhadas"
+      },
+      "options": [
+        {
+          "en": "Tailors to organizational standards",
+          "pt": "Adapta aos padrões da organização"
+        },
+        {
+          "en": "Ignores standards",
+          "pt": "Ignora padrões"
+        },
+        {
+          "en": "Uses only public code",
+          "pt": "Usa apenas código público"
+        },
+        {
+          "en": "Cannot be customized",
+          "pt": "Não pode ser personalizado"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Ignoring standards reduces consistency.",
+          "pt": "Ignorar padrões reduz consistência."
+        },
+        {
+          "en": "Enterprise includes internal knowledge, not only public code.",
+          "pt": "O Enterprise inclui conhecimento interno, não apenas código público."
+        },
+        {
+          "en": "Customization is a core feature of Enterprise.",
+          "pt": "Customização é um recurso central do Enterprise."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 19,
+      "difficulty": "medium",
+      "question": {
+        "en": "How does GitHub Copilot work?",
+        "pt": "Como o GitHub Copilot funciona?"
+      },
+      "answer": {
+        "en": "It uses natural language prompts and code context to generate suggestions.",
+        "pt": "Ele usa prompts em linguagem natural e contexto de código para gerar sugestões."
+      },
+      "explanation": {
+        "en": "The exam often combines prompt + context as the core idea. Both are necessary to produce useful results.",
+        "pt": "A prova frequentemente combina prompt + contexto como conceito central. Ambos são necessários para gerar bons resultados."
+      },
+      "mnemonic": {
+        "en": "💭 Prompt + Context = Output",
+        "pt": "💭 Prompt + Contexto = Resultado"
+      },
+      "options": [
+        {
+          "en": "Uses prompts and context",
+          "pt": "Usa prompts e contexto"
+        },
+        {
+          "en": "Reads developer mind",
+          "pt": "Lê a mente do desenvolvedor"
+        },
+        {
+          "en": "Works only with one language",
+          "pt": "Funciona apenas com uma linguagem"
+        },
+        {
+          "en": "Depends only on internet",
+          "pt": "Depende apenas da internet"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "It relies on input, not mind reading.",
+          "pt": "Ele depende de entrada, não de leitura mental."
+        },
+        {
+          "en": "It supports multiple languages.",
+          "pt": "Ele suporta várias linguagens."
+        },
+        {
+          "en": "Internet alone is not the defining factor.",
+          "pt": "A internet sozinha não define o funcionamento."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 20,
+      "difficulty": "medium",
+      "question": {
+        "en": "How does Copilot learn from prompts?",
+        "pt": "Como o Copilot aprende com prompts?"
+      },
+      "answer": {
+        "en": "By using approaches like zero-shot, one-shot, and few-shot learning.",
+        "pt": "Usando abordagens como zero-shot, one-shot e few-shot learning."
+      },
+      "explanation": {
+        "en": "These techniques describe how the model interprets instructions. More examples in the prompt can guide better outputs.",
+        "pt": "Essas técnicas descrevem como o modelo interpreta instruções. Mais exemplos no prompt ajudam a guiar melhores respostas."
+      },
+      "mnemonic": {
+        "en": "📚 Shots = examples guide AI",
+        "pt": "📚 Shots = exemplos guiam a IA"
+      },
+      "options": [
+        {
+          "en": "Zero-shot / one-shot / few-shot",
+          "pt": "Zero-shot / one-shot / few-shot"
+        },
+        {
+          "en": "Stores all prompts",
+          "pt": "Armazena todos os prompts"
+        },
+        {
+          "en": "Does not learn",
+          "pt": "Não aprende"
+        },
+        {
+          "en": "Requires manual training",
+          "pt": "Requer treinamento manual"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "The concept is about prompting strategy, not storage.",
+          "pt": "O conceito é sobre estratégia de prompt, não armazenamento."
+        },
+        {
+          "en": "Prompts directly influence outputs.",
+          "pt": "Prompts influenciam diretamente as respostas."
+        },
+        {
+          "en": "Users do not train the model manually.",
+          "pt": "O usuário não treina o modelo manualmente."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 21,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which prompt is most effective for generating unit tests?",
+        "pt": "Qual prompt é mais eficaz para gerar testes unitários?"
+      },
+      "answer": {
+        "en": "A clear prompt specifying framework, edge cases, and expected behavior.",
+        "pt": "Um prompt claro especificando framework, casos de borda e comportamento esperado."
+      },
+      "explanation": {
+        "en": "Good prompts are specific and structured. Mentioning framework (like Jest), edge cases, and expected behavior improves output quality significantly.",
+        "pt": "Prompts bons são específicos e estruturados. Mencionar framework (como Jest), casos de borda e comportamento esperado melhora muito a qualidade da resposta."
+      },
+      "mnemonic": {
+        "en": "🎯 Specific prompt = better output",
+        "pt": "🎯 Prompt específico = melhor resultado"
+      },
+      "options": [
+        {
+          "en": "Create unit tests in Jest covering edge cases and invalid inputs",
+          "pt": "Crie testes em Jest cobrindo casos de borda e entradas inválidas"
+        },
+        {
+          "en": "Write tests",
+          "pt": "Escreva testes"
+        },
+        {
+          "en": "Generate code",
+          "pt": "Gere código"
+        },
+        {
+          "en": "Test this",
+          "pt": "Teste isso"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Too vague — lacks structure and detail.",
+          "pt": "Muito vago — falta estrutura e detalhe."
+        },
+        {
+          "en": "Not specific to testing or expected behavior.",
+          "pt": "Não é específico para testes ou comportamento esperado."
+        },
+        {
+          "en": "Extremely vague — no useful context.",
+          "pt": "Extremamente vago — sem contexto útil."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 22,
+      "difficulty": "medium",
+      "question": {
+        "en": "What should you avoid including in prompts regarding privacy?",
+        "pt": "O que você deve evitar incluir em prompts por questões de privacidade?"
+      },
+      "answer": {
+        "en": "Sensitive data such as secrets, tokens, or confidential information.",
+        "pt": "Dados sensíveis como segredos, tokens ou informações confidenciais."
+      },
+      "explanation": {
+        "en": "Responsible AI usage is heavily tested. You should never include secrets or sensitive data in prompts.",
+        "pt": "Uso responsável de IA é muito cobrado. Você nunca deve incluir dados sensíveis em prompts."
+      },
+      "mnemonic": {
+        "en": "🔒 Prompt ≠ secrets",
+        "pt": "🔒 Prompt ≠ segredos"
+      },
+      "options": [
+        {
+          "en": "Sensitive data like tokens",
+          "pt": "Dados sensíveis como tokens"
+        },
+        {
+          "en": "Function names",
+          "pt": "Nomes de funções"
+        },
+        {
+          "en": "Comments",
+          "pt": "Comentários"
+        },
+        {
+          "en": "Variable names",
+          "pt": "Nomes de variáveis"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Function names are safe and expected.",
+          "pt": "Nomes de funções são seguros."
+        },
+        {
+          "en": "Comments help context.",
+          "pt": "Comentários ajudam no contexto."
+        },
+        {
+          "en": "Variable names are normal context.",
+          "pt": "Variáveis fazem parte do contexto."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 23,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the purpose of content filtering in Copilot?",
+        "pt": "Qual é o objetivo do content filtering no Copilot?"
+      },
+      "answer": {
+        "en": "To prevent harmful, unsafe, or malicious code generation.",
+        "pt": "Prevenir a geração de código perigoso, inseguro ou malicioso."
+      },
+      "explanation": {
+        "en": "Filtering is about safety, not quality. This is a classic exam trap.",
+        "pt": "Filtering é sobre segurança, não qualidade. Essa é uma pegadinha clássica da prova."
+      },
+      "mnemonic": {
+        "en": "🛡️ Filtering = safety",
+        "pt": "🛡️ Filtering = segurança"
+      },
+      "options": [
+        {
+          "en": "Prevent harmful code",
+          "pt": "Prevenir código perigoso"
+        },
+        {
+          "en": "Improve code quality",
+          "pt": "Melhorar qualidade"
+        },
+        {
+          "en": "Remove irrelevant code",
+          "pt": "Remover código irrelevante"
+        },
+        {
+          "en": "Optimize performance",
+          "pt": "Otimizar performance"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Quality is not the primary goal.",
+          "pt": "Qualidade não é o foco principal."
+        },
+        {
+          "en": "Relevance filtering is different.",
+          "pt": "Relevância é outro conceito."
+        },
+        {
+          "en": "Performance is unrelated.",
+          "pt": "Performance não tem relação."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 24,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does code reliability mean?",
+        "pt": "O que significa confiabilidade de código?"
+      },
+      "answer": {
+        "en": "The likelihood that code works correctly over time.",
+        "pt": "A probabilidade do código funcionar corretamente ao longo do tempo."
+      },
+      "explanation": {
+        "en": "Reliability is not about speed or performance — it's about consistency and correctness.",
+        "pt": "Confiabilidade não é sobre velocidade — é sobre consistência e funcionamento correto."
+      },
+      "mnemonic": {
+        "en": "🔁 Reliability = works every time",
+        "pt": "🔁 Confiabilidade = funciona sempre"
+      },
+      "options": [
+        {
+          "en": "Works correctly over time",
+          "pt": "Funciona corretamente ao longo do tempo"
+        },
+        {
+          "en": "Runs fast",
+          "pt": "Executa rápido"
+        },
+        {
+          "en": "Uses less memory",
+          "pt": "Usa menos memória"
+        },
+        {
+          "en": "Runs in parallel",
+          "pt": "Executa em paralelo"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Speed is performance, not reliability.",
+          "pt": "Velocidade é performance."
+        },
+        {
+          "en": "Memory usage is optimization.",
+          "pt": "Memória é otimização."
+        },
+        {
+          "en": "Parallelism is architecture.",
+          "pt": "Paralelismo é arquitetura."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 25,
+      "difficulty": "medium",
+      "question": {
+        "en": "What improves Copilot output quality?",
+        "pt": "O que melhora a qualidade das respostas do Copilot?"
+      },
+      "answer": {
+        "en": "Clear and specific prompts with proper context.",
+        "pt": "Prompts claros e específicos com bom contexto."
+      },
+      "explanation": {
+        "en": "Prompt engineering is a key exam topic. Clarity beats verbosity.",
+        "pt": "Prompt engineering é central na prova. Clareza é melhor que excesso."
+      },
+      "mnemonic": {
+        "en": "🎯 Clear > long",
+        "pt": "🎯 Claro > longo"
+      },
+      "options": [
+        {
+          "en": "Clear and specific prompts",
+          "pt": "Prompts claros e específicos"
+        },
+        {
+          "en": "Long prompts",
+          "pt": "Prompts longos"
+        },
+        {
+          "en": "Random prompts",
+          "pt": "Prompts aleatórios"
+        },
+        {
+          "en": "No prompts",
+          "pt": "Sem prompts"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Length alone does not improve quality.",
+          "pt": "Tamanho não melhora qualidade."
+        },
+        {
+          "en": "Random prompts reduce quality.",
+          "pt": "Aleatoriedade piora qualidade."
+        },
+        {
+          "en": "No prompt = no direction.",
+          "pt": "Sem prompt = sem direção."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 26,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is a bad prompt example?",
+        "pt": "Qual é um exemplo de prompt ruim?"
+      },
+      "answer": {
+        "en": "A vague and unclear instruction.",
+        "pt": "Uma instrução vaga e sem contexto."
+      },
+      "explanation": {
+        "en": "Vague prompts lead to poor outputs because the model lacks direction.",
+        "pt": "Prompts vagos geram respostas ruins porque o modelo não tem direção."
+      },
+      "mnemonic": {
+        "en": "❌ Vague = bad",
+        "pt": "❌ Vago = ruim"
+      },
+      "options": [
+        {
+          "en": "Improve this",
+          "pt": "Melhore isso"
+        },
+        {
+          "en": "Refactor this function for performance",
+          "pt": "Refatore esta função para performance"
+        },
+        {
+          "en": "Explain this code",
+          "pt": "Explique este código"
+        },
+        {
+          "en": "Generate tests for this function",
+          "pt": "Gere testes para esta função"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "This is a clear instruction.",
+          "pt": "Essa instrução é clara."
+        },
+        {
+          "en": "This is specific.",
+          "pt": "Essa é específica."
+        },
+        {
+          "en": "This is a valid prompt.",
+          "pt": "Esse é um prompt válido."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 27,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the best practice when using Copilot suggestions?",
+        "pt": "Qual é a melhor prática ao usar sugestões do Copilot?"
+      },
+      "answer": {
+        "en": "Review and validate suggestions before using them.",
+        "pt": "Revisar e validar as sugestões antes de usá-las."
+      },
+      "explanation": {
+        "en": "Copilot assists, but the developer is responsible for correctness.",
+        "pt": "O Copilot ajuda, mas a responsabilidade final é do desenvolvedor."
+      },
+      "mnemonic": {
+        "en": "🧠 Trust but verify",
+        "pt": "🧠 Confie, mas verifique"
+      },
+      "options": [
+        {
+          "en": "Review before using",
+          "pt": "Revisar antes de usar"
+        },
+        {
+          "en": "Always accept",
+          "pt": "Sempre aceitar"
+        },
+        {
+          "en": "Ignore suggestions",
+          "pt": "Ignorar sugestões"
+        },
+        {
+          "en": "Deploy directly",
+          "pt": "Deploy direto"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Blind trust is risky.",
+          "pt": "Confiar cegamente é arriscado."
+        },
+        {
+          "en": "Ignoring wastes value.",
+          "pt": "Ignorar desperdiça valor."
+        },
+        {
+          "en": "Deploy without review is unsafe.",
+          "pt": "Deploy sem revisão é perigoso."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 28,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is Copilot good for?",
+        "pt": "Para que o Copilot é mais útil?"
+      },
+      "answer": {
+        "en": "Generating boilerplate code and assisting repetitive tasks.",
+        "pt": "Gerar código base e ajudar em tarefas repetitivas."
+      },
+      "explanation": {
+        "en": "Copilot excels at repetitive and structured tasks.",
+        "pt": "O Copilot é excelente em tarefas repetitivas e estruturadas."
+      },
+      "mnemonic": {
+        "en": "⚙️ Repetition = Copilot strength",
+        "pt": "⚙️ Repetição = força do Copilot"
+      },
+      "options": [
+        {
+          "en": "Boilerplate code",
+          "pt": "Código base"
+        },
+        {
+          "en": "Replacing developers",
+          "pt": "Substituir devs"
+        },
+        {
+          "en": "Managing infrastructure",
+          "pt": "Gerenciar infra"
+        },
+        {
+          "en": "Running production systems",
+          "pt": "Executar produção"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Copilot assists, not replaces.",
+          "pt": "Copilot não substitui dev."
+        },
+        {
+          "en": "Not an infra tool.",
+          "pt": "Não é ferramenta de infra."
+        },
+        {
+          "en": "Not for production execution.",
+          "pt": "Não executa sistemas."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 29,
+      "difficulty": "medium",
+      "question": {
+        "en": "Where does Copilot work?",
+        "pt": "Onde o Copilot funciona?"
+      },
+      "answer": {
+        "en": "In supported IDEs like VS Code and other development environments.",
+        "pt": "Em IDEs suportadas como VS Code e outros ambientes de desenvolvimento."
+      },
+      "explanation": {
+        "en": "Copilot integrates into developer tools, not standalone systems.",
+        "pt": "O Copilot se integra às ferramentas de desenvolvimento."
+      },
+      "mnemonic": {
+        "en": "💻 IDE = Copilot home",
+        "pt": "💻 IDE = casa do Copilot"
+      },
+      "options": [
+        {
+          "en": "In IDEs",
+          "pt": "Em IDEs"
+        },
+        {
+          "en": "Only browser",
+          "pt": "Apenas navegador"
+        },
+        {
+          "en": "Only terminal",
+          "pt": "Apenas terminal"
+        },
+        {
+          "en": "Only GitHub UI",
+          "pt": "Apenas interface do GitHub"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "It is not limited to browser.",
+          "pt": "Não é só navegador."
+        },
+        {
+          "en": "Terminal alone is incorrect.",
+          "pt": "Terminal sozinho está errado."
+        },
+        {
+          "en": "GitHub UI is not the only place.",
+          "pt": "Não é só no GitHub."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 30,
+      "difficulty": "medium",
+      "question": {
+        "en": "What improves debugging with Copilot?",
+        "pt": "O que melhora debugging com Copilot?"
+      },
+      "answer": {
+        "en": "Providing error context and asking targeted questions.",
+        "pt": "Fornecer contexto do erro e fazer perguntas direcionadas."
+      },
+      "explanation": {
+        "en": "Debugging improves with context — error messages, logs, and specific prompts.",
+        "pt": "Debugging melhora com contexto — mensagens de erro, logs e prompts específicos."
+      },
+      "mnemonic": {
+        "en": "🔍 Context = better debug",
+        "pt": "🔍 Contexto = melhor debug"
+      },
+      "options": [
+        {
+          "en": "Provide context",
+          "pt": "Fornecer contexto"
+        },
+        {
+          "en": "Ask vague questions",
+          "pt": "Perguntar de forma vaga"
+        },
+        {
+          "en": "Remove errors",
+          "pt": "Remover erros"
+        },
+        {
+          "en": "Ignore logs",
+          "pt": "Ignorar logs"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Vague questions reduce quality.",
+          "pt": "Perguntas vagas pioram o resultado."
+        },
+        {
+          "en": "Removing errors is not debugging.",
+          "pt": "Remover erro não é debugging."
+        },
+        {
+          "en": "Logs are critical context.",
+          "pt": "Logs são essenciais."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 31,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the best way to provide context to GitHub Copilot for better code suggestions?",
+        "pt": "Qual é a melhor forma de fornecer contexto ao GitHub Copilot para obter sugestões de código melhores?"
+      },
+      "answer": {
+        "en": "Provide meaningful function names, specific comments, and keep related files open in the editor.",
+        "pt": "Forneça nomes de função significativos, comentários específicos e mantenha arquivos relacionados abertos no editor."
+      },
+      "explanation": {
+        "en": "Copilot performs better when it understands your intent and nearby project context. Clear naming, useful comments, and related files help the model infer structure and behavior more accurately.",
+        "pt": "O Copilot funciona melhor quando entende sua intenção e o contexto próximo do projeto. Nomes claros, comentários úteis e arquivos relacionados ajudam o modelo a inferir melhor a estrutura e o comportamento."
+      },
+      "mnemonic": {
+        "en": "📚 Good names + comments + open files = strong context",
+        "pt": "📚 Bons nomes + comentários + arquivos abertos = contexto forte"
+      },
+      "options": [
+        {
+          "en": "Provide meaningful names, comments, and open related files",
+          "pt": "Fornecer nomes significativos, comentários e arquivos relacionados abertos"
+        },
+        {
+          "en": "Keep related files closed",
+          "pt": "Manter arquivos relacionados fechados"
+        },
+        {
+          "en": "Use generic names everywhere",
+          "pt": "Usar nomes genéricos em todo lugar"
+        },
+        {
+          "en": "Avoid comments",
+          "pt": "Evitar comentários"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Closing relevant files reduces available context.",
+          "pt": "Fechar arquivos relevantes reduz o contexto disponível."
+        },
+        {
+          "en": "Generic names make intent less clear to both humans and Copilot.",
+          "pt": "Nomes genéricos deixam a intenção menos clara para humanos e para o Copilot."
+        },
+        {
+          "en": "Useful comments often improve intent clarity.",
+          "pt": "Comentários úteis costumam melhorar a clareza da intenção."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 32,
+      "difficulty": "medium",
+      "question": {
+        "en": "How can a developer optimize their experience when interacting with GitHub Copilot via chat?",
+        "pt": "Como um desenvolvedor pode otimizar a experiência ao interagir com o GitHub Copilot via chat?"
+      },
+      "answer": {
+        "en": "Use chat participants, slash commands, chat variables, and be specific in your prompts.",
+        "pt": "Use participantes de chat, slash commands, variáveis de chat e seja específico nos prompts."
+      },
+      "explanation": {
+        "en": "The exam expects you to know that better chat usage comes from combining the built-in tools with clear prompting. Copilot Chat works best when you explicitly guide scope, intent, and context.",
+        "pt": "A prova espera que você saiba que um uso melhor do chat vem da combinação dos recursos nativos com prompts claros. O Copilot Chat funciona melhor quando você guia explicitamente escopo, intenção e contexto."
+      },
+      "mnemonic": {
+        "en": "🎯 @participants + /commands + variables + specificity",
+        "pt": "🎯 @participantes + /comandos + variáveis + especificidade"
+      },
+      "options": [
+        {
+          "en": "Use chat participants, slash commands, variables, and specific prompts",
+          "pt": "Usar participantes de chat, slash commands, variáveis e prompts específicos"
+        },
+        {
+          "en": "Type randomly and let Copilot infer everything",
+          "pt": "Digitar aleatoriamente e deixar o Copilot inferir tudo"
+        },
+        {
+          "en": "Avoid commands and variables",
+          "pt": "Evitar comandos e variáveis"
+        },
+        {
+          "en": "Use vague prompts to save time",
+          "pt": "Usar prompts vagos para economizar tempo"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Random input lowers response quality.",
+          "pt": "Entrada aleatória reduz a qualidade das respostas."
+        },
+        {
+          "en": "Commands and variables are useful tools, not noise.",
+          "pt": "Comandos e variáveis são recursos úteis, não ruído."
+        },
+        {
+          "en": "Vague prompts usually lead to vague outputs.",
+          "pt": "Prompts vagos costumam gerar respostas vagas."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 33,
+      "difficulty": "hard",
+      "question": {
+        "en": "Which of the following is NOT a principle of effective prompt engineering for GitHub Copilot?",
+        "pt": "Qual das alternativas a seguir NÃO é um princípio de prompt engineering eficaz para o GitHub Copilot?"
+      },
+      "answer": {
+        "en": "Verbosity — providing extensive and overly detailed descriptions.",
+        "pt": "Verbosity — fornecer descrições extensas e detalhadas em excesso."
+      },
+      "explanation": {
+        "en": "This is a classic trap. Many people assume 'more words = better result', but for Copilot the exam favors clarity, relevance, and specificity over excessive verbosity.",
+        "pt": "Essa é uma pegadinha clássica. Muita gente assume que 'mais palavras = resultado melhor', mas para o Copilot a prova valoriza clareza, relevância e especificidade acima de verbosidade excessiva."
+      },
+      "mnemonic": {
+        "en": "✂️ Clear beats verbose",
+        "pt": "✂️ Clareza vence verbosidade"
+      },
+      "options": [
+        {
+          "en": "Verbosity",
+          "pt": "Verbosidade"
+        },
+        {
+          "en": "Be specific",
+          "pt": "Ser específico"
+        },
+        {
+          "en": "Use relevant context",
+          "pt": "Usar contexto relevante"
+        },
+        {
+          "en": "Provide clear intent",
+          "pt": "Fornecer intenção clara"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Specific prompts are a good practice.",
+          "pt": "Prompts específicos são uma boa prática."
+        },
+        {
+          "en": "Relevant context improves output quality.",
+          "pt": "Contexto relevante melhora a qualidade da resposta."
+        },
+        {
+          "en": "Clear intent helps Copilot understand what you want.",
+          "pt": "Intenção clara ajuda o Copilot a entender o que você quer."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 34,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the purpose of code refactoring?",
+        "pt": "Qual é o propósito da refatoração de código?"
+      },
+      "answer": {
+        "en": "To improve the internal structure of code without changing its external behavior or functionality.",
+        "pt": "Melhorar a estrutura interna do código sem alterar seu comportamento externo ou sua funcionalidade."
+      },
+      "explanation": {
+        "en": "Refactoring is about design quality, maintainability, and clarity. The core idea is improvement without changing what the software is supposed to do.",
+        "pt": "Refatoração é sobre qualidade de design, manutenibilidade e clareza. A ideia central é melhorar sem mudar o que o software deve fazer."
+      },
+      "mnemonic": {
+        "en": "🔨 Better inside, same outside",
+        "pt": "🔨 Melhor por dentro, igual por fora"
+      },
+      "options": [
+        {
+          "en": "Improve internal structure without changing behavior",
+          "pt": "Melhorar a estrutura interna sem mudar o comportamento"
+        },
+        {
+          "en": "Add new features quickly",
+          "pt": "Adicionar novos recursos rapidamente"
+        },
+        {
+          "en": "Rewrite everything from scratch",
+          "pt": "Reescrever tudo do zero"
+        },
+        {
+          "en": "Reduce documentation effort",
+          "pt": "Reduzir o esforço de documentação"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Adding features is development, not the definition of refactoring.",
+          "pt": "Adicionar recursos é desenvolvimento, não a definição de refatoração."
+        },
+        {
+          "en": "Refactoring does not mean rewriting everything.",
+          "pt": "Refatoração não significa reescrever tudo."
+        },
+        {
+          "en": "Documentation effort is not the defining purpose of refactoring.",
+          "pt": "Esforço de documentação não é o propósito definidor da refatoração."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 35,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the primary purpose of project documentation in software development?",
+        "pt": "Qual é o principal propósito da documentação de projeto em desenvolvimento de software?"
+      },
+      "answer": {
+        "en": "To provide essential information for understanding the project's scope and purpose.",
+        "pt": "Fornecer informações essenciais para entender o escopo e o propósito do projeto."
+      },
+      "explanation": {
+        "en": "Documentation supports alignment and collaboration. Without it, people may code in different directions or misunderstand system goals.",
+        "pt": "A documentação apoia alinhamento e colaboração. Sem ela, as pessoas podem desenvolver em direções diferentes ou entender mal os objetivos do sistema."
+      },
+      "mnemonic": {
+        "en": "📚 Docs = shared understanding",
+        "pt": "📚 Docs = entendimento compartilhado"
+      },
+      "options": [
+        {
+          "en": "Provide essential information about scope and purpose",
+          "pt": "Fornecer informações essenciais sobre escopo e propósito"
+        },
+        {
+          "en": "Make the project harder to navigate",
+          "pt": "Tornar o projeto mais difícil de navegar"
+        },
+        {
+          "en": "Take up repository space",
+          "pt": "Ocupar espaço no repositório"
+        },
+        {
+          "en": "It is not important",
+          "pt": "Ela não é importante"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Documentation should reduce confusion, not increase it.",
+          "pt": "A documentação deve reduzir confusão, não aumentá-la."
+        },
+        {
+          "en": "Storage is not its purpose.",
+          "pt": "Uso de espaço não é o propósito dela."
+        },
+        {
+          "en": "Documentation is important for understanding and collaboration.",
+          "pt": "Documentação é importante para entendimento e colaboração."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 36,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is the purpose of generating inline code documentation in software development?",
+        "pt": "Qual é o propósito de gerar documentação inline no código em desenvolvimento de software?"
+      },
+      "answer": {
+        "en": "To create a more readable and maintainable codebase that is easier for other developers to understand and work with.",
+        "pt": "Criar uma base de código mais legível e de fácil manutenção, tornando o trabalho mais fácil para outros desenvolvedores."
+      },
+      "explanation": {
+        "en": "Inline documentation explains intent close to the implementation. This improves maintainability, onboarding, and team collaboration.",
+        "pt": "Documentação inline explica a intenção perto da implementação. Isso melhora manutenção, onboarding e colaboração entre times."
+      },
+      "mnemonic": {
+        "en": "📝 Inline docs = readable and maintainable code",
+        "pt": "📝 Docs inline = código legível e manutenível"
+      },
+      "options": [
+        {
+          "en": "Create a readable and maintainable codebase",
+          "pt": "Criar uma base de código legível e manutenível"
+        },
+        {
+          "en": "Make code more confusing",
+          "pt": "Deixar o código mais confuso"
+        },
+        {
+          "en": "Slow the code down",
+          "pt": "Tornar o código mais lento"
+        },
+        {
+          "en": "Introduce harmful behavior",
+          "pt": "Introduzir comportamento prejudicial"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Inline documentation is meant to clarify, not confuse.",
+          "pt": "Documentação inline existe para esclarecer, não confundir."
+        },
+        {
+          "en": "Documentation is not about runtime performance.",
+          "pt": "Documentação não é sobre desempenho em tempo de execução."
+        },
+        {
+          "en": "Good documentation is beneficial, not harmful.",
+          "pt": "Boa documentação é benéfica, não prejudicial."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 37,
+      "difficulty": "medium",
+      "question": {
+        "en": "What types of code conversions can be completed using GitHub Copilot?",
+        "pt": "Que tipos de conversão de código podem ser realizados usando o GitHub Copilot?"
+      },
+      "answer": {
+        "en": "Converting an entire file, a function, or a code snippet from one programming language to another.",
+        "pt": "Converter um arquivo inteiro, uma função ou um trecho de código de uma linguagem de programação para outra."
+      },
+      "explanation": {
+        "en": "The exam distinguishes code conversion from explanation. Converting code means transforming implementation across programming languages, not translating code into plain human prose.",
+        "pt": "A prova diferencia conversão de código de explicação. Converter código significa transformar a implementação entre linguagens de programação, não traduzir código para texto humano comum."
+      },
+      "mnemonic": {
+        "en": "🔄 Code to code, not code to prose",
+        "pt": "🔄 Código para código, não código para prosa"
+      },
+      "options": [
+        {
+          "en": "Convert files, functions, or snippets to another programming language",
+          "pt": "Converter arquivos, funções ou trechos para outra linguagem de programação"
+        },
+        {
+          "en": "Convert a programming language into human language only",
+          "pt": "Converter uma linguagem de programação apenas para linguagem humana"
+        },
+        {
+          "en": "Generate images from code",
+          "pt": "Gerar imagens a partir do código"
+        },
+        {
+          "en": "Convert documentation into binary files",
+          "pt": "Converter documentação em arquivos binários"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Explaining code is possible, but that is not what this question calls code conversion.",
+          "pt": "Explicar código é possível, mas isso não é o que esta questão chama de conversão de código."
+        },
+        {
+          "en": "Image generation is unrelated here.",
+          "pt": "Geração de imagens não tem relação aqui."
+        },
+        {
+          "en": "This is not a standard Copilot code conversion use case.",
+          "pt": "Esse não é um caso padrão de conversão de código com Copilot."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 38,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the role of GitHub Copilot Chat in generating unit test cases?",
+        "pt": "Qual é o papel do GitHub Copilot Chat na geração de testes unitários?"
+      },
+      "answer": {
+        "en": "It helps generate test code, suggest input values, expected outputs, assertions, and identify edge cases and boundary conditions.",
+        "pt": "Ele ajuda a gerar código de testes, sugerir entradas, saídas esperadas, asserções e identificar casos de borda e condições limite."
+      },
+      "explanation": {
+        "en": "Copilot Chat is useful not only for writing tests faster, but also for expanding test coverage by surfacing scenarios developers may forget.",
+        "pt": "O Copilot Chat é útil não apenas para escrever testes mais rápido, mas também para ampliar a cobertura ao destacar cenários que o desenvolvedor pode esquecer."
+      },
+      "mnemonic": {
+        "en": "🧪 Inputs + outputs + assertions + edge cases",
+        "pt": "🧪 Entradas + saídas + asserções + casos de borda"
+      },
+      "options": [
+        {
+          "en": "Generate test snippets, suggest assertions, and identify edge cases",
+          "pt": "Gerar trechos de teste, sugerir asserções e identificar casos de borda"
+        },
+        {
+          "en": "It cannot help with unit tests",
+          "pt": "Ele não consegue ajudar com testes unitários"
+        },
+        {
+          "en": "It only runs tests",
+          "pt": "Ele apenas executa testes"
+        },
+        {
+          "en": "It deletes failing tests automatically",
+          "pt": "Ele exclui automaticamente testes com falha"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Generating tests is one of its practical use cases.",
+          "pt": "Gerar testes é um dos casos práticos de uso."
+        },
+        {
+          "en": "Generating tests and running tests are different things.",
+          "pt": "Gerar testes e executar testes são coisas diferentes."
+        },
+        {
+          "en": "Deleting tests is not the intended behavior here.",
+          "pt": "Excluir testes não é o comportamento esperado aqui."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 39,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the purpose of the Test Explorer in Visual Studio Code?",
+        "pt": "Qual é o propósito do Test Explorer no Visual Studio Code?"
+      },
+      "answer": {
+        "en": "To run and debug unit tests, view test results, and manage test cases in the workspace.",
+        "pt": "Executar e depurar testes unitários, visualizar resultados e gerenciar casos de teste no workspace."
+      },
+      "explanation": {
+        "en": "Test Explorer is the central place in VS Code for working with tests. It is about test execution and management, not version control or file browsing.",
+        "pt": "O Test Explorer é o ponto central no VS Code para trabalhar com testes. Ele é voltado à execução e ao gerenciamento de testes, não a controle de versão ou navegação de arquivos."
+      },
+      "mnemonic": {
+        "en": "🧪 Test Explorer = test hub",
+        "pt": "🧪 Test Explorer = central de testes"
+      },
+      "options": [
+        {
+          "en": "Run, debug, and manage unit tests",
+          "pt": "Executar, depurar e gerenciar testes unitários"
+        },
+        {
+          "en": "Navigate project files only",
+          "pt": "Navegar apenas pelos arquivos do projeto"
+        },
+        {
+          "en": "Manage Git branches",
+          "pt": "Gerenciar branches do Git"
+        },
+        {
+          "en": "Install extensions only",
+          "pt": "Instalar extensões apenas"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "File navigation is not the main purpose of Test Explorer.",
+          "pt": "Navegação de arquivos não é o propósito principal do Test Explorer."
+        },
+        {
+          "en": "Git branch management belongs to source control tooling.",
+          "pt": "Gerenciamento de branches pertence às ferramentas de controle de versão."
+        },
+        {
+          "en": "Extension management is unrelated to the purpose of Test Explorer.",
+          "pt": "Gerenciamento de extensões não tem relação com o propósito do Test Explorer."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 40,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the significance of the Arrange, Act, and Assert sections in unit tests?",
+        "pt": "Qual é o significado das seções Arrange, Act e Assert em testes unitários?"
+      },
+      "answer": {
+        "en": "They structure tests into setup, execution, and verification phases.",
+        "pt": "Elas estruturam os testes em fases de preparação, execução e verificação."
+      },
+      "explanation": {
+        "en": "AAA is a foundational test pattern. It helps keep tests clear, readable, and logically organized.",
+        "pt": "AAA é um padrão fundamental de testes. Ele ajuda a manter os testes claros, legíveis e organizados logicamente."
+      },
+      "mnemonic": {
+        "en": "🎬 Arrange → Act → Assert",
+        "pt": "🎬 Preparar → Executar → Verificar"
+      },
+      "options": [
+        {
+          "en": "Structure tests into setup, execution, and verification",
+          "pt": "Estruturar testes em preparação, execução e verificação"
+        },
+        {
+          "en": "Create random testing flow",
+          "pt": "Criar fluxo aleatório de testes"
+        },
+        {
+          "en": "They have no real significance",
+          "pt": "Elas não têm importância real"
+        },
+        {
+          "en": "They are only for documentation",
+          "pt": "Elas servem apenas para documentação"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "AAA is a defined best practice, not a random flow.",
+          "pt": "AAA é uma best practice definida, não um fluxo aleatório."
+        },
+        {
+          "en": "AAA is highly significant for readable test structure.",
+          "pt": "AAA é muito importante para a estrutura legível dos testes."
+        },
+        {
+          "en": "It is about structuring behavior, not only documenting it.",
+          "pt": "Ele trata da estruturação do teste, não apenas de documentação."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 41,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does GitHub Copilot provide when creating unit tests for specific conditions?",
+        "pt": "O que o GitHub Copilot fornece ao criar testes unitários para condições específicas?"
+      },
+      "answer": {
+        "en": "It suggests completions and generates tests based on the code context.",
+        "pt": "Ele sugere completions e gera testes com base no contexto do código."
+      },
+      "explanation": {
+        "en": "The key idea is contextual generation. Copilot uses the code under test to infer meaningful scenarios and likely assertions.",
+        "pt": "A ideia central é geração contextual. O Copilot usa o código testado para inferir cenários significativos e asserções prováveis."
+      },
+      "mnemonic": {
+        "en": "🤖 Context in, tests out",
+        "pt": "🤖 Contexto entra, testes saem"
+      },
+      "options": [
+        {
+          "en": "Suggest completions and generate tests from context",
+          "pt": "Sugerir completions e gerar testes a partir do contexto"
+        },
+        {
+          "en": "Generate tests randomly",
+          "pt": "Gerar testes aleatoriamente"
+        },
+        {
+          "en": "It cannot help with that",
+          "pt": "Ele não consegue ajudar com isso"
+        },
+        {
+          "en": "Require fully manual test creation only",
+          "pt": "Exigir criação totalmente manual de testes"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Test generation is not random; it is context-aware.",
+          "pt": "A geração de testes não é aleatória; ela considera contexto."
+        },
+        {
+          "en": "Helping with test generation is a valid Copilot capability.",
+          "pt": "Ajudar na geração de testes é uma capacidade válida do Copilot."
+        },
+        {
+          "en": "Copilot reduces manual effort instead of requiring only manual work.",
+          "pt": "O Copilot reduz o esforço manual em vez de exigir apenas trabalho manual."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 42,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is the benefit of using GitHub Copilot for generating unit tests?",
+        "pt": "Qual é o benefício de usar o GitHub Copilot para gerar testes unitários?"
+      },
+      "answer": {
+        "en": "It suggests relevant tests based on context, which saves development time.",
+        "pt": "Ele sugere testes relevantes com base no contexto, o que economiza tempo de desenvolvimento."
+      },
+      "explanation": {
+        "en": "The benefit here is both speed and relevance. Copilot can accelerate writing tests while still grounding suggestions in the code context.",
+        "pt": "O benefício aqui é velocidade com relevância. O Copilot pode acelerar a escrita de testes sem perder o vínculo com o contexto do código."
+      },
+      "mnemonic": {
+        "en": "⏱️ Relevant tests faster",
+        "pt": "⏱️ Testes relevantes mais rápido"
+      },
+      "options": [
+        {
+          "en": "Suggest relevant tests and save time",
+          "pt": "Sugerir testes relevantes e economizar tempo"
+        },
+        {
+          "en": "Make development slower",
+          "pt": "Tornar o desenvolvimento mais lento"
+        },
+        {
+          "en": "It cannot assist with testing",
+          "pt": "Ele não consegue ajudar com testes"
+        },
+        {
+          "en": "Testing is not important",
+          "pt": "Testes não são importantes"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "The feature is meant to accelerate useful work, not slow it down.",
+          "pt": "O recurso existe para acelerar trabalho útil, não para torná-lo mais lento."
+        },
+        {
+          "en": "Copilot can help with testing scenarios.",
+          "pt": "O Copilot pode ajudar com cenários de teste."
+        },
+        {
+          "en": "Testing remains important in software development.",
+          "pt": "Testes continuam sendo importantes no desenvolvimento de software."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 43,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the purpose of generating assertions to ensure that function input parameters are valid?",
+        "pt": "Qual é o propósito de gerar asserções para garantir que os parâmetros de entrada de uma função sejam válidos?"
+      },
+      "answer": {
+        "en": "To prevent invalid data from being processed by the function.",
+        "pt": "Prevenir que dados inválidos sejam processados pela função."
+      },
+      "explanation": {
+        "en": "Assertions act as safeguards. They stop invalid input early, which improves reliability and can prevent bugs from propagating.",
+        "pt": "Asserções funcionam como proteções. Elas barram entrada inválida cedo, o que melhora a confiabilidade e evita a propagação de bugs."
+      },
+      "mnemonic": {
+        "en": "🛡️ Validate early, fail safely",
+        "pt": "🛡️ Validar cedo, falhar com segurança"
+      },
+      "options": [
+        {
+          "en": "Prevent invalid data from being processed",
+          "pt": "Prevenir o processamento de dados inválidos"
+        },
+        {
+          "en": "They are unnecessary",
+          "pt": "Elas são desnecessárias"
+        },
+        {
+          "en": "Only make the function faster",
+          "pt": "Apenas tornam a função mais rápida"
+        },
+        {
+          "en": "Delete invalid input automatically everywhere",
+          "pt": "Excluir automaticamente toda entrada inválida em qualquer contexto"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Assertions are important for input validation and reliability.",
+          "pt": "Asserções são importantes para validação de entrada e confiabilidade."
+        },
+        {
+          "en": "Their main purpose is validation, not raw performance.",
+          "pt": "O propósito principal delas é validação, não desempenho puro."
+        },
+        {
+          "en": "That statement is too broad and not the core purpose.",
+          "pt": "Essa afirmação é ampla demais e não representa o propósito central."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 44,
+      "difficulty": "medium",
+      "question": {
+        "en": "What factors can be considered when working on code quality improvements?",
+        "pt": "Quais fatores podem ser considerados ao trabalhar em melhorias de qualidade de código?"
+      },
+      "answer": {
+        "en": "Readability, complexity, modularity, reusability, testability, extensibility, reliability, performance, security, scalability, usability, and portability.",
+        "pt": "Legibilidade, complexidade, modularidade, reutilização, testabilidade, extensibilidade, confiabilidade, desempenho, segurança, escalabilidade, usabilidade e portabilidade."
+      },
+      "explanation": {
+        "en": "Code quality is multi-dimensional. The exam expects you to think beyond just speed or style and consider a broader engineering perspective.",
+        "pt": "Qualidade de código é multidimensional. A prova espera que você pense além de velocidade ou estilo e considere uma visão mais ampla de engenharia."
+      },
+      "mnemonic": {
+        "en": "📊 Quality = more than one metric",
+        "pt": "📊 Qualidade = mais de uma métrica"
+      },
+      "options": [
+        {
+          "en": "Readability, modularity, performance, security, scalability, and more",
+          "pt": "Legibilidade, modularidade, desempenho, segurança, escalabilidade e mais"
+        },
+        {
+          "en": "Performance only",
+          "pt": "Apenas desempenho"
+        },
+        {
+          "en": "Security only",
+          "pt": "Apenas segurança"
+        },
+        {
+          "en": "It cannot really be evaluated",
+          "pt": "Ela não pode realmente ser avaliada"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Performance is important, but it is only one factor.",
+          "pt": "Desempenho é importante, mas é apenas um fator."
+        },
+        {
+          "en": "Security matters, but it is not the whole picture.",
+          "pt": "Segurança importa, mas não é o quadro completo."
+        },
+        {
+          "en": "Code quality can absolutely be evaluated across multiple dimensions.",
+          "pt": "Qualidade de código pode sim ser avaliada em múltiplas dimensões."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 45,
+      "difficulty": "hard",
+      "question": {
+        "en": "What does code reliability refer to in software development?",
+        "pt": "A que se refere a confiabilidade de código em desenvolvimento de software?"
+      },
+      "answer": {
+        "en": "The likelihood that software will function correctly under specific conditions and for a certain period of time.",
+        "pt": "A probabilidade de o software funcionar corretamente sob condições específicas e por um determinado período de tempo."
+      },
+      "explanation": {
+        "en": "This is often confused with performance. Reliability is about consistent correctness and dependability, not speed or parallel execution.",
+        "pt": "Isso costuma ser confundido com desempenho. Confiabilidade é sobre correção consistente e previsibilidade, não velocidade ou execução paralela."
+      },
+      "mnemonic": {
+        "en": "🔁 Reliable = correct and consistent",
+        "pt": "🔁 Confiável = correto e consistente"
+      },
+      "options": [
+        {
+          "en": "Using modern CPU parallelization",
+          "pt": "Usar paralelização moderna de CPU"
+        },
+        {
+          "en": "Software functions correctly under specific conditions consistently",
+          "pt": "O software funciona corretamente sob condições específicas de forma consistente"
+        },
+        {
+          "en": "Only exception handling",
+          "pt": "Apenas tratamento de exceções"
+        },
+        {
+          "en": "It is not important",
+          "pt": "Ela não é importante"
+        }
+      ],
+      "wrongReasons": [
+        {
+          "en": "Parallelization is more related to performance or architecture than reliability.",
+          "pt": "Paralelização está mais relacionada a desempenho ou arquitetura do que a confiabilidade."
+        },
+        null,
+        {
+          "en": "Exception handling can influence reliability, but it is only one part of it.",
+          "pt": "Tratamento de exceções pode influenciar confiabilidade, mas é apenas uma parte dela."
+        },
+        {
+          "en": "Reliability is a critical software quality attribute.",
+          "pt": "Confiabilidade é um atributo crítico de qualidade de software."
+        }
+      ],
+      "correct": 1
+    },
+    {
+      "id": 46,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one way to improve code reliability?",
+        "pt": "Qual é uma forma de melhorar a confiabilidade do código?"
+      },
+      "answer": {
+        "en": "Identify and address potential issues in the code to prevent bugs and errors from occurring.",
+        "pt": "Identificar e tratar possíveis problemas no código para evitar que bugs e erros ocorram."
+      },
+      "explanation": {
+        "en": "Reliability improves when you detect issues early and fix them proactively rather than reacting only after failures happen.",
+        "pt": "A confiabilidade melhora quando você detecta problemas cedo e os corrige de forma proativa, em vez de reagir apenas depois que as falhas acontecem."
+      },
+      "mnemonic": {
+        "en": "🔍 Find issues early, prevent failures",
+        "pt": "🔍 Encontrar cedo, prevenir falhas"
+      },
+      "options": [
+        {
+          "en": "Identify issues to prevent bugs",
+          "pt": "Identificar problemas para prevenir bugs"
+        },
+        {
+          "en": "Ignore minor bugs",
+          "pt": "Ignorar bugs menores"
+        },
+        {
+          "en": "Avoid testing",
+          "pt": "Evitar testes"
+        },
+        {
+          "en": "Assume bugs are unavoidable",
+          "pt": "Assumir que bugs são inevitáveis"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Ignoring issues tends to reduce reliability.",
+          "pt": "Ignorar problemas tende a reduzir a confiabilidade."
+        },
+        {
+          "en": "Testing helps reliability instead of harming it.",
+          "pt": "Testes ajudam a confiabilidade, não a prejudicam."
+        },
+        {
+          "en": "Many issues are preventable with good engineering practices.",
+          "pt": "Muitos problemas são evitáveis com boas práticas de engenharia."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 47,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the effect of maintaining a high quality bar in your code when using GitHub Copilot?",
+        "pt": "Qual é o efeito de manter um alto padrão de qualidade no seu código ao usar o GitHub Copilot?"
+      },
+      "answer": {
+        "en": "Copilot latches on to your code patterns and generates suggestions that follow the existing quality and style.",
+        "pt": "O Copilot se apoia nos padrões do seu código e gera sugestões que seguem a qualidade e o estilo já existentes."
+      },
+      "explanation": {
+        "en": "Copilot learns from nearby code patterns in context. Cleaner and more consistent code often leads to cleaner and more consistent suggestions.",
+        "pt": "O Copilot aprende com os padrões de código próximos no contexto. Código mais limpo e consistente costuma gerar sugestões mais limpas e consistentes também."
+      },
+      "mnemonic": {
+        "en": "✨ Good code in, good suggestions out",
+        "pt": "✨ Código bom entra, sugestões boas saem"
+      },
+      "options": [
+        {
+          "en": "Copilot learns patterns and follows them",
+          "pt": "O Copilot aprende os padrões e os segue"
+        },
+        {
+          "en": "Code quality has no effect",
+          "pt": "Qualidade de código não tem efeito"
+        },
+        {
+          "en": "Copilot ignores style and quality",
+          "pt": "O Copilot ignora estilo e qualidade"
+        },
+        {
+          "en": "High quality only matters for bad codebases",
+          "pt": "Alta qualidade só importa em codebases ruins"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Code quality strongly influences contextual suggestions.",
+          "pt": "Qualidade de código influencia fortemente as sugestões contextuais."
+        },
+        {
+          "en": "Copilot does use surrounding style and patterns.",
+          "pt": "O Copilot usa sim o estilo e os padrões ao redor."
+        },
+        {
+          "en": "High quality matters broadly, not just in bad codebases.",
+          "pt": "Alta qualidade importa de forma geral, não apenas em codebases ruins."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 48,
+      "difficulty": "medium",
+      "question": {
+        "en": "What are some ways to improve exception handling in code to make it more secure?",
+        "pt": "Quais são algumas formas de melhorar o tratamento de exceções no código para torná-lo mais seguro?"
+      },
+      "answer": {
+        "en": "Catch the most specific exceptions possible, avoid exposing sensitive information in exceptions, and avoid swallowing exceptions silently.",
+        "pt": "Capturar as exceções mais específicas possíveis, evitar expor informações sensíveis nas exceções e evitar engolir exceções silenciosamente."
+      },
+      "explanation": {
+        "en": "Secure exception handling is about precision, safety, and observability. You want enough detail for troubleshooting, but not enough to leak sensitive information.",
+        "pt": "Tratamento seguro de exceções envolve precisão, segurança e observabilidade. Você quer detalhe suficiente para troubleshooting, mas não a ponto de vazar informações sensíveis."
+      },
+      "mnemonic": {
+        "en": "🔒 Specific, safe, and observable",
+        "pt": "🔒 Específico, seguro e observável"
+      },
+      "options": [
+        {
+          "en": "Catch specific exceptions, hide sensitive details, and do not swallow errors",
+          "pt": "Capturar exceções específicas, ocultar detalhes sensíveis e não engolir erros"
+        },
+        {
+          "en": "Catch everything generically and ignore details",
+          "pt": "Capturar tudo genericamente e ignorar detalhes"
+        },
+        {
+          "en": "Expose internal system details in error messages",
+          "pt": "Expor detalhes internos do sistema nas mensagens de erro"
+        },
+        {
+          "en": "Silently suppress all exceptions",
+          "pt": "Suprimir silenciosamente todas as exceções"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Generic catch blocks often reduce precision and make handling weaker.",
+          "pt": "Capturas genéricas costumam reduzir a precisão e enfraquecer o tratamento."
+        },
+        {
+          "en": "Exposing internal details can create security risks.",
+          "pt": "Expor detalhes internos pode criar riscos de segurança."
+        },
+        {
+          "en": "Silently swallowing exceptions harms troubleshooting and reliability.",
+          "pt": "Engolir exceções silenciosamente prejudica troubleshooting e confiabilidade."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 49,
+      "difficulty": "hard",
+      "question": {
+        "en": "What is the primary purpose of content filtering in GitHub Copilot?",
+        "pt": "Qual é o principal propósito da filtragem de conteúdo no GitHub Copilot?"
+      },
+      "answer": {
+        "en": "To prevent the generation of malicious or harmful code.",
+        "pt": "Prevenir a geração de código malicioso ou prejudicial."
+      },
+      "explanation": {
+        "en": "This is one of the most important safety concepts in the exam. Content filtering is primarily about preventing dangerous output, not improving style, relevance, or performance.",
+        "pt": "Esse é um dos conceitos de segurança mais importantes da prova. A filtragem de conteúdo existe principalmente para evitar saídas perigosas, não para melhorar estilo, relevância ou desempenho."
+      },
+      "mnemonic": {
+        "en": "🛡️ Content filtering = block harmful output",
+        "pt": "🛡️ Filtragem de conteúdo = bloquear saída perigosa"
+      },
+      "options": [
+        {
+          "en": "Prevent malicious or harmful code generation",
+          "pt": "Prevenir a geração de código malicioso ou prejudicial"
+        },
+        {
+          "en": "Eliminate irrelevant or outdated information",
+          "pt": "Eliminar informações irrelevantes ou desatualizadas"
+        },
+        {
+          "en": "Improve code style only",
+          "pt": "Melhorar apenas o estilo do código"
+        },
+        {
+          "en": "Optimize runtime performance",
+          "pt": "Otimizar desempenho em tempo de execução"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That is not the primary safety purpose of content filtering.",
+          "pt": "Esse não é o propósito principal de segurança da filtragem de conteúdo."
+        },
+        {
+          "en": "Style improvement is different from safety filtering.",
+          "pt": "Melhoria de estilo é diferente de filtragem de segurança."
+        },
+        {
+          "en": "Runtime performance is unrelated to the main purpose here.",
+          "pt": "Desempenho em tempo de execução não tem relação com o objetivo principal aqui."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 50,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the primary purpose of the toxicity filter in GitHub Copilot?",
+        "pt": "Qual é o principal propósito do filtro de toxicidade no GitHub Copilot?"
+      },
+      "answer": {
+        "en": "To eliminate harmful or offensive content in suggestions.",
+        "pt": "Eliminar conteúdo prejudicial ou ofensivo nas sugestões."
+      },
+      "explanation": {
+        "en": "The toxicity filter is another Responsible AI concept. It focuses on reducing harmful or offensive content rather than technical correctness.",
+        "pt": "O filtro de toxicidade é outro conceito de IA Responsável. Ele foca em reduzir conteúdo prejudicial ou ofensivo, e não em correção técnica."
+      },
+      "mnemonic": {
+        "en": "🚫 Toxicity filter = safer language and content",
+        "pt": "🚫 Filtro de toxicidade = linguagem e conteúdo mais seguros"
+      },
+      "options": [
+        {
+          "en": "Eliminate harmful or offensive content",
+          "pt": "Eliminar conteúdo prejudicial ou ofensivo"
+        },
+        {
+          "en": "Improve algorithm speed",
+          "pt": "Melhorar a velocidade do algoritmo"
+        },
+        {
+          "en": "Generate more code suggestions",
+          "pt": "Gerar mais sugestões de código"
+        },
+        {
+          "en": "Increase verbosity of responses",
+          "pt": "Aumentar a verbosidade das respostas"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Speed is not the main purpose of the toxicity filter.",
+          "pt": "Velocidade não é o propósito principal do filtro de toxicidade."
+        },
+        {
+          "en": "The filter is about safer content, not producing more suggestions.",
+          "pt": "O filtro é sobre conteúdo mais seguro, não sobre produzir mais sugestões."
+        },
+        {
+          "en": "Verbosity is unrelated to the purpose of toxicity filtering.",
+          "pt": "Verbosidade não tem relação com o propósito do filtro de toxicidade."
+        }
+      ],
+      "correct": 0
+    }
+  ]
+}

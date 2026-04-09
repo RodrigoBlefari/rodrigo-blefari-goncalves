@@ -1,0 +1,2708 @@
+{
+  "id": "angular2026",
+  "label": "🅰️ Certificação Angular",
+  "title": "Angular 2026 Exam Simulator",
+  "subtitle": "Angular Certification-Style Practice",
+  "questions": [
+    {
+      "id": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is Angular?",
+        "pt": "O que é Angular?"
+      },
+      "answer": {
+        "en": "Angular is a web framework for building fast, reliable, and scalable applications.",
+        "pt": "Angular é um framework web para construir aplicações rápidas, confiáveis e escaláveis."
+      },
+      "explanation": {
+        "en": "This is the foundation. Angular is not just a UI library; it provides an opinionated platform with routing, DI, forms, HTTP, testing support, and tooling.",
+        "pt": "Essa é a base. Angular não é só uma biblioteca de UI; ele fornece uma plataforma opinativa com roteamento, DI, formulários, HTTP, suporte a testes e ferramental."
+      },
+      "mnemonic": {
+        "en": "🅰️ Angular = full app platform",
+        "pt": "🅰️ Angular = plataforma completa de app"
+      },
+      "options": [
+        {
+          "en": "A web framework for scalable apps",
+          "pt": "Um framework web para apps escaláveis"
+        },
+        {
+          "en": "Only a CSS framework",
+          "pt": "Apenas um framework CSS"
+        },
+        {
+          "en": "A database engine",
+          "pt": "Um motor de banco de dados"
+        },
+        {
+          "en": "A browser extension",
+          "pt": "Uma extensão de navegador"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Angular is not focused on CSS only.",
+          "pt": "Angular não é focado apenas em CSS."
+        },
+        {
+          "en": "Angular is not a database engine.",
+          "pt": "Angular não é um motor de banco de dados."
+        },
+        {
+          "en": "Angular is a framework, not a browser extension.",
+          "pt": "Angular é um framework, não uma extensão de navegador."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 2,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is the current recommended way to start a modern Angular application?",
+        "pt": "Qual é a forma atualmente recomendada de iniciar uma aplicação Angular moderna?"
+      },
+      "answer": {
+        "en": "Use standalone APIs, typically bootstrapping the app with bootstrapApplication.",
+        "pt": "Usar APIs standalone, normalmente iniciando a aplicação com bootstrapApplication."
+      },
+      "explanation": {
+        "en": "Modern Angular heavily emphasizes standalone APIs. They reduce boilerplate and remove the need to start from NgModules in many cases.",
+        "pt": "O Angular moderno enfatiza fortemente APIs standalone. Elas reduzem boilerplate e removem a necessidade de começar com NgModules em muitos casos."
+      },
+      "mnemonic": {
+        "en": "🚀 Modern Angular = standalone first",
+        "pt": "🚀 Angular moderno = standalone primeiro"
+      },
+      "options": [
+        {
+          "en": "Use standalone APIs and bootstrapApplication",
+          "pt": "Usar APIs standalone e bootstrapApplication"
+        },
+        {
+          "en": "Always start with AppModule only",
+          "pt": "Sempre começar apenas com AppModule"
+        },
+        {
+          "en": "Use jQuery to bootstrap Angular",
+          "pt": "Usar jQuery para iniciar Angular"
+        },
+        {
+          "en": "Create a service worker before the app",
+          "pt": "Criar um service worker antes da app"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "NgModules still exist, but standalone is the modern recommended direction.",
+          "pt": "NgModules ainda existem, mas standalone é a direção moderna recomendada."
+        },
+        {
+          "en": "jQuery is unrelated to bootstrapping Angular apps.",
+          "pt": "jQuery não tem relação com iniciar apps Angular."
+        },
+        {
+          "en": "A service worker is optional and not the app bootstrap mechanism.",
+          "pt": "Service worker é opcional e não é o mecanismo de bootstrap da app."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 3,
+      "difficulty": "easy",
+      "question": {
+        "en": "What are Angular Signals primarily used for?",
+        "pt": "Para que Angular Signals são usados principalmente?"
+      },
+      "answer": {
+        "en": "To model reactive state in a simpler and more explicit way.",
+        "pt": "Para modelar estado reativo de forma mais simples e explícita."
+      },
+      "explanation": {
+        "en": "Signals are part of Angular's modern reactivity model. They make state updates easier to reason about and reduce dependence on more manual patterns.",
+        "pt": "Signals fazem parte do modelo moderno de reatividade do Angular. Eles facilitam o entendimento das mudanças de estado e reduzem a dependência de padrões mais manuais."
+      },
+      "mnemonic": {
+        "en": "📡 Signal = reactive state",
+        "pt": "📡 Signal = estado reativo"
+      },
+      "options": [
+        {
+          "en": "Reactive state management",
+          "pt": "Gerenciamento de estado reativo"
+        },
+        {
+          "en": "Database migrations",
+          "pt": "Migrações de banco de dados"
+        },
+        {
+          "en": "CSS theming only",
+          "pt": "Apenas tematização CSS"
+        },
+        {
+          "en": "Server deployment",
+          "pt": "Deploy em servidor"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Signals are unrelated to database migrations.",
+          "pt": "Signals não têm relação com migrações de banco."
+        },
+        {
+          "en": "They are broader than CSS concerns.",
+          "pt": "Eles são muito mais amplos do que temas de CSS."
+        },
+        {
+          "en": "Signals are a framework reactivity feature, not a deployment tool.",
+          "pt": "Signals são um recurso de reatividade do framework, não uma ferramenta de deploy."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 4,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is Signal Forms in the Angular roadmap for v21?",
+        "pt": "O que é Signal Forms no roadmap do Angular para a v21?"
+      },
+      "answer": {
+        "en": "An experimental forms approach that uses signals to manage form state.",
+        "pt": "Uma abordagem experimental de formulários que usa signals para gerenciar o estado do formulário."
+      },
+      "explanation": {
+        "en": "Signal Forms was introduced experimentally in Angular v21. The roadmap says the team plans to stabilize it and improve interoperability with reactive forms over time.",
+        "pt": "Signal Forms foi introduzido de forma experimental no Angular v21. O roadmap diz que o time pretende estabilizá-lo e melhorar sua interoperabilidade com reactive forms ao longo do tempo."
+      },
+      "mnemonic": {
+        "en": "🧾 Signal Forms = forms powered by signals",
+        "pt": "🧾 Signal Forms = formulários movidos por signals"
+      },
+      "options": [
+        {
+          "en": "An experimental forms API based on signals",
+          "pt": "Uma API experimental de formulários baseada em signals"
+        },
+        {
+          "en": "A CSS forms library",
+          "pt": "Uma biblioteca CSS de formulários"
+        },
+        {
+          "en": "A replacement for HTML forms in the browser",
+          "pt": "Um substituto para formulários HTML no navegador"
+        },
+        {
+          "en": "An HTTP feature",
+          "pt": "Um recurso de HTTP"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Signal Forms is a framework forms feature, not a CSS library.",
+          "pt": "Signal Forms é um recurso de formulários do framework, não uma biblioteca CSS."
+        },
+        {
+          "en": "It builds on top of browser forms rather than replacing HTML itself.",
+          "pt": "Ele se apoia nos formulários do navegador, não substitui o HTML em si."
+        },
+        {
+          "en": "It is unrelated to HTTP APIs.",
+          "pt": "Ele não tem relação com APIs de HTTP."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 5,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does hydration mean in Angular SSR?",
+        "pt": "O que significa hydration no SSR do Angular?"
+      },
+      "answer": {
+        "en": "It restores a server-rendered application on the client by reusing the existing DOM and application state.",
+        "pt": "Ela restaura no cliente uma aplicação renderizada no servidor, reaproveitando o DOM existente e o estado da aplicação."
+      },
+      "explanation": {
+        "en": "Hydration is important for SSR performance and UX. Instead of throwing away the server-rendered HTML and recreating everything, Angular reuses what the server already produced.",
+        "pt": "Hydration é importante para desempenho e UX em SSR. Em vez de descartar o HTML renderizado no servidor e recriar tudo, o Angular reaproveita o que o servidor já produziu."
+      },
+      "mnemonic": {
+        "en": "💧 Hydration = reusing server-rendered UI on the client",
+        "pt": "💧 Hydration = reaproveitar a UI renderizada no servidor no cliente"
+      },
+      "options": [
+        {
+          "en": "Reusing server-rendered DOM on the client",
+          "pt": "Reaproveitar no cliente o DOM renderizado no servidor"
+        },
+        {
+          "en": "Only compressing CSS files",
+          "pt": "Apenas comprimir arquivos CSS"
+        },
+        {
+          "en": "Deleting server HTML and rebuilding everything from scratch",
+          "pt": "Apagar o HTML do servidor e reconstruir tudo do zero"
+        },
+        {
+          "en": "Encrypting route parameters",
+          "pt": "Criptografar parâmetros de rota"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Hydration is not about CSS compression.",
+          "pt": "Hydration não é sobre compressão de CSS."
+        },
+        {
+          "en": "That is the opposite of the reuse goal in hydration.",
+          "pt": "Isso é o oposto do objetivo de reaproveitamento da hydration."
+        },
+        {
+          "en": "Route parameter encryption is unrelated.",
+          "pt": "Criptografia de parâmetros de rota não tem relação."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 6,
+      "difficulty": "medium",
+      "question": {
+        "en": "How is dependency injection structured in Angular?",
+        "pt": "Como a injeção de dependência é estruturada no Angular?"
+      },
+      "answer": {
+        "en": "Angular uses a hierarchical injector system that resolves dependencies by walking up the injector tree.",
+        "pt": "O Angular usa um sistema hierárquico de injetores que resolve dependências subindo pela árvore de injeção."
+      },
+      "explanation": {
+        "en": "DI in Angular is hierarchical. A component can have its own injector, and Angular searches upward until it finds a matching provider.",
+        "pt": "A DI no Angular é hierárquica. Um componente pode ter seu próprio injetor, e o Angular sobe na árvore até encontrar um provider compatível."
+      },
+      "mnemonic": {
+        "en": "🌳 DI = injector tree",
+        "pt": "🌳 DI = árvore de injetores"
+      },
+      "options": [
+        {
+          "en": "A hierarchical injector tree",
+          "pt": "Uma árvore hierárquica de injetores"
+        },
+        {
+          "en": "A flat global injector only",
+          "pt": "Apenas um injetor global plano"
+        },
+        {
+          "en": "A database-driven injector",
+          "pt": "Um injetor orientado por banco de dados"
+        },
+        {
+          "en": "A CSS-based provider system",
+          "pt": "Um sistema de providers baseado em CSS"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Angular DI is not only a flat global injector.",
+          "pt": "A DI do Angular não é apenas um injetor global plano."
+        },
+        {
+          "en": "Database concepts are unrelated here.",
+          "pt": "Conceitos de banco de dados não têm relação aqui."
+        },
+        {
+          "en": "Providers are not a CSS feature.",
+          "pt": "Providers não são um recurso de CSS."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 7,
+      "difficulty": "easy",
+      "question": {
+        "en": "What must you do before using HttpClient in Angular?",
+        "pt": "O que você precisa fazer antes de usar o HttpClient no Angular?"
+      },
+      "answer": {
+        "en": "Configure HttpClient through dependency injection.",
+        "pt": "Configurar o HttpClient por meio da injeção de dependência."
+      },
+      "explanation": {
+        "en": "Angular's HttpClient is DI-based. You don't just instantiate it manually; you configure it in the application providers and inject it where needed.",
+        "pt": "O HttpClient do Angular é baseado em DI. Você não o instancia manualmente; você o configura nos providers da aplicação e o injeta onde precisar."
+      },
+      "mnemonic": {
+        "en": "🌐 HttpClient = provide first, inject later",
+        "pt": "🌐 HttpClient = primeiro fornecer, depois injetar"
+      },
+      "options": [
+        {
+          "en": "Configure it using dependency injection",
+          "pt": "Configurá-lo usando injeção de dependência"
+        },
+        {
+          "en": "Create it with new HttpClient() in every component",
+          "pt": "Criá-lo com new HttpClient() em cada componente"
+        },
+        {
+          "en": "Install a CSS package",
+          "pt": "Instalar um pacote CSS"
+        },
+        {
+          "en": "Enable SSR first",
+          "pt": "Habilitar SSR primeiro"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That bypasses Angular's DI model and is not the expected approach.",
+          "pt": "Isso contorna o modelo de DI do Angular e não é a abordagem esperada."
+        },
+        {
+          "en": "CSS packages are unrelated to HttpClient setup.",
+          "pt": "Pacotes CSS não têm relação com a configuração do HttpClient."
+        },
+        {
+          "en": "SSR is optional and unrelated to basic HttpClient setup.",
+          "pt": "SSR é opcional e não tem relação com a configuração básica do HttpClient."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 8,
+      "difficulty": "easy",
+      "question": {
+        "en": "What does each HttpClient request method return?",
+        "pt": "O que cada método de requisição do HttpClient retorna?"
+      },
+      "answer": {
+        "en": "An RxJS Observable.",
+        "pt": "Um Observable do RxJS."
+      },
+      "explanation": {
+        "en": "Angular HttpClient is designed around Observables. Subscribing sends the request, and each subscription can trigger a new backend call.",
+        "pt": "O HttpClient do Angular é baseado em Observables. Ao assinar, a requisição é enviada, e cada assinatura pode disparar uma nova chamada ao backend."
+      },
+      "mnemonic": {
+        "en": "🔄 HttpClient = Observable",
+        "pt": "🔄 HttpClient = Observable"
+      },
+      "options": [
+        {
+          "en": "An Observable",
+          "pt": "Um Observable"
+        },
+        {
+          "en": "A Promise only",
+          "pt": "Apenas uma Promise"
+        },
+        {
+          "en": "A DOM element",
+          "pt": "Um elemento DOM"
+        },
+        {
+          "en": "A CSS selector",
+          "pt": "Um seletor CSS"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "HttpClient is centered on RxJS Observables, not only Promises.",
+          "pt": "O HttpClient é centrado em Observables do RxJS, não apenas em Promises."
+        },
+        {
+          "en": "HTTP requests do not return DOM elements.",
+          "pt": "Requisições HTTP não retornam elementos DOM."
+        },
+        {
+          "en": "CSS selectors are unrelated.",
+          "pt": "Seletores CSS não têm relação."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 9,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one major benefit of Angular HttpClient according to the official docs?",
+        "pt": "Qual é um grande benefício do Angular HttpClient segundo a documentação oficial?"
+      },
+      "answer": {
+        "en": "Typed responses, streamlined error handling, interceptors, and robust testing utilities.",
+        "pt": "Respostas tipadas, tratamento de erro simplificado, interceptors e utilitários robustos de teste."
+      },
+      "explanation": {
+        "en": "The official HTTP overview highlights several built-in strengths of HttpClient. The exam-style point is that Angular gives you more than just raw fetch-like calls.",
+        "pt": "A visão geral oficial de HTTP destaca várias forças nativas do HttpClient. O ponto estilo prova é que o Angular oferece mais do que chamadas brutas parecidas com fetch."
+      },
+      "mnemonic": {
+        "en": "🧰 HttpClient = typed + interceptable + testable",
+        "pt": "🧰 HttpClient = tipado + interceptável + testável"
+      },
+      "options": [
+        {
+          "en": "Typed responses and interceptors",
+          "pt": "Respostas tipadas e interceptors"
+        },
+        {
+          "en": "Only DOM manipulation",
+          "pt": "Apenas manipulação de DOM"
+        },
+        {
+          "en": "Automatic database replication",
+          "pt": "Replicação automática de banco de dados"
+        },
+        {
+          "en": "Built-in CSS transpilation",
+          "pt": "Transpilação nativa de CSS"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "DOM manipulation is not the purpose of HttpClient.",
+          "pt": "Manipulação de DOM não é o propósito do HttpClient."
+        },
+        {
+          "en": "Database replication is unrelated.",
+          "pt": "Replicação de banco de dados não tem relação."
+        },
+        {
+          "en": "CSS transpilation is unrelated to HTTP communication.",
+          "pt": "Transpilação de CSS não tem relação com comunicação HTTP."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 10,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which Angular package is specifically used to test HTTP requests?",
+        "pt": "Qual pacote do Angular é usado especificamente para testar requisições HTTP?"
+      },
+      "answer": {
+        "en": "@angular/common/http/testing",
+        "pt": "@angular/common/http/testing"
+      },
+      "explanation": {
+        "en": "Angular provides dedicated HTTP testing tools so you can capture requests, assert against them, and mock responses without hitting a real backend.",
+        "pt": "O Angular fornece ferramentas dedicadas de teste HTTP para que você capture requisições, faça asserções sobre elas e simule respostas sem bater em um backend real."
+      },
+      "mnemonic": {
+        "en": "🧪 HTTP testing = @angular/common/http/testing",
+        "pt": "🧪 Teste HTTP = @angular/common/http/testing"
+      },
+      "options": [
+        {
+          "en": "@angular/common/http/testing",
+          "pt": "@angular/common/http/testing"
+        },
+        {
+          "en": "@angular/router/testing/http",
+          "pt": "@angular/router/testing/http"
+        },
+        {
+          "en": "@angular/forms/testing/http",
+          "pt": "@angular/forms/testing/http"
+        },
+        {
+          "en": "@angular/testing/httpclient/dom",
+          "pt": "@angular/testing/httpclient/dom"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That is not the Angular HTTP testing package.",
+          "pt": "Esse não é o pacote de teste HTTP do Angular."
+        },
+        {
+          "en": "Forms testing is not where HTTP testing utilities live.",
+          "pt": "Testes de forms não é onde vivem os utilitários de teste HTTP."
+        },
+        {
+          "en": "That package name is not the official Angular testing package.",
+          "pt": "Esse nome de pacote não é o pacote oficial de teste do Angular."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 11,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is Angular's default security model for values inserted into the DOM from templates?",
+        "pt": "Qual é o modelo de segurança padrão do Angular para valores inseridos no DOM a partir de templates?"
+      },
+      "answer": {
+        "en": "Angular treats all values as untrusted by default and sanitizes or escapes them when appropriate.",
+        "pt": "O Angular trata todos os valores como não confiáveis por padrão e os sanitiza ou escapa quando apropriado."
+      },
+      "explanation": {
+        "en": "This is central to Angular security. The framework helps mitigate XSS by default rather than assuming values are safe.",
+        "pt": "Isso é central na segurança do Angular. O framework ajuda a mitigar XSS por padrão, em vez de presumir que os valores são seguros."
+      },
+      "mnemonic": {
+        "en": "🛡️ Template values = untrusted by default",
+        "pt": "🛡️ Valores de template = não confiáveis por padrão"
+      },
+      "options": [
+        {
+          "en": "Treat values as untrusted by default",
+          "pt": "Tratar valores como não confiáveis por padrão"
+        },
+        {
+          "en": "Trust all values automatically",
+          "pt": "Confiar automaticamente em todos os valores"
+        },
+        {
+          "en": "Disable HTML escaping by default",
+          "pt": "Desabilitar escape de HTML por padrão"
+        },
+        {
+          "en": "Allow unrestricted script injection",
+          "pt": "Permitir injeção irrestrita de scripts"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That would make XSS easier, not safer.",
+          "pt": "Isso facilitaria XSS, não tornaria a app mais segura."
+        },
+        {
+          "en": "Angular does not disable escaping by default.",
+          "pt": "O Angular não desabilita escaping por padrão."
+        },
+        {
+          "en": "Script injection is exactly what Angular tries to guard against.",
+          "pt": "Injeção de script é exatamente o que o Angular tenta evitar."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 12,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one of the main web vulnerabilities Angular's built-in protections are designed to reduce?",
+        "pt": "Qual é uma das principais vulnerabilidades web que as proteções nativas do Angular procuram reduzir?"
+      },
+      "answer": {
+        "en": "Cross-site scripting (XSS).",
+        "pt": "Cross-site scripting (XSS)."
+      },
+      "explanation": {
+        "en": "The official security guide explicitly calls out XSS as a major target of Angular's built-in protections.",
+        "pt": "O guia oficial de segurança destaca explicitamente XSS como um alvo importante das proteções nativas do Angular."
+      },
+      "mnemonic": {
+        "en": "🚫 XSS = key Angular security focus",
+        "pt": "🚫 XSS = foco importante de segurança no Angular"
+      },
+      "options": [
+        {
+          "en": "XSS",
+          "pt": "XSS"
+        },
+        {
+          "en": "CPU overheating",
+          "pt": "Superaquecimento de CPU"
+        },
+        {
+          "en": "Hard disk fragmentation",
+          "pt": "Fragmentação de disco"
+        },
+        {
+          "en": "Printer driver conflicts",
+          "pt": "Conflitos de driver de impressora"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That is not a web application vulnerability in Angular's security guide.",
+          "pt": "Isso não é uma vulnerabilidade de aplicação web tratada no guia de segurança do Angular."
+        },
+        {
+          "en": "That is unrelated to Angular web security.",
+          "pt": "Isso não tem relação com segurança web no Angular."
+        },
+        {
+          "en": "Printer drivers are unrelated to Angular security concerns.",
+          "pt": "Drivers de impressora não têm relação com as preocupações de segurança do Angular."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 13,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is the purpose of end-to-end (E2E) testing in Angular?",
+        "pt": "Qual é o propósito do teste end-to-end (E2E) no Angular?"
+      },
+      "answer": {
+        "en": "To validate that the whole application works from start to finish in a way that mimics real user interaction.",
+        "pt": "Validar que a aplicação inteira funciona do início ao fim de um jeito que imita a interação real do usuário."
+      },
+      "explanation": {
+        "en": "E2E tests focus on the full system behavior rather than internal implementation details. They are about user-facing flows.",
+        "pt": "Testes E2E focam no comportamento do sistema completo, não em detalhes internos de implementação. Eles tratam de fluxos voltados ao usuário."
+      },
+      "mnemonic": {
+        "en": "🎭 E2E = user-like validation",
+        "pt": "🎭 E2E = validação tipo usuário"
+      },
+      "options": [
+        {
+          "en": "Validate the full app like a user would",
+          "pt": "Validar a app inteira como um usuário faria"
+        },
+        {
+          "en": "Only test a single function in isolation",
+          "pt": "Testar apenas uma única função isoladamente"
+        },
+        {
+          "en": "Only compile CSS",
+          "pt": "Apenas compilar CSS"
+        },
+        {
+          "en": "Only check TypeScript syntax",
+          "pt": "Apenas checar sintaxe TypeScript"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That describes unit testing more than E2E testing.",
+          "pt": "Isso descreve mais teste unitário do que teste E2E."
+        },
+        {
+          "en": "CSS compilation is unrelated to E2E purpose.",
+          "pt": "Compilação de CSS não tem relação com o propósito de E2E."
+        },
+        {
+          "en": "Syntax checking is not the core goal of E2E testing.",
+          "pt": "Verificação de sintaxe não é o objetivo central do E2E."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 14,
+      "difficulty": "medium",
+      "question": {
+        "en": "What happens when you run ng e2e and your project has no e2e target configured?",
+        "pt": "O que acontece quando você executa ng e2e e seu projeto não tem um target e2e configurado?"
+      },
+      "answer": {
+        "en": "The CLI prompts you to add an E2E package and offers supported choices such as Cypress or Playwright integrations.",
+        "pt": "A CLI pede para você adicionar um pacote de E2E e oferece opções suportadas, como integrações com Cypress ou Playwright."
+      },
+      "explanation": {
+        "en": "Angular CLI can guide setup when an e2e target is missing. The docs show the CLI offering packages like Cypress, Nightwatch, WebdriverIO, Playwright, and Puppeteer-based schematics.",
+        "pt": "A Angular CLI pode guiar a configuração quando falta um target de e2e. A documentação mostra a CLI oferecendo pacotes como Cypress, Nightwatch, WebdriverIO, Playwright e schematics baseados em Puppeteer."
+      },
+      "mnemonic": {
+        "en": "🧪 No e2e target? CLI helps install one",
+        "pt": "🧪 Sem target e2e? A CLI ajuda a instalar um"
+      },
+      "options": [
+        {
+          "en": "The CLI offers to add an E2E package",
+          "pt": "A CLI oferece adicionar um pacote de E2E"
+        },
+        {
+          "en": "Angular permanently disables testing",
+          "pt": "O Angular desabilita testes permanentemente"
+        },
+        {
+          "en": "The project is automatically converted to React",
+          "pt": "O projeto é automaticamente convertido para React"
+        },
+        {
+          "en": "The CLI deletes angular.json",
+          "pt": "A CLI apaga o angular.json"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Missing an e2e target does not permanently disable testing.",
+          "pt": "Faltar um target e2e não desabilita testes permanentemente."
+        },
+        {
+          "en": "The CLI does not convert your framework.",
+          "pt": "A CLI não converte seu framework."
+        },
+        {
+          "en": "The CLI does not solve this by deleting angular.json.",
+          "pt": "A CLI não resolve isso apagando o angular.json."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 15,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which of the following is a valid Angular CLI command for serving an app in development?",
+        "pt": "Qual das alternativas é um comando válido da Angular CLI para servir uma app em desenvolvimento?"
+      },
+      "answer": {
+        "en": "ng serve",
+        "pt": "ng serve"
+      },
+      "explanation": {
+        "en": "The Angular CLI documents ng serve, ng dev, and ng s aliases for development serving. The most canonical answer is ng serve.",
+        "pt": "A Angular CLI documenta ng serve, ng dev e o atalho ng s para servir em desenvolvimento. A resposta mais canônica é ng serve."
+      },
+      "mnemonic": {
+        "en": "▶️ Serve app = ng serve",
+        "pt": "▶️ Servir app = ng serve"
+      },
+      "options": [
+        {
+          "en": "ng serve",
+          "pt": "ng serve"
+        },
+        {
+          "en": "ng database",
+          "pt": "ng database"
+        },
+        {
+          "en": "ng css-run",
+          "pt": "ng css-run"
+        },
+        {
+          "en": "ng backend",
+          "pt": "ng backend"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That is not an Angular CLI command for serving apps.",
+          "pt": "Esse não é um comando da Angular CLI para servir apps."
+        },
+        {
+          "en": "That is not a real Angular CLI serve command.",
+          "pt": "Esse não é um comando real de serve da Angular CLI."
+        },
+        {
+          "en": "That is not the Angular CLI command for development serving.",
+          "pt": "Esse não é o comando da Angular CLI para servir em desenvolvimento."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 16,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the default port used by ng serve if you do not change it?",
+        "pt": "Qual é a porta padrão usada pelo ng serve se você não a alterar?"
+      },
+      "answer": {
+        "en": "4200",
+        "pt": "4200"
+      },
+      "explanation": {
+        "en": "This is a classic Angular CLI detail. Unless configured otherwise, the development server listens on port 4200.",
+        "pt": "Esse é um detalhe clássico da Angular CLI. A menos que você configure diferente, o servidor de desenvolvimento escuta na porta 4200."
+      },
+      "mnemonic": {
+        "en": "🚪 Angular dev door = 4200",
+        "pt": "🚪 Porta dev do Angular = 4200"
+      },
+      "options": [
+        {
+          "en": "4200",
+          "pt": "4200"
+        },
+        {
+          "en": "3000",
+          "pt": "3000"
+        },
+        {
+          "en": "8080",
+          "pt": "8080"
+        },
+        {
+          "en": "80",
+          "pt": "80"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "3000 is common elsewhere, but Angular CLI defaults to 4200.",
+          "pt": "3000 é comum em outros lugares, mas a Angular CLI usa 4200 por padrão."
+        },
+        {
+          "en": "8080 is not the Angular CLI default here.",
+          "pt": "8080 não é o padrão da Angular CLI aqui."
+        },
+        {
+          "en": "Port 80 is not the default local dev server port for ng serve.",
+          "pt": "A porta 80 não é a porta padrão local do ng serve."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 17,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does Angular's roadmap say about zoneless work?",
+        "pt": "O que o roadmap do Angular diz sobre o trabalho com zoneless?"
+      },
+      "answer": {
+        "en": "Angular has been advancing zoneless support to improve efficiency, interoperability, and initial load performance.",
+        "pt": "O Angular vem avançando no suporte a zoneless para melhorar eficiência, interoperabilidade e desempenho de carregamento inicial."
+      },
+      "explanation": {
+        "en": "Recent Angular strategy and roadmap materials connect zoneless work with performance and better interoperability, especially in modern architectures.",
+        "pt": "Materiais recentes de estratégia e roadmap do Angular conectam o trabalho com zoneless a desempenho e melhor interoperabilidade, especialmente em arquiteturas modernas."
+      },
+      "mnemonic": {
+        "en": "⚡ Zoneless = leaner change detection direction",
+        "pt": "⚡ Zoneless = direção para change detection mais enxuta"
+      },
+      "options": [
+        {
+          "en": "Improve efficiency and interoperability",
+          "pt": "Melhorar eficiência e interoperabilidade"
+        },
+        {
+          "en": "Replace TypeScript with Java",
+          "pt": "Substituir TypeScript por Java"
+        },
+        {
+          "en": "Remove templates entirely",
+          "pt": "Remover templates por completo"
+        },
+        {
+          "en": "Ban standalone APIs",
+          "pt": "Banir APIs standalone"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "The roadmap does not suggest replacing TypeScript with Java.",
+          "pt": "O roadmap não sugere substituir TypeScript por Java."
+        },
+        {
+          "en": "Angular is not planning to remove templates entirely.",
+          "pt": "O Angular não está planejando remover templates por completo."
+        },
+        {
+          "en": "Standalone APIs are part of Angular's modern direction, not something to ban.",
+          "pt": "APIs standalone fazem parte da direção moderna do Angular, não algo para banir."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 18,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which release is officially scheduled on Angular's release page for the week of 2026-06-01?",
+        "pt": "Qual release está oficialmente agendada na página de releases do Angular para a semana de 2026-06-01?"
+      },
+      "answer": {
+        "en": "Angular v22.0",
+        "pt": "Angular v22.0"
+      },
+      "explanation": {
+        "en": "The official release schedule shows v21.1 and v21.2 in early 2026, followed by v22.0 in the week of 2026-06-01.",
+        "pt": "O cronograma oficial de releases mostra v21.1 e v21.2 no começo de 2026, seguidos pela v22.0 na semana de 2026-06-01."
+      },
+      "mnemonic": {
+        "en": "📅 2026-06-01 = v22 week",
+        "pt": "📅 2026-06-01 = semana da v22"
+      },
+      "options": [
+        {
+          "en": "v22.0",
+          "pt": "v22.0"
+        },
+        {
+          "en": "v19.0",
+          "pt": "v19.0"
+        },
+        {
+          "en": "v18.2",
+          "pt": "v18.2"
+        },
+        {
+          "en": "v25.0",
+          "pt": "v25.0"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That does not match the official 2026 release schedule shown there.",
+          "pt": "Isso não corresponde ao cronograma oficial de releases de 2026 mostrado lá."
+        },
+        {
+          "en": "That version is not the one scheduled for that week in the official page.",
+          "pt": "Essa versão não é a agendada para essa semana na página oficial."
+        },
+        {
+          "en": "That is not the scheduled version shown in the release schedule.",
+          "pt": "Essa não é a versão agendada mostrada no cronograma de releases."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 19,
+      "difficulty": "medium",
+      "question": {
+        "en": "Why are related files and surrounding context important in Angular development with modern tooling and AI-assisted workflows?",
+        "pt": "Por que arquivos relacionados e contexto ao redor são importantes no desenvolvimento Angular com ferramental moderno e fluxos assistidos por IA?"
+      },
+      "answer": {
+        "en": "Because Angular code is highly contextual across components, templates, services, routing, DI, and state, and better context leads to better reasoning and suggestions.",
+        "pt": "Porque o código Angular é altamente contextual entre componentes, templates, services, roteamento, DI e estado, e um contexto melhor leva a raciocínio e sugestões melhores."
+      },
+      "explanation": {
+        "en": "Angular is rarely just one isolated file. Components connect to templates, providers, routes, and services, so broader context improves both understanding and tooling output.",
+        "pt": "Angular raramente é apenas um arquivo isolado. Componentes se conectam a templates, providers, rotas e services, então um contexto mais amplo melhora tanto o entendimento quanto o resultado do ferramental."
+      },
+      "mnemonic": {
+        "en": "🧩 Angular = connected pieces",
+        "pt": "🧩 Angular = peças conectadas"
+      },
+      "options": [
+        {
+          "en": "Because Angular features are strongly connected through app context",
+          "pt": "Porque os recursos do Angular são fortemente conectados pelo contexto da app"
+        },
+        {
+          "en": "Because Angular has no templates",
+          "pt": "Porque o Angular não tem templates"
+        },
+        {
+          "en": "Because services cannot be injected",
+          "pt": "Porque services não podem ser injetados"
+        },
+        {
+          "en": "Because routing is handled only by CSS",
+          "pt": "Porque roteamento é tratado apenas por CSS"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Angular absolutely has templates.",
+          "pt": "O Angular definitivamente tem templates."
+        },
+        {
+          "en": "Services are a core part of DI usage in Angular.",
+          "pt": "Services são parte central do uso de DI no Angular."
+        },
+        {
+          "en": "Routing is not a CSS concern.",
+          "pt": "Roteamento não é um tema de CSS."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 20,
+      "difficulty": "hard",
+      "question": {
+        "en": "Which study strategy best matches the current Angular ecosystem in 2026 if you want certification-style preparation?",
+        "pt": "Qual estratégia de estudo combina melhor com o ecossistema atual do Angular em 2026 se você quiser preparação estilo certificação?"
+      },
+      "answer": {
+        "en": "Prioritize official docs and hands-on practice around standalone APIs, signals, forms, router, HTTP, testing, SSR/hydration, security, and CLI workflows.",
+        "pt": "Priorize a documentação oficial e prática hands-on em APIs standalone, signals, formulários, router, HTTP, testes, SSR/hydration, segurança e fluxos da CLI."
+      },
+      "explanation": {
+        "en": "Because Angular's modern direction is documented through its official guides, roadmap, and release notes. A strong study path combines core concepts with current Angular patterns.",
+        "pt": "Porque a direção moderna do Angular está documentada em seus guias oficiais, roadmap e notas de release. Um bom caminho de estudo combina conceitos centrais com os padrões atuais do Angular."
+      },
+      "mnemonic": {
+        "en": "🎯 Official docs + real practice = strongest prep",
+        "pt": "🎯 Docs oficiais + prática real = preparação mais forte"
+      },
+      "options": [
+        {
+          "en": "Study official docs plus hands-on modern Angular features",
+          "pt": "Estudar docs oficiais junto com prática nas features modernas do Angular"
+        },
+        {
+          "en": "Ignore current Angular features and study AngularJS only",
+          "pt": "Ignorar as features atuais do Angular e estudar apenas AngularJS"
+        },
+        {
+          "en": "Focus only on CSS animations",
+          "pt": "Focar apenas em animações CSS"
+        },
+        {
+          "en": "Study browser internals only and skip Angular APIs",
+          "pt": "Estudar apenas internals do navegador e pular as APIs do Angular"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "AngularJS is not the current Angular platform direction.",
+          "pt": "AngularJS não é a direção atual da plataforma Angular."
+        },
+        {
+          "en": "CSS animation alone is far too narrow for Angular certification-style prep.",
+          "pt": "Animação CSS sozinha é estreita demais para uma preparação estilo certificação Angular."
+        },
+        {
+          "en": "Skipping Angular APIs would miss the core of the framework.",
+          "pt": "Pular as APIs do Angular faria você perder o núcleo do framework."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 21,
+      "difficulty": "easy",
+      "question": {
+        "en": "What does input.required() provide in modern Angular?",
+        "pt": "O que input.required() fornece no Angular moderno?"
+      },
+      "answer": {
+        "en": "A required signal-based input that must be provided by the parent.",
+        "pt": "Um input obrigatório baseado em signal que deve ser fornecido pelo componente pai."
+      },
+      "explanation": {
+        "en": "Modern Angular supports signal inputs, and input.required() is used when the parent must pass a value. This improves API clarity and prevents missing required data.",
+        "pt": "O Angular moderno suporta signal inputs, e input.required() é usado quando o componente pai precisa obrigatoriamente passar um valor. Isso melhora a clareza da API e evita falta de dados obrigatórios."
+      },
+      "mnemonic": {
+        "en": "📥 required input = parent must provide",
+        "pt": "📥 input obrigatório = o pai deve fornecer"
+      },
+      "options": [
+        {
+          "en": "A required signal input",
+          "pt": "Um input obrigatório baseado em signal"
+        },
+        {
+          "en": "An optional CSS variable",
+          "pt": "Uma variável CSS opcional"
+        },
+        {
+          "en": "A router-only parameter",
+          "pt": "Um parâmetro apenas de roteamento"
+        },
+        {
+          "en": "A test-only configuration",
+          "pt": "Uma configuração apenas de teste"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "input.required() is a component input API, not a CSS feature.",
+          "pt": "input.required() é uma API de input de componente, não um recurso de CSS."
+        },
+        {
+          "en": "It is not limited to the router.",
+          "pt": "Ele não é limitado ao roteamento."
+        },
+        {
+          "en": "It is part of runtime component inputs, not only tests.",
+          "pt": "Ele faz parte dos inputs de componentes em runtime, não só de testes."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 22,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is true about signal inputs as of Angular v19+?",
+        "pt": "O que é verdadeiro sobre signal inputs a partir do Angular v19+?"
+      },
+      "answer": {
+        "en": "They are production-ready and Angular provides a migration to convert existing @Input fields.",
+        "pt": "Eles estão prontos para produção e o Angular fornece uma migração para converter campos @Input existentes."
+      },
+      "explanation": {
+        "en": "Angular documents signal inputs as production-ready and offers an automated migration schematic to help teams adopt them incrementally.",
+        "pt": "O Angular documenta signal inputs como prontos para produção e oferece uma migração automática para ajudar times a adotá-los gradualmente."
+      },
+      "mnemonic": {
+        "en": "🔁 signal inputs = ready + migratable",
+        "pt": "🔁 signal inputs = prontos + migráveis"
+      },
+      "options": [
+        {
+          "en": "They are production-ready and have a migration",
+          "pt": "Eles estão prontos para produção e têm migração"
+        },
+        {
+          "en": "They are only experimental forever",
+          "pt": "Eles são apenas experimentais para sempre"
+        },
+        {
+          "en": "They replace TypeScript decorators completely",
+          "pt": "Eles substituem completamente decorators do TypeScript"
+        },
+        {
+          "en": "They work only in SSR mode",
+          "pt": "Eles funcionam apenas em modo SSR"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Angular explicitly documents them as production-ready.",
+          "pt": "O Angular documenta explicitamente que eles estão prontos para produção."
+        },
+        {
+          "en": "They are a new API, but not a total removal of all decorators everywhere.",
+          "pt": "Eles são uma API nova, mas não uma remoção total de todos os decorators em todos os lugares."
+        },
+        {
+          "en": "They are not limited to SSR.",
+          "pt": "Eles não são limitados a SSR."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 23,
+      "difficulty": "medium",
+      "question": {
+        "en": "What do Angular outputs created with output() emit?",
+        "pt": "O que Angular outputs criados com output() emitem?"
+      },
+      "answer": {
+        "en": "Custom events that parent components can subscribe to.",
+        "pt": "Eventos customizados aos quais componentes pais podem se inscrever."
+      },
+      "explanation": {
+        "en": "The output() API declares outputs for directives and components. Parents can listen using template event bindings or programmatic subscriptions.",
+        "pt": "A API output() declara outputs para diretivas e componentes. Componentes pais podem escutar usando event bindings em template ou assinaturas programáticas."
+      },
+      "mnemonic": {
+        "en": "📤 output = custom event",
+        "pt": "📤 output = evento customizado"
+      },
+      "options": [
+        {
+          "en": "Custom events",
+          "pt": "Eventos customizados"
+        },
+        {
+          "en": "Database rows",
+          "pt": "Linhas de banco de dados"
+        },
+        {
+          "en": "CSS classes only",
+          "pt": "Apenas classes CSS"
+        },
+        {
+          "en": "Router snapshots",
+          "pt": "Snapshots de rota"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Outputs are not database mechanisms.",
+          "pt": "Outputs não são mecanismos de banco de dados."
+        },
+        {
+          "en": "Outputs are broader than CSS concerns.",
+          "pt": "Outputs são mais amplos do que questões de CSS."
+        },
+        {
+          "en": "Outputs are component event APIs, not router snapshots.",
+          "pt": "Outputs são APIs de evento de componente, não snapshots de rota."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 24,
+      "difficulty": "medium",
+      "question": {
+        "en": "Do Angular custom events created with output() bubble up the DOM?",
+        "pt": "Eventos customizados do Angular criados com output() sobem pelo DOM (bubble)?"
+      },
+      "answer": {
+        "en": "No, Angular custom events do not bubble up the DOM.",
+        "pt": "Não, eventos customizados do Angular não sobem pelo DOM."
+      },
+      "explanation": {
+        "en": "This is a subtle but important detail from the official outputs guide. Angular custom events are not the same as native browser bubbling events.",
+        "pt": "Esse é um detalhe sutil, mas importante, do guia oficial de outputs. Eventos customizados do Angular não são iguais a eventos nativos do navegador com bubbling."
+      },
+      "mnemonic": {
+        "en": "🚫 output events ≠ DOM bubbling",
+        "pt": "🚫 eventos de output ≠ bubbling do DOM"
+      },
+      "options": [
+        {
+          "en": "No, they do not bubble",
+          "pt": "Não, eles não fazem bubble"
+        },
+        {
+          "en": "Yes, always",
+          "pt": "Sim, sempre"
+        },
+        {
+          "en": "Only in production mode",
+          "pt": "Apenas em modo de produção"
+        },
+        {
+          "en": "Only with HttpClient enabled",
+          "pt": "Apenas com HttpClient habilitado"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "The official outputs guide states they do not bubble.",
+          "pt": "O guia oficial de outputs afirma que eles não fazem bubble."
+        },
+        {
+          "en": "Bubbling behavior is not tied to production mode here.",
+          "pt": "O comportamento de bubbling não está ligado ao modo de produção aqui."
+        },
+        {
+          "en": "HttpClient has nothing to do with output bubbling.",
+          "pt": "HttpClient não tem relação com bubbling de outputs."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 25,
+      "difficulty": "easy",
+      "question": {
+        "en": "Are Angular output names case-sensitive?",
+        "pt": "Os nomes de outputs do Angular diferenciam maiúsculas de minúsculas?"
+      },
+      "answer": {
+        "en": "Yes, output names are case-sensitive.",
+        "pt": "Sim, nomes de outputs diferenciam maiúsculas de minúsculas."
+      },
+      "explanation": {
+        "en": "This matters when binding to outputs in templates. A casing mismatch can break event handling.",
+        "pt": "Isso importa ao fazer binding de outputs em templates. Uma diferença de caixa pode quebrar o tratamento do evento."
+      },
+      "mnemonic": {
+        "en": "🔠 Output names = case matters",
+        "pt": "🔠 Nomes de outputs = caixa importa"
+      },
+      "options": [
+        {
+          "en": "Yes, they are case-sensitive",
+          "pt": "Sim, diferenciam maiúsculas e minúsculas"
+        },
+        {
+          "en": "No, Angular normalizes them automatically",
+          "pt": "Não, o Angular normaliza automaticamente"
+        },
+        {
+          "en": "Only on Linux",
+          "pt": "Apenas no Linux"
+        },
+        {
+          "en": "Only in tests",
+          "pt": "Apenas em testes"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "The outputs guide states output names are case-sensitive.",
+          "pt": "O guia de outputs afirma que nomes de outputs diferenciam maiúsculas e minúsculas."
+        },
+        {
+          "en": "This is not an OS-specific rule.",
+          "pt": "Essa não é uma regra específica de sistema operacional."
+        },
+        {
+          "en": "This applies generally, not only in tests.",
+          "pt": "Isso se aplica de forma geral, não apenas em testes."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 26,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is true about reactive forms in Angular since v14?",
+        "pt": "O que é verdadeiro sobre reactive forms no Angular desde a v14?"
+      },
+      "answer": {
+        "en": "Reactive forms are strictly typed by default.",
+        "pt": "Reactive forms são estritamente tipados por padrão."
+      },
+      "explanation": {
+        "en": "Angular's typed forms guide states that reactive forms are strictly typed by default starting in Angular 14.",
+        "pt": "O guia de typed forms do Angular afirma que reactive forms são estritamente tipados por padrão a partir do Angular 14."
+      },
+      "mnemonic": {
+        "en": "🧾 Reactive forms = typed by default",
+        "pt": "🧾 Reactive forms = tipados por padrão"
+      },
+      "options": [
+        {
+          "en": "They are strictly typed by default",
+          "pt": "Eles são estritamente tipados por padrão"
+        },
+        {
+          "en": "They are untyped by default",
+          "pt": "Eles não são tipados por padrão"
+        },
+        {
+          "en": "They only work with template-driven forms",
+          "pt": "Eles só funcionam com template-driven forms"
+        },
+        {
+          "en": "They are deprecated",
+          "pt": "Eles estão deprecated"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "The typed forms guide says the opposite.",
+          "pt": "O guia de typed forms diz o contrário."
+        },
+        {
+          "en": "Reactive forms are their own forms approach.",
+          "pt": "Reactive forms são sua própria abordagem de formulários."
+        },
+        {
+          "en": "Reactive forms are an actively supported Angular feature.",
+          "pt": "Reactive forms são um recurso ativamente suportado no Angular."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 27,
+      "difficulty": "easy",
+      "question": {
+        "en": "What does a validator return in Angular forms when validation passes?",
+        "pt": "O que um validator retorna em forms do Angular quando a validação passa?"
+      },
+      "answer": {
+        "en": "null",
+        "pt": "null"
+      },
+      "explanation": {
+        "en": "Angular's Validators API describes validators as functions that return an error map or null. Null means validation passed.",
+        "pt": "A API Validators do Angular descreve validators como funções que retornam um mapa de erros ou null. Null significa que a validação passou."
+      },
+      "mnemonic": {
+        "en": "✅ Valid = null",
+        "pt": "✅ Válido = null"
+      },
+      "options": [
+        {
+          "en": "null",
+          "pt": "null"
+        },
+        {
+          "en": "true",
+          "pt": "true"
+        },
+        {
+          "en": "undefined only",
+          "pt": "apenas undefined"
+        },
+        {
+          "en": "A DOM node",
+          "pt": "um nó DOM"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Validators return null or an error map, not a boolean here.",
+          "pt": "Validators retornam null ou um mapa de erros, não um boolean aqui."
+        },
+        {
+          "en": "The Validators API specifically documents null as the passing result.",
+          "pt": "A API Validators documenta especificamente null como resultado de validação bem-sucedida."
+        },
+        {
+          "en": "Validation does not return DOM nodes.",
+          "pt": "Validação não retorna nós DOM."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 28,
+      "difficulty": "easy",
+      "question": {
+        "en": "What does FormControlName track?",
+        "pt": "O que o FormControlName rastreia?"
+      },
+      "answer": {
+        "en": "The name of the FormControl bound to the directive, corresponding to a key in the parent FormGroup or FormArray.",
+        "pt": "O nome do FormControl ligado à diretiva, correspondendo a uma chave no FormGroup ou FormArray pai."
+      },
+      "explanation": {
+        "en": "FormControlName connects a template control to a parent reactive forms container using the control key.",
+        "pt": "FormControlName conecta um controle do template a um container pai de reactive forms usando a chave do controle."
+      },
+      "mnemonic": {
+        "en": "🏷️ FormControlName = control key link",
+        "pt": "🏷️ FormControlName = ligação pela chave do controle"
+      },
+      "options": [
+        {
+          "en": "The control name key in the parent form model",
+          "pt": "A chave do nome do controle no modelo de formulário pai"
+        },
+        {
+          "en": "The CSS class of the input",
+          "pt": "A classe CSS do input"
+        },
+        {
+          "en": "The route URL",
+          "pt": "A URL da rota"
+        },
+        {
+          "en": "The server response body",
+          "pt": "O corpo da resposta do servidor"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "FormControlName is about forms model binding, not CSS.",
+          "pt": "FormControlName trata de binding do modelo de formulário, não de CSS."
+        },
+        {
+          "en": "It is unrelated to routing URLs.",
+          "pt": "Ele não tem relação com URLs de rota."
+        },
+        {
+          "en": "It is unrelated to HTTP response bodies.",
+          "pt": "Ele não tem relação com corpos de resposta HTTP."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 29,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one advantage of lazy loading in Angular routing?",
+        "pt": "Qual é uma vantagem do lazy loading no roteamento do Angular?"
+      },
+      "answer": {
+        "en": "It improves initial load time by deferring downloads until routes are needed.",
+        "pt": "Ele melhora o tempo de carregamento inicial ao adiar downloads até que as rotas sejam necessárias."
+      },
+      "explanation": {
+        "en": "Angular routing docs emphasize lazy loading as a performance optimization because it avoids loading everything at startup.",
+        "pt": "A documentação de routing do Angular destaca lazy loading como otimização de desempenho porque evita carregar tudo na inicialização."
+      },
+      "mnemonic": {
+        "en": "🐢 Load later = faster start",
+        "pt": "🐢 Carregar depois = início mais rápido"
+      },
+      "options": [
+        {
+          "en": "Improves initial load time",
+          "pt": "Melhora o carregamento inicial"
+        },
+        {
+          "en": "Disables navigation",
+          "pt": "Desabilita navegação"
+        },
+        {
+          "en": "Removes the need for routes",
+          "pt": "Remove a necessidade de rotas"
+        },
+        {
+          "en": "Only changes CSS loading",
+          "pt": "Apenas muda o carregamento de CSS"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Lazy loading is a routing performance feature, not a navigation blocker.",
+          "pt": "Lazy loading é um recurso de desempenho do roteamento, não um bloqueador de navegação."
+        },
+        {
+          "en": "It works with routes rather than removing them.",
+          "pt": "Ele trabalha com rotas, não as remove."
+        },
+        {
+          "en": "It is broader than CSS loading.",
+          "pt": "Ele é mais amplo do que carregamento de CSS."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 30,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is the purpose of Angular preloading strategies?",
+        "pt": "Qual é o propósito das preloading strategies do Angular?"
+      },
+      "answer": {
+        "en": "To load lazy-loaded route modules in the background before users navigate to them.",
+        "pt": "Carregar módulos lazy-loaded em segundo plano antes de o usuário navegar para eles."
+      },
+      "explanation": {
+        "en": "Preloading strategies aim to reduce the delay users feel the first time they navigate to a lazy route.",
+        "pt": "Preloading strategies buscam reduzir o atraso que o usuário sente na primeira navegação para uma rota lazy."
+      },
+      "mnemonic": {
+        "en": "⏩ Preload = load before click",
+        "pt": "⏩ Preload = carregar antes do clique"
+      },
+      "options": [
+        {
+          "en": "Load lazy route modules in the background",
+          "pt": "Carregar módulos lazy em segundo plano"
+        },
+        {
+          "en": "Delete lazy routes permanently",
+          "pt": "Excluir rotas lazy permanentemente"
+        },
+        {
+          "en": "Turn every route into SSR only",
+          "pt": "Transformar toda rota em SSR apenas"
+        },
+        {
+          "en": "Disable route guards",
+          "pt": "Desabilitar route guards"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Preloading does not delete routes.",
+          "pt": "Preloading não exclui rotas."
+        },
+        {
+          "en": "Preloading is about loading timing, not forcing SSR.",
+          "pt": "Preloading é sobre timing de carregamento, não sobre forçar SSR."
+        },
+        {
+          "en": "Route guards are a different routing feature.",
+          "pt": "Route guards são outro recurso de roteamento."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 31,
+      "difficulty": "medium",
+      "question": {
+        "en": "What can @defer do in Angular templates?",
+        "pt": "O que @defer pode fazer em templates Angular?"
+      },
+      "answer": {
+        "en": "It defers loading of template content until a trigger condition is met.",
+        "pt": "Ele adia o carregamento de conteúdo do template até que uma condição de disparo seja atendida."
+      },
+      "explanation": {
+        "en": "@defer is used for deferred loading in templates, helping performance by postponing expensive UI until needed.",
+        "pt": "@defer é usado para carregamento adiado em templates, ajudando no desempenho ao postergar UI cara até ser necessária."
+      },
+      "mnemonic": {
+        "en": "⏳ @defer = render later",
+        "pt": "⏳ @defer = renderizar depois"
+      },
+      "options": [
+        {
+          "en": "Delay template content loading",
+          "pt": "Adiar o carregamento do conteúdo do template"
+        },
+        {
+          "en": "Only rename CSS selectors",
+          "pt": "Apenas renomear seletores CSS"
+        },
+        {
+          "en": "Encrypt service injections",
+          "pt": "Criptografar injeções de service"
+        },
+        {
+          "en": "Automatically migrate forms",
+          "pt": "Migrar formulários automaticamente"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "@defer is not about CSS selector management.",
+          "pt": "@defer não é sobre gerenciamento de seletores CSS."
+        },
+        {
+          "en": "It is unrelated to encryption of DI.",
+          "pt": "Ele não tem relação com criptografia de DI."
+        },
+        {
+          "en": "It is not a forms migration feature.",
+          "pt": "Ele não é um recurso de migração de forms."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 32,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does @placeholder do inside an Angular @defer block?",
+        "pt": "O que @placeholder faz dentro de um bloco @defer do Angular?"
+      },
+      "answer": {
+        "en": "It declares content to show before the deferred block is triggered.",
+        "pt": "Ele declara o conteúdo a ser exibido antes de o bloco adiado ser disparado."
+      },
+      "explanation": {
+        "en": "The @defer guide explains that @placeholder is optional content shown before the defer trigger happens.",
+        "pt": "O guia de @defer explica que @placeholder é um conteúdo opcional exibido antes de o gatilho do defer acontecer."
+      },
+      "mnemonic": {
+        "en": "🪧 Placeholder = before deferred content",
+        "pt": "🪧 Placeholder = antes do conteúdo adiado"
+      },
+      "options": [
+        {
+          "en": "Show content before the defer trigger",
+          "pt": "Exibir conteúdo antes do gatilho do defer"
+        },
+        {
+          "en": "Only style the router outlet",
+          "pt": "Apenas estilizar o router outlet"
+        },
+        {
+          "en": "Run validators automatically",
+          "pt": "Executar validators automaticamente"
+        },
+        {
+          "en": "Destroy the component tree",
+          "pt": "Destruir a árvore de componentes"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "@placeholder is unrelated to router outlet styling.",
+          "pt": "@placeholder não tem relação com estilização de router outlet."
+        },
+        {
+          "en": "It is not a forms validation feature.",
+          "pt": "Ele não é um recurso de validação de formulários."
+        },
+        {
+          "en": "It does not destroy the component tree.",
+          "pt": "Ele não destrói a árvore de componentes."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 33,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is TestBed used for in Angular testing?",
+        "pt": "Para que o TestBed é usado nos testes Angular?"
+      },
+      "answer": {
+        "en": "To configure and initialize the Angular testing environment.",
+        "pt": "Para configurar e inicializar o ambiente de testes do Angular."
+      },
+      "explanation": {
+        "en": "TestBed is Angular's primary testing utility for configuring providers, declarations/imports, and creating testable components/services.",
+        "pt": "TestBed é o principal utilitário de testes do Angular para configurar providers, declarações/imports e criar componentes/services testáveis."
+      },
+      "mnemonic": {
+        "en": "🛏️ TestBed = test setup bed",
+        "pt": "🛏️ TestBed = base de configuração do teste"
+      },
+      "options": [
+        {
+          "en": "Configure the Angular testing environment",
+          "pt": "Configurar o ambiente de testes do Angular"
+        },
+        {
+          "en": "Compile CSS into WebAssembly",
+          "pt": "Compilar CSS em WebAssembly"
+        },
+        {
+          "en": "Replace the browser permanently",
+          "pt": "Substituir o navegador permanentemente"
+        },
+        {
+          "en": "Deploy the application to production",
+          "pt": "Fazer deploy da aplicação em produção"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That is unrelated to Angular testing utilities.",
+          "pt": "Isso não tem relação com os utilitários de teste do Angular."
+        },
+        {
+          "en": "TestBed does not replace the browser.",
+          "pt": "TestBed não substitui o navegador."
+        },
+        {
+          "en": "TestBed is for tests, not production deployment.",
+          "pt": "TestBed é para testes, não para deploy em produção."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 34,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does TestBed.createComponent() return?",
+        "pt": "O que TestBed.createComponent() retorna?"
+      },
+      "answer": {
+        "en": "A ComponentFixture.",
+        "pt": "Um ComponentFixture."
+      },
+      "explanation": {
+        "en": "The Angular testing guide states that createComponent() returns a ComponentFixture, which wraps the created component and associated test DOM.",
+        "pt": "O guia de testes do Angular afirma que createComponent() retorna um ComponentFixture, que encapsula o componente criado e o DOM de teste associado."
+      },
+      "mnemonic": {
+        "en": "🧩 createComponent = fixture",
+        "pt": "🧩 createComponent = fixture"
+      },
+      "options": [
+        {
+          "en": "A ComponentFixture",
+          "pt": "Um ComponentFixture"
+        },
+        {
+          "en": "A RouterTestingHarness",
+          "pt": "Um RouterTestingHarness"
+        },
+        {
+          "en": "A DOM stylesheet",
+          "pt": "Uma folha de estilo do DOM"
+        },
+        {
+          "en": "A production bundle",
+          "pt": "Um bundle de produção"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "RouterTestingHarness is a different testing utility.",
+          "pt": "RouterTestingHarness é outro utilitário de teste."
+        },
+        {
+          "en": "createComponent() does not return stylesheets.",
+          "pt": "createComponent() não retorna folhas de estilo."
+        },
+        {
+          "en": "It does not build production bundles.",
+          "pt": "Ele não gera bundles de produção."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 35,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does ComponentFixture.whenStable() help with?",
+        "pt": "Em que ComponentFixture.whenStable() ajuda?"
+      },
+      "answer": {
+        "en": "It resolves when the fixture becomes stable, allowing tests to wait for pending async activity.",
+        "pt": "Ele resolve quando o fixture fica estável, permitindo que o teste espere atividades assíncronas pendentes."
+      },
+      "explanation": {
+        "en": "Angular's ComponentFixture API documents whenStable() as the way to resume after async activity or async change detection settles.",
+        "pt": "A API ComponentFixture do Angular documenta whenStable() como a forma de retomar depois que atividade assíncrona ou change detection assíncrona se estabilizam."
+      },
+      "mnemonic": {
+        "en": "⏱️ whenStable = wait for async calm",
+        "pt": "⏱️ whenStable = esperar a calmaria assíncrona"
+      },
+      "options": [
+        {
+          "en": "Wait for async tasks to complete",
+          "pt": "Esperar tarefas assíncronas terminarem"
+        },
+        {
+          "en": "Delete pending promises",
+          "pt": "Apagar promises pendentes"
+        },
+        {
+          "en": "Skip change detection forever",
+          "pt": "Pular change detection para sempre"
+        },
+        {
+          "en": "Compile TypeScript manually",
+          "pt": "Compilar TypeScript manualmente"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "It waits for stability; it does not delete async work.",
+          "pt": "Ele espera estabilidade; não apaga trabalho assíncrono."
+        },
+        {
+          "en": "It helps synchronize with change detection rather than disabling it.",
+          "pt": "Ele ajuda a sincronizar com change detection, não a desabilitá-lo."
+        },
+        {
+          "en": "TypeScript compilation is unrelated.",
+          "pt": "Compilação de TypeScript não tem relação."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 36,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is RouterTestingHarness designed for?",
+        "pt": "Para que o RouterTestingHarness foi projetado?"
+      },
+      "answer": {
+        "en": "To test routed components with built-in navigation and component testing capabilities.",
+        "pt": "Para testar componentes roteados com capacidades nativas de navegação e teste de componentes."
+      },
+      "explanation": {
+        "en": "Angular's routing testing guide highlights RouterTestingHarness as a focused utility for route-driven testing scenarios.",
+        "pt": "O guia de testes de routing do Angular destaca o RouterTestingHarness como um utilitário focado em cenários de teste dirigidos por rota."
+      },
+      "mnemonic": {
+        "en": "🛣️ RouterTestingHarness = route test helper",
+        "pt": "🛣️ RouterTestingHarness = ajudante de teste de rotas"
+      },
+      "options": [
+        {
+          "en": "Testing routed components and navigation",
+          "pt": "Testar componentes roteados e navegação"
+        },
+        {
+          "en": "Compiling SCSS themes",
+          "pt": "Compilar temas SCSS"
+        },
+        {
+          "en": "Managing HTTP interceptors in production",
+          "pt": "Gerenciar interceptors HTTP em produção"
+        },
+        {
+          "en": "Replacing TestBed completely",
+          "pt": "Substituir completamente o TestBed"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "It is not a styling tool.",
+          "pt": "Ele não é uma ferramenta de estilo."
+        },
+        {
+          "en": "It is a testing utility, not a production interceptor manager.",
+          "pt": "Ele é um utilitário de teste, não um gerenciador de interceptors em produção."
+        },
+        {
+          "en": "It complements Angular testing utilities rather than replacing them completely.",
+          "pt": "Ele complementa os utilitários de teste do Angular em vez de substituí-los completamente."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 37,
+      "difficulty": "medium",
+      "question": {
+        "en": "What can TestBed.overrideComponent() be used for?",
+        "pt": "Para que TestBed.overrideComponent() pode ser usado?"
+      },
+      "answer": {
+        "en": "To override parts of a component's metadata or behavior in testing scenarios.",
+        "pt": "Para sobrescrever partes dos metadados ou do comportamento de um componente em cenários de teste."
+      },
+      "explanation": {
+        "en": "Angular testing scenarios document overrideComponent() as a way to replace or customize aspects of a component during tests.",
+        "pt": "Os cenários de teste do Angular documentam overrideComponent() como uma forma de substituir ou customizar aspectos de um componente durante testes."
+      },
+      "mnemonic": {
+        "en": "🛠️ overrideComponent = test-time customization",
+        "pt": "🛠️ overrideComponent = customização em tempo de teste"
+      },
+      "options": [
+        {
+          "en": "Override component behavior or metadata in tests",
+          "pt": "Sobrescrever comportamento ou metadados do componente em testes"
+        },
+        {
+          "en": "Deploy a component to production",
+          "pt": "Fazer deploy de um componente em produção"
+        },
+        {
+          "en": "Change the Angular compiler globally forever",
+          "pt": "Mudar o compilador do Angular globalmente para sempre"
+        },
+        {
+          "en": "Generate database schemas",
+          "pt": "Gerar schemas de banco de dados"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "This API is for tests, not production deployment.",
+          "pt": "Essa API é para testes, não para deploy em produção."
+        },
+        {
+          "en": "It is not a permanent global compiler mutation tool.",
+          "pt": "Ela não é uma ferramenta de mutação global permanente do compilador."
+        },
+        {
+          "en": "It has nothing to do with database schemas.",
+          "pt": "Ela não tem relação com schemas de banco de dados."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 38,
+      "difficulty": "easy",
+      "question": {
+        "en": "What kind of directive modifies the behavior of an element, component, or another directive?",
+        "pt": "Que tipo de diretiva modifica o comportamento de um elemento, componente ou outra diretiva?"
+      },
+      "answer": {
+        "en": "An attribute directive.",
+        "pt": "Uma attribute directive."
+      },
+      "explanation": {
+        "en": "Angular's attribute directive testing guide describes attribute directives as directives that modify behavior when applied like an attribute.",
+        "pt": "O guia de teste de attribute directives do Angular descreve attribute directives como diretivas que modificam comportamento quando aplicadas como atributo."
+      },
+      "mnemonic": {
+        "en": "🏷️ Attribute directive = behavior modifier",
+        "pt": "🏷️ Attribute directive = modificadora de comportamento"
+      },
+      "options": [
+        {
+          "en": "Attribute directive",
+          "pt": "Attribute directive"
+        },
+        {
+          "en": "Database directive",
+          "pt": "Diretiva de banco de dados"
+        },
+        {
+          "en": "Style sheet directive",
+          "pt": "Diretiva de folha de estilo"
+        },
+        {
+          "en": "Package manager directive",
+          "pt": "Diretiva de gerenciador de pacotes"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That is not an Angular directive category.",
+          "pt": "Essa não é uma categoria de diretiva do Angular."
+        },
+        {
+          "en": "Directives are not CSS stylesheets.",
+          "pt": "Diretivas não são folhas de estilo CSS."
+        },
+        {
+          "en": "Package managers are unrelated to Angular directives.",
+          "pt": "Gerenciadores de pacote não têm relação com diretivas Angular."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 39,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one reason Angular recommends staying current with the release schedule?",
+        "pt": "Qual é uma razão para o Angular recomendar que você se mantenha atualizado com o cronograma de releases?"
+      },
+      "answer": {
+        "en": "Because Angular follows a regular release cadence, making it easier to plan upgrades and adopt new supported features.",
+        "pt": "Porque o Angular segue uma cadência regular de releases, facilitando planejar upgrades e adotar novos recursos suportados."
+      },
+      "explanation": {
+        "en": "The release page exposes a predictable schedule, which helps teams plan migrations, training, and adoption of new capabilities.",
+        "pt": "A página de releases expõe um cronograma previsível, o que ajuda times a planejar migrações, treinamento e adoção de novas capacidades."
+      },
+      "mnemonic": {
+        "en": "📆 Predictable releases = easier planning",
+        "pt": "📆 Releases previsíveis = planejamento mais fácil"
+      },
+      "options": [
+        {
+          "en": "Angular has a regular release cadence",
+          "pt": "Angular tem uma cadência regular de releases"
+        },
+        {
+          "en": "Angular never changes",
+          "pt": "Angular nunca muda"
+        },
+        {
+          "en": "Upgrades are forbidden",
+          "pt": "Upgrades são proibidos"
+        },
+        {
+          "en": "Only CSS changes between versions",
+          "pt": "Apenas CSS muda entre versões"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Angular evolves actively and publishes release plans.",
+          "pt": "Angular evolui ativamente e publica planos de release."
+        },
+        {
+          "en": "Angular explicitly supports upgrades; they are not forbidden.",
+          "pt": "O Angular explicitamente suporta upgrades; eles não são proibidos."
+        },
+        {
+          "en": "Version changes are broader than CSS.",
+          "pt": "As mudanças de versão são mais amplas do que CSS."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 40,
+      "difficulty": "hard",
+      "question": {
+        "en": "What is the most future-aligned Angular study focus for 2026 according to the official roadmap and docs?",
+        "pt": "Qual é o foco de estudo de Angular mais alinhado ao futuro para 2026 segundo o roadmap e a documentação oficiais?"
+      },
+      "answer": {
+        "en": "Standalone APIs, signals, signal-based forms work, SSR/hydration, zoneless progress, routing, HTTP, testing, and security fundamentals.",
+        "pt": "APIs standalone, signals, trabalho com formulários baseados em signals, SSR/hydration, avanços em zoneless, roteamento, HTTP, testes e fundamentos de segurança."
+      },
+      "explanation": {
+        "en": "The most valuable preparation is not memorizing old NgModule-first patterns in isolation, but understanding Angular's current direction and production-ready APIs.",
+        "pt": "A preparação mais valiosa não é decorar apenas padrões antigos centrados em NgModule, mas entender a direção atual do Angular e suas APIs prontas para produção."
+      },
+      "mnemonic": {
+        "en": "🎯 Modern Angular = standalone + signals + platform fundamentals",
+        "pt": "🎯 Angular moderno = standalone + signals + fundamentos da plataforma"
+      },
+      "options": [
+        {
+          "en": "Standalone, signals, SSR/hydration, testing, security, and modern platform patterns",
+          "pt": "Standalone, signals, SSR/hydration, testes, segurança e padrões modernos da plataforma"
+        },
+        {
+          "en": "Study AngularJS only",
+          "pt": "Estudar apenas AngularJS"
+        },
+        {
+          "en": "Ignore forms and routing",
+          "pt": "Ignorar forms e roteamento"
+        },
+        {
+          "en": "Focus only on CSS animations",
+          "pt": "Focar apenas em animações CSS"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "AngularJS is not the current Angular platform direction.",
+          "pt": "AngularJS não é a direção atual da plataforma Angular."
+        },
+        {
+          "en": "Forms and routing are core Angular capabilities.",
+          "pt": "Forms e roteamento são capacidades centrais do Angular."
+        },
+        {
+          "en": "CSS animation is far too narrow for Angular platform mastery.",
+          "pt": "Animação CSS é estreita demais para domínio da plataforma Angular."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 41,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one official Angular CLI alias for ng serve?",
+        "pt": "Qual é um alias oficial da Angular CLI para ng serve?"
+      },
+      "answer": {
+        "en": "ng s",
+        "pt": "ng s"
+      },
+      "explanation": {
+        "en": "The CLI reference documents ng serve with aliases including ng dev and ng s.",
+        "pt": "A referência da CLI documenta ng serve com aliases incluindo ng dev e ng s."
+      },
+      "mnemonic": {
+        "en": "▶️ Short serve = ng s",
+        "pt": "▶️ Serve curto = ng s"
+      },
+      "options": [
+        {
+          "en": "ng s",
+          "pt": "ng s"
+        },
+        {
+          "en": "ng srvx",
+          "pt": "ng srvx"
+        },
+        {
+          "en": "ng serve-css",
+          "pt": "ng serve-css"
+        },
+        {
+          "en": "ng prod-now",
+          "pt": "ng prod-now"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That is not a documented CLI alias.",
+          "pt": "Esse não é um alias documentado da CLI."
+        },
+        {
+          "en": "That is not an official serve alias.",
+          "pt": "Esse não é um alias oficial de serve."
+        },
+        {
+          "en": "That is not a real Angular CLI serve alias.",
+          "pt": "Esse não é um alias real de serve da Angular CLI."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 42,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does the Angular security guide recommend regarding direct DOM APIs?",
+        "pt": "O que o guia de segurança do Angular recomenda sobre APIs diretas de DOM?"
+      },
+      "answer": {
+        "en": "Avoid directly interacting with the DOM when possible, because Angular's built-in protections are designed around template and framework APIs.",
+        "pt": "Evitar interagir diretamente com o DOM sempre que possível, porque as proteções nativas do Angular são desenhadas em torno de templates e APIs do framework."
+      },
+      "explanation": {
+        "en": "Angular's security model is strongest when you stay inside Angular patterns instead of bypassing them with direct DOM manipulation.",
+        "pt": "O modelo de segurança do Angular é mais forte quando você permanece dentro dos padrões do framework em vez de contorná-los com manipulação direta do DOM."
+      },
+      "mnemonic": {
+        "en": "🛡️ Stay in Angular APIs for safer DOM work",
+        "pt": "🛡️ Fique nas APIs do Angular para um DOM mais seguro"
+      },
+      "options": [
+        {
+          "en": "Avoid direct DOM interaction when possible",
+          "pt": "Evitar interação direta com o DOM quando possível"
+        },
+        {
+          "en": "Always manipulate the DOM directly",
+          "pt": "Sempre manipular o DOM diretamente"
+        },
+        {
+          "en": "Disable sanitization before DOM updates",
+          "pt": "Desabilitar sanitização antes de atualizar o DOM"
+        },
+        {
+          "en": "Trust all third-party HTML automatically",
+          "pt": "Confiar automaticamente em todo HTML de terceiros"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That bypasses Angular's safety model.",
+          "pt": "Isso contorna o modelo de segurança do Angular."
+        },
+        {
+          "en": "Disabling sanitization weakens protection.",
+          "pt": "Desabilitar sanitização enfraquece a proteção."
+        },
+        {
+          "en": "Automatically trusting third-party HTML is unsafe.",
+          "pt": "Confiar automaticamente em HTML de terceiros é inseguro."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 43,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one core benefit of Angular's router according to official materials?",
+        "pt": "Qual é um benefício central do router do Angular segundo materiais oficiais?"
+      },
+      "answer": {
+        "en": "It provides a feature-rich navigation toolkit with guards, data resolution, lazy loading, and more.",
+        "pt": "Ele fornece um kit rico de navegação com guards, resolução de dados, lazy loading e mais."
+      },
+      "explanation": {
+        "en": "Angular positions the router as a first-party navigation toolkit rather than a minimal URL switcher.",
+        "pt": "O Angular posiciona o router como um kit de navegação first-party, e não apenas um alternador mínimo de URLs."
+      },
+      "mnemonic": {
+        "en": "🛣️ Router = more than paths",
+        "pt": "🛣️ Router = mais do que caminhos"
+      },
+      "options": [
+        {
+          "en": "Guards, data resolution, lazy loading, and navigation tooling",
+          "pt": "Guards, resolução de dados, lazy loading e ferramental de navegação"
+        },
+        {
+          "en": "Only hash changes",
+          "pt": "Apenas mudanças de hash"
+        },
+        {
+          "en": "Only CSS transitions",
+          "pt": "Apenas transições CSS"
+        },
+        {
+          "en": "Only server database joins",
+          "pt": "Apenas joins de banco no servidor"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "The Angular router is broader than simple hash changes.",
+          "pt": "O router do Angular é mais amplo do que simples mudanças de hash."
+        },
+        {
+          "en": "CSS transitions are unrelated to router feature scope.",
+          "pt": "Transições CSS não têm relação com o escopo de recursos do router."
+        },
+        {
+          "en": "Database joins are unrelated to Angular routing.",
+          "pt": "Joins de banco não têm relação com roteamento Angular."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 44,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one thing Angular forms provide according to the official overview?",
+        "pt": "O que Angular forms fornece segundo a visão geral oficial?"
+      },
+      "answer": {
+        "en": "Two approaches for handling user input: reactive forms and template-driven forms.",
+        "pt": "Duas abordagens para lidar com entrada do usuário: reactive forms e template-driven forms."
+      },
+      "explanation": {
+        "en": "The official forms overview emphasizes that Angular supports both reactive and template-driven approaches to user input handling.",
+        "pt": "A visão geral oficial de forms enfatiza que o Angular suporta tanto a abordagem reactive quanto a template-driven para lidar com entrada do usuário."
+      },
+      "mnemonic": {
+        "en": "🧾 Angular forms = reactive + template-driven",
+        "pt": "🧾 Angular forms = reactive + template-driven"
+      },
+      "options": [
+        {
+          "en": "Reactive and template-driven forms",
+          "pt": "Reactive forms e template-driven forms"
+        },
+        {
+          "en": "Only database forms",
+          "pt": "Apenas forms de banco de dados"
+        },
+        {
+          "en": "Only CSS forms",
+          "pt": "Apenas forms de CSS"
+        },
+        {
+          "en": "Only server-side Java forms",
+          "pt": "Apenas forms Java do lado do servidor"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Angular forms are not database-specific.",
+          "pt": "Forms do Angular não são específicos de banco de dados."
+        },
+        {
+          "en": "Angular forms are not just about CSS.",
+          "pt": "Forms do Angular não são apenas sobre CSS."
+        },
+        {
+          "en": "Angular forms are client framework features, not Java server forms.",
+          "pt": "Forms do Angular são recursos do framework cliente, não forms Java do servidor."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 45,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one practical reason to use Validators in Angular forms?",
+        "pt": "Qual é uma razão prática para usar Validators em forms do Angular?"
+      },
+      "answer": {
+        "en": "To ensure user input is complete and correct before processing it.",
+        "pt": "Garantir que a entrada do usuário esteja completa e correta antes de processá-la."
+      },
+      "explanation": {
+        "en": "The form validation guide frames validation as a way to improve overall data quality and provide useful feedback to users.",
+        "pt": "O guia de validação de formulários enquadra a validação como forma de melhorar a qualidade geral dos dados e fornecer feedback útil aos usuários."
+      },
+      "mnemonic": {
+        "en": "✅ Validate input before trusting it",
+        "pt": "✅ Validar entrada antes de confiar nela"
+      },
+      "options": [
+        {
+          "en": "Ensure input is complete and correct",
+          "pt": "Garantir que a entrada esteja completa e correta"
+        },
+        {
+          "en": "Increase CPU temperature",
+          "pt": "Aumentar a temperatura da CPU"
+        },
+        {
+          "en": "Disable all user interaction",
+          "pt": "Desabilitar toda interação do usuário"
+        },
+        {
+          "en": "Replace routing",
+          "pt": "Substituir o roteamento"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Validation is about data quality, not hardware temperature.",
+          "pt": "Validação é sobre qualidade de dados, não temperatura de hardware."
+        },
+        {
+          "en": "Validation should guide user interaction, not disable it entirely.",
+          "pt": "Validação deve guiar a interação do usuário, não desabilitá-la por completo."
+        },
+        {
+          "en": "Validation and routing solve different concerns.",
+          "pt": "Validação e roteamento resolvem preocupações diferentes."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 46,
+      "difficulty": "hard",
+      "question": {
+        "en": "Why is hydration considered important for Core Web Vitals in Angular SSR applications?",
+        "pt": "Por que hydration é considerada importante para Core Web Vitals em aplicações Angular com SSR?"
+      },
+      "answer": {
+        "en": "Because reusing server-rendered DOM instead of recreating it helps improve loading performance, reduce layout shifts, and improve responsiveness.",
+        "pt": "Porque reaproveitar o DOM renderizado no servidor em vez de recriá-lo ajuda a melhorar desempenho de carregamento, reduzir layout shifts e melhorar responsividade."
+      },
+      "explanation": {
+        "en": "Angular's hydration guide explicitly connects hydration to better real-user performance and improved Core Web Vitals through DOM reuse and smoother client takeover.",
+        "pt": "O guia de hydration do Angular conecta explicitamente hydration a melhor desempenho real para o usuário e melhores Core Web Vitals por meio do reaproveitamento do DOM e de uma retomada mais suave no cliente."
+      },
+      "mnemonic": {
+        "en": "💧 Reuse DOM = better web vitals",
+        "pt": "💧 Reaproveitar DOM = melhores web vitals"
+      },
+      "options": [
+        {
+          "en": "DOM reuse improves loading and UX metrics",
+          "pt": "Reaproveitar o DOM melhora métricas de carregamento e UX"
+        },
+        {
+          "en": "Hydration only affects CSS naming",
+          "pt": "Hydration afeta apenas nomes de CSS"
+        },
+        {
+          "en": "Hydration disables SSR",
+          "pt": "Hydration desabilita SSR"
+        },
+        {
+          "en": "Hydration removes the need for JavaScript entirely",
+          "pt": "Hydration remove totalmente a necessidade de JavaScript"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Hydration is much broader than CSS concerns.",
+          "pt": "Hydration é muito mais ampla do que questões de CSS."
+        },
+        {
+          "en": "Hydration complements SSR rather than disabling it.",
+          "pt": "Hydration complementa SSR em vez de desabilitá-lo."
+        },
+        {
+          "en": "Hydration does not eliminate JavaScript entirely.",
+          "pt": "Hydration não elimina totalmente a necessidade de JavaScript."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 47,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one reason teams use Angular migrations like signal-input-migration or signal-queries-migration?",
+        "pt": "Qual é uma razão para times usarem migrações do Angular como signal-input-migration ou signal-queries-migration?"
+      },
+      "answer": {
+        "en": "To adopt newer Angular APIs more safely and consistently across an existing codebase.",
+        "pt": "Para adotar APIs mais novas do Angular de forma mais segura e consistente em uma base de código existente."
+      },
+      "explanation": {
+        "en": "Angular provides migration schematics to reduce manual effort and help teams move from older patterns to newer supported APIs.",
+        "pt": "O Angular fornece schematics de migração para reduzir esforço manual e ajudar times a sair de padrões antigos para APIs novas e suportadas."
+      },
+      "mnemonic": {
+        "en": "🔁 Migration = safer modernization",
+        "pt": "🔁 Migração = modernização mais segura"
+      },
+      "options": [
+        {
+          "en": "Adopt newer APIs safely across a codebase",
+          "pt": "Adotar APIs novas com segurança em toda a base"
+        },
+        {
+          "en": "Delete all old components permanently",
+          "pt": "Apagar todos os componentes antigos permanentemente"
+        },
+        {
+          "en": "Remove TypeScript from the project",
+          "pt": "Remover TypeScript do projeto"
+        },
+        {
+          "en": "Disable Angular testing tools",
+          "pt": "Desabilitar ferramentas de teste do Angular"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Migrations help transformation; they are not about deleting everything blindly.",
+          "pt": "Migrações ajudam na transformação; não servem para apagar tudo cegamente."
+        },
+        {
+          "en": "Angular migrations do not remove TypeScript from projects.",
+          "pt": "Migrações do Angular não removem TypeScript dos projetos."
+        },
+        {
+          "en": "Migrations are unrelated to disabling testing tools.",
+          "pt": "Migrações não têm relação com desabilitar ferramentas de teste."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 48,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is one advantage of Angular's built-in testing utilities over ad hoc testing setup?",
+        "pt": "Qual é uma vantagem dos utilitários nativos de teste do Angular em comparação com uma configuração improvisada de testes?"
+      },
+      "answer": {
+        "en": "They provide framework-aware tools like TestBed and ComponentFixture that understand Angular's component lifecycle and dependency injection.",
+        "pt": "Eles fornecem ferramentas conscientes do framework, como TestBed e ComponentFixture, que entendem o ciclo de vida de componentes e a injeção de dependência do Angular."
+      },
+      "explanation": {
+        "en": "Angular's testing utilities are designed specifically for Angular's rendering, DI, and async behavior, which makes tests more reliable and representative.",
+        "pt": "Os utilitários de teste do Angular foram projetados especificamente para renderização, DI e comportamento assíncrono do Angular, tornando os testes mais confiáveis e representativos."
+      },
+      "mnemonic": {
+        "en": "🧪 Built-in tools = Angular-aware tests",
+        "pt": "🧪 Ferramentas nativas = testes conscientes do Angular"
+      },
+      "options": [
+        {
+          "en": "They understand Angular lifecycle and DI",
+          "pt": "Eles entendem ciclo de vida e DI do Angular"
+        },
+        {
+          "en": "They remove the need for assertions",
+          "pt": "Eles removem a necessidade de assertions"
+        },
+        {
+          "en": "They replace the browser with SQL",
+          "pt": "Eles substituem o navegador por SQL"
+        },
+        {
+          "en": "They only test CSS",
+          "pt": "Eles testam apenas CSS"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Testing utilities do not remove the need for assertions.",
+          "pt": "Utilitários de teste não removem a necessidade de assertions."
+        },
+        {
+          "en": "They do not replace the browser with SQL.",
+          "pt": "Eles não substituem o navegador por SQL."
+        },
+        {
+          "en": "Angular testing utilities go far beyond CSS.",
+          "pt": "Os utilitários de teste do Angular vão muito além de CSS."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 49,
+      "difficulty": "medium",
+      "question": {
+        "en": "What does Angular recommend for learning how to use a new feature like Signals or Hydration?",
+        "pt": "O que o Angular recomenda para aprender a usar um recurso novo como Signals ou Hydration?"
+      },
+      "answer": {
+        "en": "Use the official guides and in-depth documentation for the feature.",
+        "pt": "Usar os guias oficiais e a documentação aprofundada do recurso."
+      },
+      "explanation": {
+        "en": "Angular's documentation organizes features into guides, API references, and tutorials. For modern features, the official docs are the primary source of truth.",
+        "pt": "A documentação do Angular organiza recursos em guias, referências de API e tutoriais. Para recursos modernos, os docs oficiais são a principal fonte de verdade."
+      },
+      "mnemonic": {
+        "en": "📘 New feature? Start with official guides",
+        "pt": "📘 Recurso novo? Comece pelos guias oficiais"
+      },
+      "options": [
+        {
+          "en": "Read the official guides and references",
+          "pt": "Ler os guias e referências oficiais"
+        },
+        {
+          "en": "Ignore the docs and guess",
+          "pt": "Ignorar a documentação e adivinhar"
+        },
+        {
+          "en": "Study only unrelated CSS tutorials",
+          "pt": "Estudar apenas tutoriais de CSS não relacionados"
+        },
+        {
+          "en": "Wait for browser vendors to rewrite Angular",
+          "pt": "Esperar que fabricantes de navegador reescrevam o Angular"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "Guessing is not a sound learning strategy.",
+          "pt": "Adivinhar não é uma boa estratégia de aprendizado."
+        },
+        {
+          "en": "Unrelated CSS tutorials are too narrow and off-topic.",
+          "pt": "Tutoriais de CSS não relacionados são estreitos demais e fora do tema."
+        },
+        {
+          "en": "Angular's official team, not browser vendors, maintains Angular docs and direction.",
+          "pt": "É o time oficial do Angular, não fabricantes de navegador, que mantém os docs e a direção do Angular."
+        }
+      ],
+      "correct": 0
+    },
+    {
+      "id": 50,
+      "difficulty": "hard",
+      "question": {
+        "en": "If you were building an Angular 2026 certification-style study plan, what combination would best reflect the official ecosystem?",
+        "pt": "Se você estivesse montando um plano de estudos estilo certificação Angular 2026, que combinação refletiria melhor o ecossistema oficial?"
+      },
+      "answer": {
+        "en": "Standalone APIs, signals and modern reactivity, typed/reactive forms, router and lazy loading, HttpClient, SSR/hydration, testing utilities, security, and release awareness.",
+        "pt": "APIs standalone, signals e reatividade moderna, typed/reactive forms, router e lazy loading, HttpClient, SSR/hydration, utilitários de teste, segurança e atenção às releases."
+      },
+      "explanation": {
+        "en": "This reflects the official docs and roadmap much better than older isolated patterns alone. It balances fundamentals with the Angular platform's modern direction.",
+        "pt": "Isso reflete muito melhor a documentação e o roadmap oficiais do que padrões antigos isolados. Equilibra fundamentos com a direção moderna da plataforma Angular."
+      },
+      "mnemonic": {
+        "en": "🎯 Angular 2026 = fundamentals + modern platform direction",
+        "pt": "🎯 Angular 2026 = fundamentos + direção moderna da plataforma"
+      },
+      "options": [
+        {
+          "en": "Standalone, signals, forms, router, HTTP, SSR/hydration, testing, security, releases",
+          "pt": "Standalone, signals, forms, router, HTTP, SSR/hydration, testes, segurança, releases"
+        },
+        {
+          "en": "Only memorize decorators from old codebases",
+          "pt": "Apenas decorar decorators de codebases antigas"
+        },
+        {
+          "en": "Study only CSS and browser tabs",
+          "pt": "Estudar apenas CSS e abas do navegador"
+        },
+        {
+          "en": "Avoid official docs entirely",
+          "pt": "Evitar completamente a documentação oficial"
+        }
+      ],
+      "wrongReasons": [
+        null,
+        {
+          "en": "That is too narrow and misses Angular's current platform direction.",
+          "pt": "Isso é estreito demais e perde a direção atual da plataforma Angular."
+        },
+        {
+          "en": "That misses the core of Angular as a framework platform.",
+          "pt": "Isso perde o núcleo do Angular como plataforma de framework."
+        },
+        {
+          "en": "Official docs are the strongest primary source for current Angular.",
+          "pt": "Os docs oficiais são a fonte primária mais forte para o Angular atual."
+        }
+      ],
+      "correct": 0
+    }
+  ]
+}

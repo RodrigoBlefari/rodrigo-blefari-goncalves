@@ -1,16 +1,79 @@
-/**
+﻿/**
  * GH-300 EXAM SIMULATOR - Complete Controller
  * 
- * Este é o coração do simulador. Ele gerencia:
- * - Renderização das questões
- * - Alternância de idioma (EN/PT)
- * - Navegação entre questões
- * - Cálculo de score
- * - Exibição de resposta e análise
+ * Este Ã© o coraÃ§Ã£o do simulador. Ele gerencia:
+ * - RenderizaÃ§Ã£o das questÃµes
+ * - AlternÃ¢ncia de idioma (EN/PT)
+ * - NavegaÃ§Ã£o entre questÃµes
+ * - CÃ¡lculo de score
+ * - ExibiÃ§Ã£o de resposta e anÃ¡lise
  */
 
+async function fetchJson(url) {
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
+  return res.json();
+}
+
+function getExamIdFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('exam') || 'gh300';
+}
+
+async function loadExamData() {
+  const examId = getExamIdFromUrl();
+  const base = window.location.href;
+
+  try {
+    const indexUrl = new URL('data/exams/index.json', base).href;
+    const index = await fetchJson(indexUrl);
+    const exams = Array.isArray(index?.exams) ? index.exams : [];
+    const entry = exams.find(e => e.id === examId) || exams[0];
+    const file = entry?.file || `${examId}.json`;
+    const examUrl = new URL(`data/exams/${file}`, base).href;
+    const exam = await fetchJson(examUrl);
+
+    if (!exam.id) exam.id = entry?.id || examId;
+    if (!exam.label && entry?.label) exam.label = entry.label;
+    if (!exam.title && entry?.title) exam.title = entry.title;
+    if (!exam.subtitle && entry?.subtitle) exam.subtitle = entry.subtitle;
+
+    return exam;
+  } catch (err) {
+    console.warn('Failed to load exam index, trying direct exam file:', err);
+    try {
+      const examUrl = new URL(`data/exams/${examId}.json`, base).href;
+      const exam = await fetchJson(examUrl);
+      if (!exam.id) exam.id = examId;
+      return exam;
+    } catch (innerErr) {
+      console.error('Failed to load exam data:', innerErr);
+      return null;
+    }
+  }
+}
+
+function hashExamData(exam) {
+  try {
+    const raw = JSON.stringify(exam?.questions || []);
+    let hash = 5381;
+    for (let i = 0; i < raw.length; i++) {
+      hash = ((hash << 5) + hash) + raw.charCodeAt(i);
+      hash = hash & 0xffffffff;
+    }
+    return `q${exam?.questions?.length || 0}-${hash >>> 0}`;
+  } catch {
+    return `q${exam?.questions?.length || 0}-0`;
+  }
+}
+
 class GH300Simulator {
-  constructor() {
+  constructor(exam) {
+    this.exam = exam || { id: 'gh300', title: 'Exam Simulator', questions: [] };
+    this.questions = Array.isArray(this.exam.questions) ? this.exam.questions : [];
+    this.totalQuestions = this.questions.length;
+
+    this.applyExamMeta();
     // Recuperar estado da prova em progresso OU criar novo
     const existingExamState = storageService.getCurrentExamState();
     
@@ -36,7 +99,7 @@ class GH300Simulator {
       });
     }
     
-    // Carregar preferências do usuário
+    // Carregar preferÃªncias do usuÃ¡rio
     this.currentLang = storageService.getLanguage();
     const uiPrefs = storageService.getUIPreferences();
     this.showAnswers = uiPrefs.showAnswers;
@@ -49,12 +112,34 @@ class GH300Simulator {
     this.initializeLanguage();
     // Inicializar event listeners
     this.initializeEventListeners();
-    // Carregar questão atual
+    // Carregar questÃ£o atual
     this.loadQuestion();
   }
 
   /**
-   * FUNÇÃO: initializeLanguage()
+   * FUNÃƒâ€¡ÃƒÆ’O: applyExamMeta()
+   * Aplica tÃƒÂ­tulo e subtÃƒÂ­tulo da prova na UI
+   */
+  applyExamMeta() {
+    const title = this.exam?.title || 'Exam Simulator';
+    const subtitle = this.exam?.subtitle || '';
+
+    const h1 = document.querySelector('.header-title h1');
+    const p = document.querySelector('.header-title p');
+
+    if (h1) h1.textContent = title;
+    if (p) {
+      p.textContent = subtitle;
+      p.style.display = subtitle ? '' : 'none';
+    }
+
+    if (title) {
+      document.title = `${title} | Exam Practice`;
+    }
+  }
+
+  /**
+   * FUNÃ‡ÃƒO: initializeLanguage()
    * Aplica o idioma salvo ao documento
    */
   initializeLanguage() {
@@ -66,7 +151,7 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: initializeTheme()
+   * FUNÃ‡ÃƒO: initializeTheme()
    * Carrega o tema salvo e aplica ao documento
    */
   initializeTheme() {
@@ -84,7 +169,7 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: applyTheme()
+   * FUNÃ‡ÃƒO: applyTheme()
    * Aplica o tema ao documento HTML
    * @param {string} theme - 'light' ou 'dark'
    */
@@ -97,7 +182,7 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: changeTheme()
+   * FUNÃ‡ÃƒO: changeTheme()
    * Muda o tema e salva no storage
    * @param {string} theme - 'light' ou 'dark'
    */
@@ -107,11 +192,11 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: initializeEventListeners()
-   * DESCRIÇÃO: Conecta todos os botões e eventos aos seus handlers
+   * FUNÃ‡ÃƒO: initializeEventListeners()
+   * DESCRIÃ‡ÃƒO: Conecta todos os botÃµes e eventos aos seus handlers
    */
   initializeEventListeners() {
-    // Botão de trocar idioma (EN ↔ PT)
+    // BotÃ£o de trocar idioma (EN â†” PT)
     const langToggle = document.getElementById('langToggle');
     const viewHistoryTopBtn = document.getElementById('viewHistoryTopBtn');
     if (langToggle) {
@@ -122,8 +207,8 @@ class GH300Simulator {
       viewHistoryTopBtn.addEventListener('click', () => this.showExamHistory());
     }
 
-    // Botão de modo revisão
-    // Botões de navegação
+    // BotÃ£o de modo revisÃ£o
+    // BotÃµes de navegaÃ§Ã£o
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const finishBtn = document.getElementById('finishBtn');
@@ -132,19 +217,19 @@ class GH300Simulator {
     if (nextBtn) nextBtn.addEventListener('click', () => this.nextQuestion());
     if (finishBtn) finishBtn.addEventListener('click', () => this.submitExam());
 
-    // Botão para mostrar resposta
+    // BotÃ£o para mostrar resposta
     const showAnswerBtn = document.getElementById('showAnswerBtn');
     if (showAnswerBtn) {
       showAnswerBtn.addEventListener('click', () => this.toggleAnswer());
     }
 
-    // Botão para mostrar dicas/tips
+    // BotÃ£o para mostrar dicas/tips
     const showTipsBtn = document.getElementById('showTipsBtn');
     if (showTipsBtn) {
       showTipsBtn.addEventListener('click', () => this.toggleTips());
     }
 
-    // Botão de filtro
+    // BotÃ£o de filtro
     const filterBtn = document.getElementById('filterBtn');
     if (filterBtn) {
       filterBtn.addEventListener('click', () => this.toggleFilter());
@@ -182,7 +267,7 @@ class GH300Simulator {
       });
     }
 
-    // Buttons do modal de histórico
+    // Buttons do modal de histÃ³rico
     const closeHistoryBtn = document.getElementById('closeHistoryBtn');
     const closeReloadBtn = document.getElementById('closeReloadBtn');
     const cancelReloadBtn = document.getElementById('cancelReloadBtn');
@@ -213,19 +298,19 @@ class GH300Simulator {
       confirmReloadBtn.addEventListener('click', () => this.confirmReloadExam());
     }
 
-    // Atualizar mini dots (50 bolinhas das questões)
+    // Atualizar mini dots (50 bolinhas das questÃµes)
     this.updateMiniDots();
   }
 
   /**
-   * FUNÇÃO: toggleLanguage()
-   * DESCRIÇÃO: Alterna entre Inglês (EN) e Português (PT)
-   * - Muda a classe do body para 'lang-pt' (CSS cuida de mostrar/esconder tradução)
-   * - Re-renderiza questão com novo idioma
-   * - Atualiza todos os textos dos botões
+   * FUNÃ‡ÃƒO: toggleLanguage()
+   * DESCRIÃ‡ÃƒO: Alterna entre InglÃªs (EN) e PortuguÃªs (PT)
+   * - Muda a classe do body para 'lang-pt' (CSS cuida de mostrar/esconder traduÃ§Ã£o)
+   * - Re-renderiza questÃ£o com novo idioma
+   * - Atualiza todos os textos dos botÃµes
    */
   toggleLanguage() {
-    // Alterna: EN → PT ou PT → EN
+    // Alterna: EN â†’ PT ou PT â†’ EN
     this.currentLang = this.currentLang === 'en' ? 'pt' : 'en';
     storageService.setLanguage(this.currentLang);
     
@@ -236,11 +321,11 @@ class GH300Simulator {
       document.body.classList.remove('lang-pt');
     }
 
-    // Atualizar labels dos botões para o idioma selecionado
+    // Atualizar labels dos botÃµes para o idioma selecionado
     this.updateUILabels();
 
-    // Re-renderizar opções (agora com overlay model)
-    const question = GH300_QUESTIONS[this.currentQuestionIndex];
+    // Re-renderizar opÃ§Ãµes (agora com overlay model)
+    const question = this.questions[this.currentQuestionIndex];
     if (question) {
       this.loadOptions(question);
     }
@@ -255,23 +340,23 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: loadQuestion()
-   * DESCRIÇÃO: Carrega e exibe a questão atual
-   * - Renderiza o texto da questão
-   * - Carrega as opções de resposta
-   * - Carrega o "Tip to Remember" (dica/mnemônico) - MOSTRA POR PADRÃO
-   * - Atualiza navegação (disabled prev/next)
+   * FUNÃ‡ÃƒO: loadQuestion()
+   * DESCRIÃ‡ÃƒO: Carrega e exibe a questÃ£o atual
+   * - Renderiza o texto da questÃ£o
+   * - Carrega as opÃ§Ãµes de resposta
+   * - Carrega o "Tip to Remember" (dica/mnemÃ´nico) - MOSTRA POR PADRÃƒO
+   * - Atualiza navegaÃ§Ã£o (disabled prev/next)
    */
   loadQuestion() {
-    if (!GH300_QUESTIONS || GH300_QUESTIONS.length === 0) {
+    if (!this.questions || this.questions.length === 0) {
       console.error('Questions not loaded');
       return;
     }
 
-    const question = GH300_QUESTIONS[this.currentQuestionIndex];
+    const question = this.questions[this.currentQuestionIndex];
     if (!question) return;
 
-    // Atualizar número da questão (1/50)
+    // Atualizar nÃºmero da questÃ£o (1/50)
     const questionNumberEl = document.getElementById('questionNumber');
     if (questionNumberEl) {
       questionNumberEl.textContent = this.currentQuestionIndex + 1;
@@ -284,46 +369,47 @@ class GH300Simulator {
       difficultyEl.className = `difficulty-badge difficulty-${question.difficulty}`;
     }
 
-    // Carregar texto da questão (EN + PT embaixo em verde)
+    // Carregar texto da questÃ£o (EN + PT embaixo em verde)
     const questionTextENEl = document.getElementById('questionTextEN');
     const questionTextPTEl = document.getElementById('questionTextPT');
     
-    if (questionTextENEl && question.en && question.en.question) {
-      questionTextENEl.innerHTML = this.escapeHtml(question.en.question);
+    if (questionTextENEl && question.question) {
+      questionTextENEl.innerHTML = this.escapeHtml(this.getText(question.question, 'en'));
     }
-    if (questionTextPTEl && question.pt && question.pt.question) {
-      questionTextPTEl.innerHTML = this.escapeHtml(question.pt.question);
+    if (questionTextPTEl && question.question) {
+      questionTextPTEl.innerHTML = this.escapeHtml(this.getText(question.question, 'pt'));
     }
 
-    // Carregar as opções de resposta
+    // Carregar as opÃ§Ãµes de resposta
     this.loadOptions(question);
 
-    // Carregar o "Tip to Remember" (mnemônico para memorizar) - ESCONDIDO POR PADRÃO
+    // Carregar o "Tip to Remember" (mnemÃ´nico para memorizar) - ESCONDIDO POR PADRÃƒO
     this.loadMemoryAid(question);
     const tipsSection = document.querySelector('.tips-section');
     if (tipsSection) tipsSection.style.display = this.showTips ? 'block' : 'none';
 
-    // Limpar seção de resposta (esconde até usuário clicar "Show Answer")
+    // Limpar seÃ§Ã£o de resposta (esconde atÃ© usuÃ¡rio clicar "Show Answer")
     this.showAnswers = false;
     const answerSection = document.getElementById('answerSection');
     if (answerSection) answerSection.style.display = 'none';
     
     this.updateUILabels();
 
-    // Atualizar botões navegação (prev desabilitado na Q1, next desabilitado na Q50)
+    // Atualizar botÃµes navegaÃ§Ã£o (prev desabilitado na Q1, next desabilitado na Q50)
     this.updateNavigationButtons();
     this.updateMiniDots();
-    
-    // Salvar estado da prova após carregar questão
+    this.updateProgress();
+
+    // Salvar estado da prova apÃ³s carregar questÃ£o
     this.saveExamState();
   }
 
   /**
-   * FUNÇÃO: saveExamState()
-   * DESCRIÇÃO: Salva o estado atual da prova em localStorage
-   * - Chamada frequentemente enquanto usuário faz prova
-   * - Persiste: questão atual, respostas, tempo de início
-   * - Permite recuperação se página for recarregada
+   * FUNÃ‡ÃƒO: saveExamState()
+   * DESCRIÃ‡ÃƒO: Salva o estado atual da prova em localStorage
+   * - Chamada frequentemente enquanto usuÃ¡rio faz prova
+   * - Persiste: questÃ£o atual, respostas, tempo de inÃ­cio
+   * - Permite recuperaÃ§Ã£o se pÃ¡gina for recarregada
    */
   saveExamState() {
     storageService.saveExamState({
@@ -335,25 +421,34 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: loadOptions()
-   * DESCRIÇÃO: Renderiza as 4 opções de resposta
-   * - Renderiza SEMPRE com modelo overlay: EN visível + PT embaixo (lang-pt)
-   * - Cria radio buttons clicáveis
-   * - Permite clicar em toda a linha (não só no radio)
-   * - Marca opção anterior se usuário já respondeu
+   * FUNÃ‡ÃƒO: loadOptions()
+   * DESCRIÃ‡ÃƒO: Renderiza as 4 opÃ§Ãµes de resposta
+   * - Renderiza SEMPRE com modelo overlay: EN visÃ­vel + PT embaixo (lang-pt)
+   * - Cria radio buttons clicÃ¡veis
+   * - Permite clicar em toda a linha (nÃ£o sÃ³ no radio)
+   * - Marca opÃ§Ã£o anterior se usuÃ¡rio jÃ¡ respondeu
    */
+  getText(block, lang) {
+    if (!block || typeof block !== 'object') return '';
+    return block[lang] || '';
+  }
+
+  getOptionText(option, lang) {
+    if (!option || typeof option !== 'object') return '';
+    return option[lang] || '';
+  }
+
   loadOptions(question) {
     const optionsContainer = document.getElementById('optionsContainer');
     if (!optionsContainer) return;
     
     optionsContainer.innerHTML = '';
 
-    const engOptions = question.en.options;
-    const ptOptions = OPTION_TRANSLATIONS[question.id] || [];
-    const savedAnswer = this.answers[question.id]; // Se já respondeu, recover resposta
+    const engOptions = Array.isArray(question.options) ? question.options : [];
+    const savedAnswer = this.answers[question.id]; // Se jÃ¡ respondeu, recover resposta
 
-    // Uma label para cada opção
-    engOptions.forEach((engOption, index) => {
+    // Uma label para cada opÃ§Ã£o
+    engOptions.forEach((opt, index) => {
       const label = document.createElement('label');
       label.className = 'option';
 
@@ -361,7 +456,7 @@ class GH300Simulator {
       input.type = 'radio';
       input.name = 'answer';
       input.value = index;
-      input.checked = savedAnswer === index; // Marca se é a resposta salva
+      input.checked = savedAnswer === index; // Marca se Ã© a resposta salva
 
       // Container com EN e PT
       const optionWrapper = document.createElement('div');
@@ -370,12 +465,12 @@ class GH300Simulator {
       // Text principal (EN)
       const textMain = document.createElement('div');
       textMain.className = 'text-main';
-      textMain.innerHTML = this.escapeHtml(engOption);
+      textMain.innerHTML = this.escapeHtml(this.getOptionText(opt, 'en'));
 
-      // Text tradução (PT)
+      // Text traduÃ§Ã£o (PT)
       const textTranslation = document.createElement('div');
       textTranslation.className = 'text-translation';
-      textTranslation.innerHTML = this.escapeHtml(ptOptions[index] || engOption);
+      textTranslation.innerHTML = this.escapeHtml(this.getOptionText(opt, 'pt') || this.getOptionText(opt, 'en'));
 
       optionWrapper.appendChild(textMain);
       optionWrapper.appendChild(textTranslation);
@@ -384,13 +479,13 @@ class GH300Simulator {
       label.appendChild(optionWrapper);
       optionsContainer.appendChild(label);
 
-      // Permite clicar em qualquer lugar da label, não só no radio
+      // Permite clicar em qualquer lugar da label, nÃ£o sÃ³ no radio
       label.addEventListener('click', (e) => {
         if (e.target !== input) {
           e.preventDefault();
         }
         input.checked = true;
-        this.answers[question.id] = index; // Salvar resposta em memória
+        this.answers[question.id] = index; // Salvar resposta em memÃ³ria
         storageService.setAnswer(question.id, index); // Salvar no localStorage
         this.saveExamState(); // Salvar estado completo da prova
       });
@@ -398,29 +493,29 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: loadMemoryAid()
-   * DESCRIÇÃO: Carrega o "Tip to Remember" (mnemônico)
-   * - Exibe dica/analogia para memorizar a questão
+   * FUNÃ‡ÃƒO: loadMemoryAid()
+   * DESCRIÃ‡ÃƒO: Carrega o "Tip to Remember" (mnemÃ´nico)
+   * - Exibe dica/analogia para memorizar a questÃ£o
    * - Exemplo: "Enterprise = Extra Training | Business = Basic Usage"
-   * - Aparece em EN, com tradução em verde embaixo se selecionado PT
+   * - Aparece em EN, com traduÃ§Ã£o em verde embaixo se selecionado PT
    */
   loadMemoryAid(question) {
-    // Carregar mnemônico em inglês
+    // Carregar mnemÃ´nico em inglÃªs
     const memoryTextEl = document.getElementById('memoryText');
-    if (memoryTextEl && question.en) {
-      memoryTextEl.textContent = question.en.mnemonic || '';
+    if (memoryTextEl && question.mnemonic) {
+      memoryTextEl.textContent = this.getText(question.mnemonic, 'en') || '';
     }
 
-    // Carregar mnemônico em português (aparece embaixo com CSS)
+    // Carregar mnemÃ´nico em portuguÃªs (aparece embaixo com CSS)
     const memoryTextPTEl = document.getElementById('memoryTextPT');
-    if (memoryTextPTEl && question.pt) {
-      memoryTextPTEl.textContent = question.pt.mnemonic || '';
+    if (memoryTextPTEl && question.mnemonic) {
+      memoryTextPTEl.textContent = this.getText(question.mnemonic, 'pt') || '';
     }
   }
 
   /**
-   * FUNÇÃO: toggleAnswer()
-   * DESCRIÇÃO: Mostra ou esconde a resposta correta + análise
+   * FUNÃ‡ÃƒO: toggleAnswer()
+   * DESCRIÃ‡ÃƒO: Mostra ou esconde a resposta correta + anÃ¡lise
    */
   toggleAnswer() {
     this.showAnswers = !this.showAnswers;
@@ -439,8 +534,8 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: toggleTips()
-   * DESCRIÇÃO: Mostra ou esconde a seção de dicas/tips
+   * FUNÃ‡ÃƒO: toggleTips()
+   * DESCRIÃ‡ÃƒO: Mostra ou esconde a seÃ§Ã£o de dicas/tips
    */
   toggleTips() {
     this.showTips = !this.showTips;
@@ -459,8 +554,8 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: toggleFilter()
-   * DESCRIÇÃO: Toggle simples - mostrar/esconder dots das respostas
+   * FUNÃ‡ÃƒO: toggleFilter()
+   * DESCRIÃ‡ÃƒO: Toggle simples - mostrar/esconder dots das respostas
    */
   toggleFilter() {
     this.showAnswerDots = !this.showAnswerDots;
@@ -470,8 +565,8 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: updateFilterLabel()
-   * DESCRIÇÃO: Atualiza o rótulo do botão de filtro (Show/Hide Answer Dots)
+   * FUNÃ‡ÃƒO: updateFilterLabel()
+   * DESCRIÃ‡ÃƒO: Atualiza o rÃ³tulo do botÃ£o de filtro (Show/Hide Answer Dots)
    */
   updateFilterLabel() {
     const filterBtn = document.getElementById('filterBtn');
@@ -489,20 +584,20 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: renderAnswer()
-   * DESCRIÇÃO: Renderiza a resposta correta e sua explicação
-   * - Marca a opção correta com verde
+   * FUNÃ‡ÃƒO: renderAnswer()
+   * DESCRIÃ‡ÃƒO: Renderiza a resposta correta e sua explicaÃ§Ã£o
+   * - Marca a opÃ§Ã£o correta com verde
    * - Mostra texto da resposta completa
-   * - Mostra explicação detalhada
+   * - Mostra explicaÃ§Ã£o detalhada
    * - Tudo aparece em EN + PT embaixo em verde
    */
   renderAnswer() {
-    const question = GH300_QUESTIONS[this.currentQuestionIndex];
-    if (!question || !question.en) return;
+    const question = this.questions[this.currentQuestionIndex];
+    if (!question) return;
 
-    const correctIndex = question.en.correct; // Qual é a resposta correta (índice)
+    const correctIndex = question.correct; // Qual Ã© a resposta correta (Ã­ndice)
 
-    // Destacar opção correta com verde
+    // Destacar opÃ§Ã£o correta com verde
     document.querySelectorAll('.option').forEach((opt, idx) => {
       if (idx === correctIndex) {
         opt.classList.add('correct-option');
@@ -513,157 +608,112 @@ class GH300Simulator {
 
     // Mostrar resposta completa (EN)
     const answerTextENEl = document.getElementById('correctAnswerEN');
-    if (answerTextENEl && question.en.answer) {
-      answerTextENEl.innerHTML = this.escapeHtml(question.en.answer);
+    if (answerTextENEl && question.answer) {
+      answerTextENEl.innerHTML = this.escapeHtml(this.getText(question.answer, 'en'));
     }
 
     // Mostrar resposta em PT (aparece embaixo em verde com CSS)
     const answerTextPTEl = document.getElementById('correctAnswerPT');
-    if (answerTextPTEl && question.pt && question.pt.answer) {
-      answerTextPTEl.innerHTML = this.escapeHtml(question.pt.answer);
+    if (answerTextPTEl && question.answer) {
+      answerTextPTEl.innerHTML = this.escapeHtml(this.getText(question.answer, 'pt'));
     }
 
-    // Mostrar explicação (por quê está correta)
+    // Mostrar explicaÃ§Ã£o (por quÃª estÃ¡ correta)
     const explanationSection = document.getElementById('explanationSection');
     if (explanationSection) {
       explanationSection.style.display = 'block';
     }
 
     const explanationENEl = document.getElementById('explanationEN');
-    if (explanationENEl && question.en.explanation) {
-      explanationENEl.innerHTML = this.escapeHtml(question.en.explanation);
+    if (explanationENEl && question.explanation) {
+      explanationENEl.innerHTML = this.escapeHtml(this.getText(question.explanation, 'en'));
     }
 
     const explanationPTEl = document.getElementById('explanationPT');
-    if (explanationPTEl && question.pt && question.pt.explanation) {
-      explanationPTEl.innerHTML = this.escapeHtml(question.pt.explanation);
+    if (explanationPTEl && question.explanation) {
+      explanationPTEl.innerHTML = this.escapeHtml(this.getText(question.explanation, 'pt'));
     }
   }
 
   /**
-   * FUNÇÃO: renderWrongOptions()
-   * DESCRIÇÃO: Renderiza análise das opções ERRADAS com modelo overlay EN + PT
-   * - Para cada opção que NÃO é a correta:
-   *   • Mostra o texto da opção (EN + PT embaixo)
-   *   • Explica POR QUÊ está errada (EN + PT embaixo)
-   * - Tudo sempre com ambos idiomas visíveis = overlay model
+   * FUNÃ‡ÃƒO: renderWrongOptions()
+   * DESCRIÃ‡ÃƒO: Renderiza anÃ¡lise das opÃ§Ãµes ERRADAS com modelo overlay EN + PT
+   * - Para cada opÃ§Ã£o que NÃƒO Ã© a correta:
+   *   â€¢ Mostra o texto da opÃ§Ã£o (EN + PT embaixo)
+   *   â€¢ Explica POR QUÃŠ estÃ¡ errada (EN + PT embaixo)
+   * - Tudo sempre com ambos idiomas visÃ­veis = overlay model
    */
   renderWrongOptions() {
-    const question = GH300_QUESTIONS[this.currentQuestionIndex];
-    if (!question || !question.en) return;
+    const question = this.questions[this.currentQuestionIndex];
+    if (!question) return;
 
-    const correctIndex = question.en.correct;
-    const engOptions = question.en.options;
-    const ptOptions = OPTION_TRANSLATIONS[question.id] || [];
-    const engWrongReasons = question.en.wrongReasons || [];
-    const ptWrongReasons = question.pt?.wrongReasons || [];
+    const correctIndex = question.correct;
+    const engOptions = Array.isArray(question.options) ? question.options : [];
+    const wrongReasons = Array.isArray(question.wrongReasons) ? question.wrongReasons : [];
 
     const container = document.getElementById('wrongOptionsAnalysis');
     if (!container) return;
 
     container.innerHTML = '';
 
-    // Para cada opção, se não for correta, mostra motivo dela estar errada
-    engOptions.forEach((engOption, idx) => {
+    // Para cada opÃ§Ã£o, se nÃ£o for correta, mostra motivo dela estar errada
+    engOptions.forEach((opt, idx) => {
       if (idx !== correctIndex) {
         const wrongDiv = document.createElement('div');
         wrongDiv.className = 'wrong-option';
 
-        const engReason = engWrongReasons && engWrongReasons[idx] ? engWrongReasons[idx] : 'This option is incorrect.';
-        const ptReason = ptWrongReasons && ptWrongReasons[idx] ? ptWrongReasons[idx] : engReason;
-        const ptOption = ptOptions[idx] || engOption;
+        const engReason = wrongReasons[idx]?.en || 'This option is incorrect.';
+        const ptReason = wrongReasons[idx]?.pt || engReason;
+        const engOption = this.getOptionText(opt, 'en');
+        const ptOption = this.getOptionText(opt, 'pt') || engOption;
 
-        // Título com overlay
+        // TÃ­tulo com overlay
         const titleDiv = document.createElement('div');
         titleDiv.className = 'wrong-option-title';
-        
+
         const titleMain = document.createElement('span');
         titleMain.className = 'text-main';
-        titleMain.textContent = `📌 Option ${idx + 1} - Why not?`;
-        
+        titleMain.textContent = `Option ${idx + 1} - Why not?`;
+
         const titleTrans = document.createElement('span');
         titleTrans.className = 'text-translation';
-        titleTrans.textContent = `📌 Opção ${idx + 1} - Por quê não?`;
-        
+        titleTrans.textContent = `Opção ${idx + 1} - Por que não?`;
+
         titleDiv.appendChild(titleMain);
         titleDiv.appendChild(titleTrans);
 
-        // Conteúdo da opção (EN + PT overlay)
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'wrong-option-content';
-        
-        const optionTextDiv = document.createElement('div');
-        optionTextDiv.style.marginBottom = '12px';
-        
-        const optionLabelDiv = document.createElement('div');
-        optionLabelDiv.style.marginBottom = '8px';
-        optionLabelDiv.style.fontWeight = 'bold';
-        optionLabelDiv.innerHTML = 'Option: <span class="text-translation" style="font-weight: normal; margin-left: 8px;">Opção:</span>';
-        optionTextDiv.appendChild(optionLabelDiv);
-        
-        const optionMainWrapper = document.createElement('div');
-        optionMainWrapper.style.margin = '5px 0';
-        optionMainWrapper.style.padding = '8px';
-        optionMainWrapper.style.background = 'rgba(255,255,255,0.05)';
-        optionMainWrapper.style.borderLeft = '3px solid #ef4444';
-        optionMainWrapper.style.borderRadius = '4px';
-        
+        // ConteÃºdo simples da opÃ§Ã£o
         const optionMain = document.createElement('div');
         optionMain.className = 'text-main';
-        optionMain.innerHTML = this.escapeHtml(engOption);
-        
+        optionMain.innerHTML = this.escapeHtml(this.getOptionText(opt, 'en'));
+
         const optionTrans = document.createElement('div');
         optionTrans.className = 'text-translation';
         optionTrans.innerHTML = this.escapeHtml(ptOption);
-        
-        optionMainWrapper.appendChild(optionMain);
-        optionMainWrapper.appendChild(optionTrans);
-        optionTextDiv.appendChild(optionMainWrapper);
-        contentDiv.appendChild(optionTextDiv);
 
-        // Por quê está errada (EN + PT overlay)
-        const reasonDiv = document.createElement('div');
-        reasonDiv.className = 'wrong-option-why';
-        
-        const reasonLabelDiv = document.createElement('div');
-        reasonLabelDiv.style.marginBottom = '8px';
-        reasonLabelDiv.style.fontWeight = 'bold';
-        reasonLabelDiv.innerHTML = '❌ Why wrong: <span class="text-translation" style="font-weight: normal; margin-left: 8px; color: #06b6d4;">Por quê errada:</span>';
-        reasonDiv.appendChild(reasonLabelDiv);
-        
-        const reasonMainWrapper = document.createElement('div');
-        reasonMainWrapper.style.margin = '5px 0';
-        reasonMainWrapper.style.padding = '8px';
-        reasonMainWrapper.style.background = 'rgba(239,68,68,0.15)';
-        reasonMainWrapper.style.borderLeft = '3px solid #ef4444';
-        reasonMainWrapper.style.borderRadius = '4px';
-        
+        // Motivo
         const reasonMain = document.createElement('div');
         reasonMain.className = 'text-main';
-        // Use theme-aware error color for readability in light and dark modes
         reasonMain.style.color = 'var(--error)';
         reasonMain.innerHTML = this.escapeHtml(engReason);
-        
+
         const reasonTrans = document.createElement('div');
         reasonTrans.className = 'text-translation';
-        reasonTrans.style.color = '#06b6d4';
         reasonTrans.innerHTML = this.escapeHtml(ptReason);
-        
-        reasonMainWrapper.appendChild(reasonMain);
-        reasonMainWrapper.appendChild(reasonTrans);
-        reasonDiv.appendChild(reasonMainWrapper);
 
         wrongDiv.appendChild(titleDiv);
-        wrongDiv.appendChild(contentDiv);
-        wrongDiv.appendChild(reasonDiv);
+        wrongDiv.appendChild(optionMain);
+        wrongDiv.appendChild(optionTrans);
+        wrongDiv.appendChild(reasonMain);
+        wrongDiv.appendChild(reasonTrans);
         container.appendChild(wrongDiv);
       }
     });
   }
 
   /**
-   * FUNÇÃO: previousQuestion()
-   * DESCRIÇÃO: Vai para questão anterior
+   * FUNÃ‡ÃƒO: previousQuestion()
+   * DESCRIÃ‡ÃƒO: Vai para questÃ£o anterior
    * - Desabilitada na Q1
    * - Suaviza scroll para o topo
    */
@@ -676,13 +726,13 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: nextQuestion()
-   * DESCRIÇÃO: Vai para próxima questão
+   * FUNÃ‡ÃƒO: nextQuestion()
+   * DESCRIÃ‡ÃƒO: Vai para prÃ³xima questÃ£o
    * - Desabilitada na Q50
    * - Suaviza scroll para o topo
    */
   nextQuestion() {
-    if (this.currentQuestionIndex < GH300_QUESTIONS.length - 1) {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
       storageService.setCurrentQuestion(this.currentQuestionIndex);
       this.loadQuestion();
@@ -691,8 +741,8 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: previousQuestion()
-   * DESCRIÇÃO: Vai para questão anterior
+   * FUNÃ‡ÃƒO: previousQuestion()
+   * DESCRIÃ‡ÃƒO: Vai para questÃ£o anterior
    */
   previousQuestion() {
     if (this.currentQuestionIndex > 0) {
@@ -704,11 +754,11 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: updateNavigationButtons()
-   * DESCRIÇÃO: Atualiza estado dos botões de navegação
-   * - Desabilita "Previous" na primeira questão
-   * - Desabilita "Next" na última questão
-   * - Mostra botão "Finish" na última questão
+   * FUNÃ‡ÃƒO: updateNavigationButtons()
+   * DESCRIÃ‡ÃƒO: Atualiza estado dos botÃµes de navegaÃ§Ã£o
+   * - Desabilita "Previous" na primeira questÃ£o
+   * - Desabilita "Next" na Ãºltima questÃ£o
+   * - Mostra botÃ£o "Finish" na Ãºltima questÃ£o
    */
   updateNavigationButtons() {
     const prevBtn = document.getElementById('prevBtn');
@@ -716,24 +766,24 @@ class GH300Simulator {
     const finishBtn = document.getElementById('finishBtn');
 
     const isFirst = this.currentQuestionIndex === 0;
-    const isLast = this.currentQuestionIndex === GH300_QUESTIONS.length - 1;
+    const isLast = this.currentQuestionIndex === this.questions.length - 1;
 
     if (prevBtn) prevBtn.disabled = isFirst;
     if (nextBtn) nextBtn.disabled = isLast;
 
-    // Mostrar finish button apenas na última questão
+    // Mostrar finish button apenas na Ãºltima questÃ£o
     if (finishBtn) {
       finishBtn.style.display = isLast ? 'inline-flex' : 'none';
     }
   }
 
   /**
-   * FUNÇÃO: updateMiniDots()
-   * DESCRIÇÃO: Renderiza os 50 bolinhas (1 por questão)
-   * - Mostra qual questão está ativa (blue)
+   * FUNÃ‡ÃƒO: updateMiniDots()
+   * DESCRIÃ‡ÃƒO: Renderiza os 50 bolinhas (1 por questÃ£o)
+   * - Mostra qual questÃ£o estÃ¡ ativa (blue)
    * - Se showAnswerDots=true: Mostra cores (verde=correto, vermelho=errado)
    * - Se showAnswerDots=false: Sem cores
-   * - Permite pular para qualquer questão clicando
+   * - Permite pular para qualquer questÃ£o clicando
    */
   updateMiniDots() {
     const dotsContainer = document.getElementById('miniDots');
@@ -741,16 +791,22 @@ class GH300Simulator {
 
     dotsContainer.innerHTML = '';
 
-    GH300_QUESTIONS.forEach((q, idx) => {
+    this.questions.forEach((q, idx) => {
       const dot = document.createElement('button');
       dot.className = 'mini-dot';
       dot.textContent = idx + 1;
       
       if (idx === this.currentQuestionIndex) dot.classList.add('active');
       
+      const hasAnswer = this.answers[q.id] !== undefined;
+      if (hasAnswer) {
+        dot.classList.add('answered'); // BLUE default for answered
+      }
+
       // Adicionar cores APENAS se showAnswerDots for true
-      if (this.showAnswerDots && this.answers[q.id] !== undefined) {
-        if (this.answers[q.id] === q.en.correct) {
+      if (this.showAnswerDots && hasAnswer) {
+        dot.classList.remove('answered');
+        if (this.answers[q.id] === q.correct) {
           dot.classList.add('answered-correct');    // GREEN
         } else {
           dot.classList.add('answered-wrong');      // RED
@@ -771,20 +827,44 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: submitExam()
-   * DESCRIÇÃO: Termina o exame e mostra resultados
+   * FUNÃ‡ÃƒO: updateProgress()
+   * DESCRIÃ‡ÃƒO: Atualiza barra de progresso e texto
+   */
+  updateProgress() {
+    const total = this.questions.length || 1;
+    const current = Math.min(this.currentQuestionIndex + 1, total);
+    const progress = Math.round((current / total) * 100);
+
+    const progressFill = document.getElementById('progressFill');
+    if (progressFill) progressFill.style.width = `${progress}%`;
+
+    const progressText = document.getElementById('progressText');
+    if (progressText) progressText.textContent = `Question ${current} of ${total}`;
+
+    const scoreText = document.getElementById('scoreText');
+    if (scoreText) {
+      const score = this.calculateScore();
+      const scorePct = Math.round((score / total) * 100);
+      scoreText.textContent = `Score: ${scorePct}%`;
+    }
+  }
+
+  /**
+   * FUNÃ‡ÃƒO: submitExam()
+   * DESCRIÃ‡ÃƒO: Termina o exame e mostra resultados
    * - Calcula score (quantas acertou)
    * - Calcula percentual
    * - Calcula tempo total gasto
-   * - Salva prova no histórico
+   * - Salva prova no histÃ³rico
    * - Exibe modal com resultados e feedback
    */
   submitExam() {
     const score = this.calculateScore();
-    const percentage = Math.round((score / GH300_QUESTIONS.length) * 100);
+    const totalQuestions = this.questions.length || 1;
+    const percentage = Math.round((score / totalQuestions) * 100);
     const totalTime = Math.floor((Date.now() - this.startTime) / 1000);
 
-    // Salvar prova como completada no histórico
+    // Salvar prova como completada no histÃ³rico
     storageService.completeExam({
       examId: this.examId,
       answers: { ...this.answers },
@@ -800,17 +880,17 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: calculateScore()
-   * DESCRIÇÃO: Conta quantas questões o usuário acertou
+   * FUNÃ‡ÃƒO: calculateScore()
+   * DESCRIÃ‡ÃƒO: Conta quantas questÃµes o usuÃ¡rio acertou
    * - Compara resposta salva com resposta correta
-   * - Retorna número de acertos (0-50)
+   * - Retorna nÃºmero de acertos (0-50)
    */
   calculateScore() {
     let score = 0;
-    GH300_QUESTIONS.forEach(q => {
-      // A resposta correta é definida em en.correct
-      const correctIndex = q.en.correct;
-      // Compara a resposta salva com o índice correto
+    this.questions.forEach(q => {
+      // A resposta correta Ã© definida em en.correct
+      const correctIndex = q.correct;
+      // Compara a resposta salva com o Ã­ndice correto
       if (this.answers[q.id] === correctIndex) {
         score++;
       }
@@ -819,13 +899,13 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: showResults()
-   * DESCRIÇÃO: Exibe modal com os resultados finais
+   * FUNÃ‡ÃƒO: showResults()
+   * DESCRIÃ‡ÃƒO: Exibe modal com os resultados finais
    * - Score em grande
-   * - Número de corretas/erradas
+   * - NÃºmero de corretas/erradas
    * - Tempo gasto
    * - Mensagem motivacional com base no score
-   * - Botões para retomar/voltar
+   * - BotÃµes para retomar/voltar
    */
   showResults(score, percentage, totalTime) {
     const resultsModal = document.getElementById('resultsModal');
@@ -835,9 +915,9 @@ class GH300Simulator {
     }
 
     const correct = score;
-    const wrong = GH300_QUESTIONS.length - score;
+    const wrong = this.questions.length - score;
 
-    // Atualizar título
+    // Atualizar tÃ­tulo
     const resultsTitle = document.getElementById('resultsTitle');
     if (resultsTitle) {
       resultsTitle.textContent = this.currentLang === 'en' ? 'Exam Complete!' : 'Prova Concluída!';
@@ -849,7 +929,7 @@ class GH300Simulator {
       finalScore.textContent = percentage;
     }
 
-    // Estatísticas (corretas/erradas/tempo)
+    // EstatÃ­sticas (corretas/erradas/tempo)
     const correctCount = document.getElementById('correctCount');
     const wrongCount = document.getElementById('wrongCount');
     const timeSpent = document.getElementById('timeSpent');
@@ -871,7 +951,7 @@ class GH300Simulator {
     const resultsFeedback = document.getElementById('resultsFeedback');
     if (resultsFeedback) {
       resultsFeedback.textContent = this.getResultMessage(percentage, this.currentLang);
-    // Mostrar botão View History no modal final se houver provas anteriores
+    // Mostrar botÃ£o View History no modal final se houver provas anteriores
     const history = storageService.getExamHistory();
     const viewHistoryBtn = document.getElementById('viewHistoryBtn');
 
@@ -885,8 +965,8 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: getResultMessage()
-   * DESCRIÇÃO: Retorna mensagem motivacional baseada no score
+   * FUNÃ‡ÃƒO: getResultMessage()
+   * DESCRIÃ‡ÃƒO: Retorna mensagem motivacional baseada no score
    * - 90+% = Excelente
    * - 75-89% = Bom
    * - 60-74% = Regular
@@ -895,16 +975,16 @@ class GH300Simulator {
   getResultMessage(percentage, lang) {
     const messages = {
       en: {
-        excellent: '🎉 Excellent! You\'ve mastered the GitHub Copilot material! Ready for certification! 🚀',
-        good: '👍 Great job! Keep practicing to reach excellence! A few more attempts and you\'ll be ready!',
-        fair: '📚 Good effort! Review the material where you struggled and try again!',
-        needs: '💪 Keep studying! Review key concepts and retake the exam. You\'ve got this!'
+        excellent: 'Excellent! You\'ve mastered the GitHub Copilot material! Ready for certification!',
+        good: 'Great job! Keep practicing to reach excellence! A few more attempts and you\'ll be ready!',
+        fair: 'Good effort! Review the material where you struggled and try again!',
+        needs: 'Keep studying! Review key concepts and retake the exam. You\'ve got this!'
       },
       pt: {
-        excellent: '🎉 Excelente! Você dominou o material do GitHub Copilot! Pronto para certificação! 🚀',
-        good: '👍 Ótimo! Continue praticando para alcançar excelência! Mais algumas tentativas e estará pronto!',
-        fair: '📚 Bom esforço! Revise o material onde teve dificuldade e tente novamente!',
-        needs: '💪 Continue estudando! Revise conceitos-chave e refaça a prova. Você consegue!'
+        excellent: 'Excelente! Você dominou o material do GitHub Copilot! Pronto para certificação!',
+        good: 'Ótimo! Continue praticando para alcançar excelência! Mais algumas tentativas e estará pronto!',
+        fair: 'Bom esforço! Revise o material onde teve dificuldade e tente novamente!',
+        needs: 'Continue estudando! Revise conceitos-chave e refaça a prova. Você consegue!'
       }
     };
 
@@ -916,11 +996,11 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: retakeExam()
-   * DESCRIÇÃO: Reseta tudo e permite fazer o exame novamente
+   * FUNÃ‡ÃƒO: retakeExam()
+   * DESCRIÃ‡ÃƒO: Reseta tudo e permite fazer o exame novamente
    * - Limpa todas as respostas
    * - Volta para Q1
-   * - Reinicia cronômetro
+   * - Reinicia cronÃ´metro
    * - Cria novo ID para essa tentativa
    * - Esconde modal de resultados
    */
@@ -946,11 +1026,11 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: updateUILabels()
-   * DESCRIÇÃO: Atualiza todos os textos dos botões conforme idioma
-   * - "EN / PT" → "PT / EN"
-   * - "Show Answer" → "Mostrar Resposta"
-   * - "Show Tips" → "Mostrar Dicas"
+   * FUNÃ‡ÃƒO: updateUILabels()
+   * DESCRIÃ‡ÃƒO: Atualiza todos os textos dos botÃµes conforme idioma
+   * - "EN / PT" â†’ "PT / EN"
+   * - "Show Answer" â†’ "Mostrar Resposta"
+   * - "Show Tips" â†’ "Mostrar Dicas"
    * - etc
    */
   updateUILabels() {
@@ -993,13 +1073,13 @@ class GH300Simulator {
     if (showAnswerBtn) showAnswerBtn.textContent = this.showAnswers ? lang.hideAnswer : lang.showAnswer;
     if (showTipsBtn) showTipsBtn.textContent = this.showTips ? lang.hideTips : lang.showTips;
 
-    // Atualizar rótulo do filtro de dots
+    // Atualizar rÃ³tulo do filtro de dots
     this.updateFilterLabel();
   }
 
   /**
-   * FUNÇÃO: formatTime()
-   * DESCRIÇÃO: Converte segundos para formato legível (ex: "12m 45s")
+   * FUNÃ‡ÃƒO: formatTime()
+   * DESCRIÃ‡ÃƒO: Converte segundos para formato legÃ­vel (ex: "12m 45s")
    */
   formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -1008,31 +1088,36 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: scrollToTop()
-   * DESCRIÇÃO: Suaviza scroll para o topo da página
-   * - Usado ao navegar para nova questão
+   * FUNÃ‡ÃƒO: scrollToTop()
+   * DESCRIÃ‡ÃƒO: Suaviza scroll para o topo da pÃ¡gina
+   * - Usado ao navegar para nova questÃ£o
    */
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /**
-   * FUNÇÃO: generateReviewDocument()
-   * DESCRIÇÃO: Gera um documento HTML lindo para revisão completa
+   * FUNÃ‡ÃƒO: generateReviewDocument()
+   * DESCRIÃ‡ÃƒO: Gera um documento HTML lindo para revisÃ£o completa
    */
   generateReviewDocument() {
     const score = this.calculateScore();
-    const percentage = Math.round((score / GH300_QUESTIONS.length) * 100);
+    const totalQuestions = this.questions.length || 1;
+    const percentage = Math.round((score / totalQuestions) * 100);
+    const examTitle = this.exam?.title || 'Exam';
     const totalTime = Math.floor((Date.now() - this.startTime) / 1000);
-    const wrong = GH300_QUESTIONS.length - score;
+    const wrong = this.questions.length - score;
+
+    const langForReview = this.currentLang;
+    const isPT = langForReview === 'pt';
 
     // Build the review document HTML
     let html = `<!DOCTYPE html>
-<html lang="en">
+<html lang="${langForReview}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GH-300 Exam Review - ${percentage}%</title>
+  <title>${examTitle} Review - ${percentage}%</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -1110,24 +1195,25 @@ class GH300Simulator {
     }
     .tips h4 { margin-bottom: 10px; color: #06b6d4; }
     .tips li { margin-left: 20px; margin-bottom: 8px; }
+    .answer-translation { color: #06b6d4; font-style: italic; margin-top: 6px; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>📋 GH-300 Exam Review</h1>
+      <h1>${examTitle} Review</h1>
       <div class="score-display">${percentage}%</div>
       <div class="summary-stats">
         <div class="stat-box">
-          <div class="stat-label">✅ Correct</div>
-          <div class="stat-value">${score}/50</div>
+          <div class="stat-label">âœ… Correct</div>
+          <div class="stat-value">${score}/${totalQuestions}</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">❌ Wrong</div>
+          <div class="stat-label">âŒ Wrong</div>
           <div class="stat-value">${wrong}</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">⏱️ Time</div>
+          <div class="stat-label">â±ï¸ Time</div>
           <div class="stat-value">${this.formatTime(totalTime)}</div>
         </div>
       </div>
@@ -1136,7 +1222,7 @@ class GH300Simulator {
     <div class="summary-end">
       <div class="footer-message">${this.getDetailedFeedback(percentage)}</div>
       <div class="tips">
-        <h4>💡 Tips for Next Time:</h4>
+        <h4>Tips for Next Time:</h4>
         <ul>
           <li>Review the questions you got wrong above</li>
           <li>Focus on understanding the "Why wrong" explanations</li>
@@ -1148,29 +1234,61 @@ class GH300Simulator {
   </div>
   <script>
     const container = document.getElementById('review-questions');
-    const questions = ${JSON.stringify(GH300_QUESTIONS)};
+    const questions = ${JSON.stringify(this.questions)};
     const answers = ${JSON.stringify(this.answers)};
-    
+    const totalQuestions = questions.length;
+    const currentLang = '${langForReview}';
+    const isPT = currentLang === 'pt';
+
     questions.forEach((q, idx) => {
       const userAnswer = answers[q.id];
-      const isCorrect = userAnswer === q.en.correct;
-      const userOption = q.en.options[userAnswer];
-      const correctOption = q.en.options[q.en.correct];
-      
+      const isCorrect = userAnswer === q.correct;
+      const option = (i, lang) => (q.options && q.options[i]) ? (q.options[i][lang] || q.options[i].en || '') : '';
+      const userOption = option(userAnswer, 'en');
+      const correctOption = option(q.correct, 'en');
+      const ptUserOption = option(userAnswer, 'pt');
+      const ptCorrectOption = option(q.correct, 'pt');
+
+      let reviewHtml = '<div class="question-header"><span class="status-icon">' + (isCorrect ? 'OK' : 'X') + '</span><div><div class="question-num">Question ' + (idx + 1) + ' of ' + totalQuestions + ' - ' + (isCorrect ? 'CORRECT' : 'INCORRECT') + '</div></div></div>';
+      reviewHtml += '<div class="question-text">' + (q.question?.en || '') + '</div>';
+      if (isPT && q.question?.pt) {
+        reviewHtml += '<div class="answer-translation">' + q.question.pt + '</div>';
+      }
+
+      reviewHtml += '<div class="answer-item user-answer"><div class="answer-label">Your Answer:</div><div class="answer-text">* ' + (userOption || 'Not answered') + '</div>';
+      if (isPT && ptUserOption) {
+        reviewHtml += '<div class="answer-translation">* ' + ptUserOption + '</div>';
+      }
+      reviewHtml += '</div>';
+
+      reviewHtml += '<div class="answer-item correct-answer"><div class="answer-label">Correct Answer:</div><div class="answer-text">+ ' + correctOption + '</div>';
+      if (isPT && ptCorrectOption) {
+        reviewHtml += '<div class="answer-translation">+ ' + ptCorrectOption + '</div>';
+      }
+      reviewHtml += '</div>';
+
+      reviewHtml += '<div class="answer-item explanation"><div class="answer-label">Explanation:</div><div class="answer-text">' + (q.explanation?.en || '') + '</div>';
+      if (isPT && q.explanation?.pt) {
+        reviewHtml += '<div class="answer-translation">' + q.explanation.pt + '</div>';
+      }
+      reviewHtml += '</div>';
+
+      reviewHtml += '<div class="answer-item explanation"><div class="answer-label">Detailed Answer:</div><div class="answer-text">' + (q.answer?.en || '') + '</div>';
+      if (isPT && q.answer?.pt) {
+        reviewHtml += '<div class="answer-translation">' + q.answer.pt + '</div>';
+      }
+      reviewHtml += '</div>';
+
+      if (!isCorrect && q.wrongReasons && q.wrongReasons[userAnswer] && q.wrongReasons[userAnswer].en) {
+        reviewHtml += '<div class="answer-item wrong-analysis"><div class="answer-label">Why Your Answer Is Wrong:</div><div class="answer-text">' + q.wrongReasons[userAnswer].en + '</div>';
+        if (isPT && q.wrongReasons[userAnswer].pt) {
+          reviewHtml += '<div class="answer-translation">' + q.wrongReasons[userAnswer].pt + '</div>';
+        }
+        reviewHtml += '</div>';
+      }
+
       const div = document.createElement('div');
       div.className = 'question-review ' + (isCorrect ? 'correct' : 'incorrect');
-      
-      let reviewHtml = '<div class="question-header"><span class="status-icon">' + (isCorrect ? '✅' : '❌') + '</span><div><div class="question-num">Question ' + (idx + 1) + ' of 50 - ' + (isCorrect ? 'CORRECT ✓' : 'INCORRECT ✗') + '</div></div></div>';
-      reviewHtml += '<div class="question-text">' + q.en.question + '</div>';
-      reviewHtml += '<div class="answer-item user-answer"><div class="answer-label">Your Answer:</div><div class="answer-text">📌 ' + (userOption || 'Not answered') + '</div></div>';
-      reviewHtml += '<div class="answer-item correct-answer"><div class="answer-label">Correct Answer:</div><div class="answer-text">✅ ' + correctOption + '</div></div>';
-      reviewHtml += '<div class="answer-item explanation"><div class="answer-label">Explanation:</div><div class="answer-text">' + q.en.explanation + '</div></div>';
-      reviewHtml += '<div class="answer-item explanation"><div class="answer-label">Detailed Answer:</div><div class="answer-text">' + q.en.answer + '</div></div>';
-      
-      if (!isCorrect && q.en.wrongReasons && q.en.wrongReasons[userAnswer]) {
-        reviewHtml += '<div class="answer-item wrong-analysis"><div class="answer-label">Why Your Answer Is Wrong:</div><div class="answer-text">' + q.en.wrongReasons[userAnswer] + '</div></div>';
-      }
-      
       div.innerHTML = reviewHtml;
       container.appendChild(div);
     });
@@ -1182,33 +1300,33 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: getDetailedFeedback()
-   * DESCRIÇÃO: Retorna mensagem motivacional detalhada baseada no score
+   * FUNÃ‡ÃƒO: getDetailedFeedback()
+   * DESCRIÃ‡ÃƒO: Retorna mensagem motivacional detalhada baseada no score
    */
   getDetailedFeedback(percentage) {
     if (percentage >= 90) {
-      return '🎉 Outstanding! You\'ve mastered GitHub Copilot! Ready for certification!';
+      return 'Outstanding! You\'ve mastered GitHub Copilot! Ready for certification!';
     } else if (percentage >= 75) {
-      return '👍 Great job! Continue practicing to reach perfection!';
+      return 'Great job! Continue practicing to reach perfection!';
     } else if (percentage >= 60) {
-      return '📚 Good effort! Review the material and focus on weak areas!';
+      return 'Good effort! Review the material and focus on weak areas!';
     } else {
-      return '💪 Keep studying! Review the explanations and try again!';
+      return 'Keep studying! Review the explanations and try again!';
     }
   }
 
   /**
-   * FUNÇÃO: openReview()
-   * DESCRIÇÃO: Abre documento de revisão detalhado em nova janela
-   * - Gera HTML com todas as questões, respostas e explicações
-   * - Inclui botão "Back" para voltar ao modal
-   * - Ideal para revisão completa
+   * FUNÃ‡ÃƒO: openReview()
+   * DESCRIÃ‡ÃƒO: Abre documento de revisÃ£o detalhado em nova janela
+   * - Gera HTML com todas as questÃµes, respostas e explicaÃ§Ãµes
+   * - Inclui botÃ£o "Back" para voltar ao modal
+   * - Ideal para revisÃ£o completa
    */
   openReview() {
     const doc = this.generateReviewDocument();
     const win = window.open();
     
-    // Adicionar botão Back no topo
+    // Adicionar botÃ£o Back no topo
     const backButtonHtml = `
       <div style="position: sticky; top: 0; background: var(--card-bg); padding: 16px; border-bottom: 1px solid var(--border); z-index: 100;">
         <button onclick="window.close()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;">
@@ -1222,9 +1340,9 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: showExamHistory()
-   * DESCRIÇÃO: Mostra lista de provas anteriores do usuário
-   * - Recupera histórico do storageService
+   * FUNÃ‡ÃƒO: showExamHistory()
+   * DESCRIÃ‡ÃƒO: Mostra lista de provas anteriores do usuÃ¡rio
+   * - Recupera histÃ³rico do storageService
    * - Renderiza lista com score, data e hora
    * - Permite clicar para reabrir prova
    */
@@ -1248,7 +1366,7 @@ class GH300Simulator {
       return;
     }
     
-    // Renderizar cada prova no histórico
+    // Renderizar cada prova no histÃ³rico
     history.forEach((exam, index) => {
       const date = new Date(exam.completedAt);
       const dateStr = date.toLocaleDateString(this.currentLang === 'en' ? 'en-US' : 'pt-BR');
@@ -1285,7 +1403,7 @@ class GH300Simulator {
           <div>
             <div style="font-weight: 600; color: var(--text); margin-bottom: 4px;">Exam ${index + 1}</div>
             <div style="font-size: 13px; color: var(--text-muted);">${dateStr} at ${timeStr}</div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">${exam.score}/${GH300_QUESTIONS.length} correct • ${this.formatTime(exam.totalTime)}</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">${exam.score}/${this.questions.length} correct • ${this.formatTime(exam.totalTime)}</div>
           </div>
         </div>
       `;
@@ -1309,8 +1427,8 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: promptReloadExam()
-   * DESCRIÇÃO: Mostra modal de confirmação antes de recarregar prova antiga
+   * FUNÃ‡ÃƒO: promptReloadExam()
+   * DESCRIÃ‡ÃƒO: Mostra modal de confirmaÃ§Ã£o antes de recarregar prova antiga
    * @param {string} examId - ID da prova
    * @param {number} percentage - Percentual que tirou
    * @param {number} score - Score que tirou
@@ -1319,8 +1437,8 @@ class GH300Simulator {
     this.selectedExamIdToReload = examId;
     
     const message = this.currentLang === 'en' 
-      ? `You are about to reload Exam with ${percentage}% (${score}/${GH300_QUESTIONS.length} questions correct). Your previous answers will be loaded and you can review or retake this exam.`
-      : `Você vai recarregar a Prova com ${percentage}% (${score}/${GH300_QUESTIONS.length} questões corretas). Suas respostas anteriores serão carregadas e você pode revisar ou refazer esta prova.`;
+      ? `You are about to reload Exam with ${percentage}% (${score}/${this.questions.length} questions correct). Your previous answers will be loaded and you can review or retake this exam.`
+      : `Você vai recarregar a Prova com ${percentage}% (${score}/${this.questions.length} questões corretas). Suas respostas anteriores serão carregadas e você pode revisar ou refazer esta prova.`;
     
     const reloadMessage = document.getElementById('reloadMessage');
     if (reloadMessage) {
@@ -1341,8 +1459,8 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: confirmReloadExam()
-   * DESCRIÇÃO: Confirma e carrega a prova selecionada
+   * FUNÃ‡ÃƒO: confirmReloadExam()
+   * DESCRIÃ‡ÃƒO: Confirma e carrega a prova selecionada
    */
   confirmReloadExam() {
     if (!this.selectedExamIdToReload) return;
@@ -1353,7 +1471,7 @@ class GH300Simulator {
       return;
     }
     
-    // Criar novo examId para essa sessão
+    // Criar novo examId para essa sessÃ£o
     this.examId = storageService.generateExamId();
     this.answers = { ...oldAnswers };
     this.currentQuestionIndex = 0;
@@ -1381,9 +1499,9 @@ class GH300Simulator {
   }
 
   /**
-   * FUNÇÃO: escapeHtml()
-   * DESCRIÇÃO: Escapa caracteres especiais HTML
-   * - Previne XSS (segurança)
+   * FUNÃ‡ÃƒO: escapeHtml()
+   * DESCRIÃ‡ÃƒO: Escapa caracteres especiais HTML
+   * - Previne XSS (seguranÃ§a)
    * - Exemplo: <script> vira &lt;script&gt; (inofensivo)
    */
   escapeHtml(text) {
@@ -1399,10 +1517,62 @@ class GH300Simulator {
 }
 
 /**
- * INICIALIZAÇÃO
- * Quando a página termina de carregar, cria uma instância do simulador
- * Este é o ponto de entrada: tudo começa aqui!
+ * INICIALIZAÃ‡ÃƒO
+ * Quando a pÃ¡gina termina de carregar, cria uma instÃ¢ncia do simulador
+ * Este Ã© o ponto de entrada: tudo comeÃ§a aqui!
  */
-document.addEventListener('DOMContentLoaded', () => {
-  new GH300Simulator();
+document.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  const examParam = params.get('exam') || 'gh300';
+  const standalone = params.get('standalone') === '1';
+
+  // Se abrir direto no simulador, redireciona para o hub com navbar
+  if (window.top === window.self && !standalone) {
+    window.location.href = `index.html?exam=${encodeURIComponent(examParam)}`;
+    return;
+  }
+
+  const exam = await loadExamData();
+  if (!exam) return;
+
+  if (window.storageService && exam.id) {
+    storageService.setNamespace(exam.id);
+  }
+
+  // Invalidar sessão se a prova mudou
+  if (window.storageService) {
+    const version = exam.version || hashExamData(exam);
+    const stored = storageService.getExamVersion();
+    if (stored && stored !== version) {
+      storageService.resetExamData();
+    }
+    storageService.setExamVersion(version);
+  }
+
+  new GH300Simulator(exam);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -273,8 +273,9 @@ html, body {
 }
 
 .mini-dot.answered {
-  background: var(--success);
-  border-color: var(--success);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
 }
 
 .mini-dot.answered-correct {
@@ -789,6 +790,7 @@ body.lang-pt .text-translation {
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
+  padding: 20px;
 }
 
 .modal-close {
@@ -951,9 +953,24 @@ body.lang-pt .text-translation {
     justify-content: center;
   }
 
+  .btn-filter {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
   .card-footer {
     flex-direction: column;
     gap: 12px;
+  }
+
+  .finish-nav {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .finish-nav .btn {
+    width: 100%;
   }
 
   .question-nav {
@@ -966,6 +983,8 @@ body.lang-pt .text-translation {
 
   .mini-dots {
     gap: 3px;
+    max-height: none;
+    overflow-y: visible;
   }
 
   .mini-dot {
