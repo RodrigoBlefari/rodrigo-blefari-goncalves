@@ -252,7 +252,7 @@ html, body {
 }
 
 .top-actions .btn {
-  flex: 1 1 180px;
+  flex: 0 1 auto;
 }
 
 .mini-dot {
@@ -1018,6 +1018,8 @@ body.lang-pt .text-translation {
   .top-actions .btn {
     width: 100%;
     justify-content: center;
+    padding: 10px 12px;
+    min-height: 40px;
   }
 
   .question-actions {
