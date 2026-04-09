@@ -330,7 +330,7 @@ html, body {
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
   gap: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .question-actions-inline {
@@ -340,7 +340,31 @@ html, body {
 }
 
 .question-actions-inline .btn {
-  padding: 8px 12px;
+  padding: 6px 8px;
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.question-actions-inline .btn i {
+  font-size: 14px;
+}
+
+.question-actions-inline .btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.question-actions-inline .btn.active,
+.question-actions-inline .btn:active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(37, 99, 235, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.25);
 }
 
 .question-number {
