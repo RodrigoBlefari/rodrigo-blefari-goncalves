@@ -49,6 +49,16 @@
 
     <!-- MAIN CONTENT -->
     <main class="quiz-content">
+      <div class="inline-alert" id="tipsInline" style="display: none;">
+        <div class="inline-alert-header">
+          <i class="fas fa-lightbulb"></i>
+          <span id="tipsTitle">Tip to Remember</span>
+        </div>
+        <div class="tips-wrapper">
+          <div class="text-main" id="memoryText"></div>
+          <div class="text-translation" id="memoryTextPT"></div>
+        </div>
+      </div>
       <div class="question-container">
         <!-- QUESTION CARD -->
         <div class="question-card">
@@ -85,18 +95,6 @@
             <button class="btn btn-primary" id="finishBtn" style="display: none;">
               <i class="fas fa-check"></i> <span id="finishLabel">Finish Exam</span>
             </button>
-          </div>
-
-          <!-- MEMORY AID / TIPS -->
-          <div class="tips-section">
-            <div class="tips-header">
-              <i class="fas fa-lightbulb"></i>
-              <h4>💡 Tip to Remember</h4>
-            </div>
-            <div class="tips-wrapper">
-              <div class="text-main" id="memoryText"></div>
-              <div class="text-translation" id="memoryTextPT"></div>
-            </div>
           </div>
 
         </div>
@@ -198,6 +196,7 @@
       </div>
     </div>
   </div>
+  <div class="snackbar" id="snackbar" aria-live="polite"></div>
 
   <script src="services/storageService.js" defer></script>
   <script src="scripts/gh300-simulator.js?v=20260409" defer></script>

@@ -384,8 +384,8 @@ class GH300Simulator {
 
     // Carregar o "Tip to Remember" (mnemÃ´nico para memorizar) - ESCONDIDO POR PADRÃƒO
     this.loadMemoryAid(question);
-    const tipsSection = document.querySelector('.tips-section');
-    if (tipsSection) tipsSection.style.display = this.showTips ? 'block' : 'none';
+    const tipsInline = document.getElementById('tipsInline');
+    if (tipsInline) tipsInline.style.display = this.showTips ? 'block' : 'none';
 
     // Limpar seÃ§Ã£o de resposta (esconde atÃ© usuÃ¡rio clicar "Show Answer")
     this.showAnswers = false;
@@ -525,6 +525,51 @@ class GH300Simulator {
   }
 
   /**
+   * FUNÃ‡ÃƒO: showSnackbar()
+   * DESCRIÃ‡ÃƒO: Mostra um snackbar rÃ¡pido com feedback do usuÃ¡rio
+   */
+  showSnackbar(message) {
+    const snackbar = document.getElementById('snackbar');
+    if (!snackbar) return;
+    snackbar.textContent = message;
+    snackbar.classList.add('show');
+    clearTimeout(this.snackbarTimeout);
+    this.snackbarTimeout = setTimeout(() => {
+      snackbar.classList.remove('show');
+    }, 1800);
+  }
+
+  /**
+   * FUNÃ‡ÃƒO: getToggleMessage()
+   * DESCRIÃ‡ÃƒO: Mensagens curtas para toggles (Answer/Tips/Dots)
+   */
+  getToggleMessage(type, enabled) {
+    const messages = {
+      en: {
+        answersOn: 'Answers on',
+        answersOff: 'Answers off',
+        tipsOn: 'Tips on',
+        tipsOff: 'Tips off',
+        dotsOn: 'Dots on',
+        dotsOff: 'Dots off'
+      },
+      pt: {
+        answersOn: 'Respostas ligadas',
+        answersOff: 'Respostas desligadas',
+        tipsOn: 'Dicas ligadas',
+        tipsOff: 'Dicas desligadas',
+        dotsOn: 'Bolinhas ligadas',
+        dotsOff: 'Bolinhas desligadas'
+      }
+    };
+
+    const lang = messages[this.currentLang] || messages.en;
+    if (type === 'answers') return enabled ? lang.answersOn : lang.answersOff;
+    if (type === 'tips') return enabled ? lang.tipsOn : lang.tipsOff;
+    return enabled ? lang.dotsOn : lang.dotsOff;
+  }
+
+  /**
    * FUNÃ‡ÃƒO: toggleAnswer()
    * DESCRIÃ‡ÃƒO: Mostra ou esconde a resposta correta + anÃ¡lise
    */
@@ -539,6 +584,7 @@ class GH300Simulator {
     }
 
     this.updateUILabels();
+    this.showSnackbar(this.getToggleMessage('answers', this.showAnswers));
   }
 
   /**
@@ -548,17 +594,14 @@ class GH300Simulator {
   toggleTips() {
     this.showTips = !this.showTips;
     storageService.setUIPreference('showTips', this.showTips);
-    const tipsSection = document.querySelector('.tips-section');
-    
-    if (tipsSection) {
-      if (this.showTips) {
-        tipsSection.style.display = 'block';
-      } else {
-        tipsSection.style.display = 'none';
-      }
+    const tipsInline = document.getElementById('tipsInline');
+
+    if (tipsInline) {
+      tipsInline.style.display = this.showTips ? 'block' : 'none';
     }
 
     this.updateUILabels();
+    this.showSnackbar(this.getToggleMessage('tips', this.showTips));
   }
 
   /**
@@ -570,6 +613,7 @@ class GH300Simulator {
     storageService.setUIPreference('showDots', this.showAnswerDots);
     this.updateFilterLabel();
     this.updateMiniDots();
+    this.showSnackbar(this.getToggleMessage('dots', this.showAnswerDots));
   }
 
   /**
@@ -993,6 +1037,7 @@ class GH300Simulator {
         hideAnswer: 'Hide Answer',
         showTips: 'Show Tips',
         hideTips: 'Hide Tips',
+        tipsTitle: 'Tip to Remember',
         finish: 'Finish Exam',
         langDisplay: 'EN',
         langOther: 'PT'
@@ -1004,6 +1049,7 @@ class GH300Simulator {
         hideAnswer: 'Ocultar Resposta',
         showTips: 'Mostrar Dicas',
         hideTips: 'Ocultar Dicas',
+        tipsTitle: 'Dica para lembrar',
         finish: 'Finalizar Prova',
         langDisplay: 'PT',
         langOther: 'EN'
@@ -1017,12 +1063,18 @@ class GH300Simulator {
     const finishLabel = document.getElementById('finishLabel');
     const showAnswerBtn = document.getElementById('showAnswerLabel');
     const showTipsBtn = document.getElementById('showTipsLabel');
+    const showAnswerRoot = document.getElementById('showAnswerBtn');
+    const showTipsRoot = document.getElementById('showTipsBtn');
+    const tipsTitle = document.getElementById('tipsTitle');
 
     if (prevBtn) prevBtn.textContent = lang.prev;
     if (nextBtn) nextBtn.textContent = lang.next;
     if (finishLabel) finishLabel.textContent = lang.finish;
     if (showAnswerBtn) showAnswerBtn.textContent = this.showAnswers ? lang.hideAnswer : lang.showAnswer;
     if (showTipsBtn) showTipsBtn.textContent = this.showTips ? lang.hideTips : lang.showTips;
+    if (tipsTitle) tipsTitle.textContent = lang.tipsTitle;
+    if (showAnswerRoot) showAnswerRoot.classList.toggle('active', this.showAnswers);
+    if (showTipsRoot) showTipsRoot.classList.toggle('active', this.showTips);
 
     // Atualizar rÃ³tulo do filtro de dots
     this.updateFilterLabel();
@@ -1507,6 +1559,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   new GH300Simulator(exam);
 });
+
 
 
 
