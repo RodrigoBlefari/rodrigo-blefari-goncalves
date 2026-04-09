@@ -123,13 +123,6 @@ class GH300Simulator {
     }
 
     // Botão de modo revisão
-    const reviewBtn = document.getElementById('reviewBtn');
-    if (reviewBtn) {
-      reviewBtn.addEventListener('click', () => {
-        reviewBtn.classList.toggle('active');
-      });
-    }
-
     // Botões de navegação
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
