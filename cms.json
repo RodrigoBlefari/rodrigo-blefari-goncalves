@@ -257,7 +257,31 @@
       "QUIDDE",
       "Vivo",
       "OpenTravel"
-    ]
+    ],
+    "projects": {
+      "intro": "Experiências pessoais misturando tecnologia, IA e estudo contínuo.",
+      "ctaLabel": "Abrir projeto",
+      "items": [
+        {
+          "badge": "Certificação & Estudo",
+          "title": "GH-300 Exam Simulator",
+          "slug": "gh300-simulator",
+          "description": "Simulador interativo para certificação GitHub Copilot GH-300. Inclui 50 questões, revisão de respostas, tradução português/inglês, explicações detalhadas e análise de desempenho. MVP profissional com UI/UX moderna.",
+          "href": "gh300-simulator.html",
+          "tags": ["GitHub Copilot", "Exam Prep", "Interactive"],
+          "note": "Prova de conceito: simulador educativo com tradução multilíngue."
+        },
+        {
+          "badge": "Proyecto de IA Generativa",
+          "title": "Generative Game Rogue Like",
+          "slug": "generative-game-rogue-like",
+          "description": "Jogo roguelike em HTML5 Canvas que alterna entre modo de jogador e modo de aprendizado, evoluindo o agente em tempo real.",
+          "href": "../../projetos-pessoais/generative-game-rogue-like/index.html",
+          "tags": ["Canvas", "IA Generativa", "Rogue-like"],
+          "note": "Hospedado no GitHub Pages na mesma branch."
+        }
+      ]
+    }
   },
   "techColors": {
     "javascript": { "base": "#f7df1e", "text": "#323330", "gradient": ["#f7df1e", "#f0db4f"], "border": "#323330" },

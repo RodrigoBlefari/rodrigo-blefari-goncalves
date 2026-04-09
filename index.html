@@ -21,9 +21,12 @@
       html, body {
         height: 100%;
         margin: 0;
+        padding: 0;
         background: var(--bg);
         color: var(--text);
         font-family: Inter, -apple-system, Segoe UI, Roboto, sans-serif;
+        display: flex;
+        flex-direction: column;
       }
       .topbar {
         display: flex;
@@ -44,44 +47,6 @@
         color: var(--text);
       }
       .spacer { flex: 1; }
-      .selector {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--muted);
-        font-weight: 600;
-      }
-      .selector select {
-        appearance: none;
-        background: #0b1220;
-        color: var(--text);
-        border: 1px solid #243244;
-        padding: 10px 36px 10px 12px;
-        border-radius: 10px;
-        font-size: 14px;
-        cursor: pointer;
-        outline: none;
-      }
-      .selector .fa-caret-down {
-        margin-left: -28px;
-        pointer-events: none;
-        color: var(--muted);
-      }
-      .frame-wrap {
-        height: calc(100% - 58px);
-        width: 100%;
-      }
-      iframe {
-        width: 100%;
-        height: 100%;
-        border: 0;
-        background: #0b1220;
-      }
-      .hint {
-        font-size: 12px;
-        color: var(--muted);
-        margin-left: 6px;
-      }
       .brand {
         display: inline-flex;
         align-items: center;
@@ -92,6 +57,132 @@
         width: 8px; height: 8px; border-radius: 50%;
         background: var(--primary);
         box-shadow: 0 0 12px var(--primary);
+      }
+      
+      /* ===== NAVBAR NAVIGATION ===== */
+      #projectNav {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      
+      .nav-item {
+        background: transparent;
+        border: 1px solid #243244;
+        color: var(--muted);
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      
+      .nav-item:hover {
+        border-color: var(--primary);
+        color: var(--text);
+        background: rgba(37, 99, 235, 0.1);
+      }
+      
+      .nav-item.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+        box-shadow: 0 0 12px rgba(37, 99, 235, 0.3);
+      }
+      
+      /* ===== DROPDOWN ===== */
+      .dropdown-wrapper {
+        position: relative;
+        z-index: 100;
+      }
+      
+      .dropdown-toggle {
+        cursor: pointer;
+      }
+      
+      .dropdown-menu {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        background: #111827;
+        border: 1px solid #243244;
+        border-radius: 6px;
+        display: none;
+        flex-direction: column;
+        min-width: 200px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+      }
+      
+      .dropdown-menu.show {
+        display: flex;
+      }
+      
+      .dropdown-item {
+        background: transparent;
+        border: none;
+        color: var(--text);
+        padding: 10px 16px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.2s;
+        text-align: left;
+      }
+      
+      .dropdown-item:hover {
+        background: rgba(37, 99, 235, 0.2);
+        color: var(--primary);
+      }
+      
+      .dropdown-item:first-child {
+        border-radius: 6px 6px 0 0;
+      }
+      
+      .dropdown-item:last-child {
+        border-radius: 0 0 6px 6px;
+      }
+      
+      #navBreadcrumb {
+        font-size: 12px;
+        color: var(--muted);
+        padding: 4px 8px;
+        background: rgba(37, 99, 235, 0.05);
+        border-radius: 4px;
+        min-width: 120px;
+      }
+      
+      /* ===== FRAME + NAV BAR ===== */
+      .frame-wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+      }
+      
+      .nav-bar {
+        background: linear-gradient(135deg, rgba(11, 18, 32, 0.8), rgba(17, 24, 39, 0.8));
+        border-bottom: 1px solid #1f2937;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        overflow: visible;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 50;
+      }
+      
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: #0b1220;
+        flex: 1;
+        position: relative;
+        z-index: 1;
       }
     </style>
   </head>
@@ -116,7 +207,11 @@
     </div>
 
     <div class="frame-wrap">
-      <iframe id="templateFrame" src="" title="Pré-visualização do template"></iframe>
+      <div class="nav-bar">
+        <span id="navBreadcrumb">📍 Moderno</span>
+        <div id="projectNav"></div>
+      </div>
+      <iframe id="templateFrame" src="" title="Pré-visualização"></iframe>
     </div>
 
     <!-- CSP-friendly external script -->

@@ -1,64 +1,117 @@
 /**
- * Hub de templates sem inline script (compatível com CSP) e com caminho relativo
- * - Carrega templates/templates.json relativo ao index.html (funciona em GitHub Pages)
- * - Mantém suporte ao seletor (se existir) e ao carregamento automático por localStorage
+ * Hub simples: CV padrão + Projetos com dropdown
  */
 
-const TEMPLATES_INDEX = "templates/templates.json";
-const SELECT_ID = "templateSelector";
+const CONFIG = {
+  defaultCV: "template-moderno",
+  projects: [
+    { id: "ia-rogue", name: "🤖 I.A (Rogue-Like)", url: "projetos-pessoais/generative-game-rogue-like/index.html" },
+    { id: "gh300", name: "🎓 Certificação Copilot", url: "gh300-simulator.html" }
+  ]
+};
+
 const IFRAME_ID = "templateFrame";
-const STORAGE_KEY = "currentTemplateId";
+const STORAGE_KEY = "currentPage";
 
-async function loadTemplatesList() {
-  try {
-    const res = await fetch(TEMPLATES_INDEX, { cache: "no-store" });
-    if (!res.ok) throw new Error("Falha ao carregar templates.json");
-    const json = await res.json();
-    return Array.isArray(json.templates) ? json.templates : [];
-  } catch (e) {
-    console.error(e);
-    return [];
-  }
-}
-
-function setIframeTemplate(id) {
+function setPage(type, id) {
   const iframe = document.getElementById(IFRAME_ID);
   if (!iframe) return;
-  // Carrega o index.html do template de forma relativa
-  const url = `templates/${id}/index.html`;
-  iframe.src = url;
-  try {
-    localStorage.setItem(STORAGE_KEY, id);
-  } catch {}
-}
 
-function populateSelect(templates, defaultId) {
-  const sel = document.getElementById(SELECT_ID);
-  if (!sel) return;
-  sel.innerHTML = "";
-  templates.forEach((t) => {
-    const opt = document.createElement("option");
-    opt.value = t.id;
-    opt.textContent = t.name || t.id;
-    sel.appendChild(opt);
-  });
-  sel.value = defaultId;
-  sel.addEventListener("change", () => setIframeTemplate(sel.value));
-}
-
-async function bootHub() {
-  const templates = await loadTemplatesList();
-  if (!templates.length) {
-    // Fallback para template-moderno se não houver lista
-    populateSelect([{ id: "template-moderno", name: "Moderno" }], "template-moderno");
-    setIframeTemplate("template-moderno");
-    return;
+  let url;
+  if (type === "cv") {
+    url = `templates/${id}/index.html`;
+  } else if (type === "project") {
+    const project = CONFIG.projects.find(p => p.id === id);
+    url = project?.url;
   }
-  const saved = localStorage.getItem(STORAGE_KEY);
-  const exists = templates.find((t) => t.id === saved);
-  const defaultId = exists ? saved : templates[0].id;
-  populateSelect(templates, defaultId);
-  setIframeTemplate(defaultId);
+
+  if (url) {
+    iframe.src = url;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ type, id }));
+    } catch {}
+    updateBreadcrumb(type, id);
+  }
+}
+
+function updateBreadcrumb(type, id) {
+  const breadcrumb = document.getElementById("navBreadcrumb");
+  if (!breadcrumb) return;
+
+  if (type === "cv") {
+    breadcrumb.textContent = "📄 Meu CV";
+  } else if (type === "project") {
+    const project = CONFIG.projects.find(p => p.id === id);
+    if (project) breadcrumb.textContent = project.name;
+  }
+}
+
+function buildDropdown() {
+  const container = document.getElementById("projectNav");
+  if (!container) return;
+
+  // Botão CV
+  const cvBtn = document.createElement("button");
+  cvBtn.className = "nav-item active";
+  cvBtn.id = "cvBtn";
+  cvBtn.innerHTML = "📄 Meu CV";
+  cvBtn.addEventListener("click", () => {
+    setPage("cv", CONFIG.defaultCV);
+    document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+    cvBtn.classList.add("active");
+    const dropdown = document.getElementById("projectsDropdown");
+    if (dropdown) dropdown.classList.remove("show");
+  });
+  container.appendChild(cvBtn);
+
+  // Dropdown Projetos
+  const dropdownWrapper = document.createElement("div");
+  dropdownWrapper.className = "dropdown-wrapper";
+
+  const projectsBtn = document.createElement("button");
+  projectsBtn.className = "nav-item dropdown-toggle";
+  projectsBtn.innerHTML = "📁 Projetos ▼";
+  projectsBtn.addEventListener("click", () => {
+    const dropdown = document.getElementById("projectsDropdown");
+    dropdown.classList.toggle("show");
+  });
+  dropdownWrapper.appendChild(projectsBtn);
+
+  const dropdown = document.createElement("div");
+  dropdown.id = "projectsDropdown";
+  dropdown.className = "dropdown-menu";
+
+  CONFIG.projects.forEach(proj => {
+    const item = document.createElement("button");
+    item.className = "dropdown-item";
+    item.innerHTML = proj.name;
+    item.addEventListener("click", () => {
+      setPage("project", proj.id);
+      document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+      projectsBtn.classList.add("active");
+      dropdown.classList.remove("show");
+    });
+    dropdown.appendChild(item);
+  });
+
+  dropdownWrapper.appendChild(dropdown);
+  container.appendChild(dropdownWrapper);
+}
+
+function bootHub() {
+  buildDropdown();
+
+  // Carregar último ou padrão
+  let saved;
+  try {
+    saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  } catch {}
+
+  if (saved && (saved.type === "cv" || saved.type === "project")) {
+    setPage(saved.type, saved.id);
+  } else {
+    setPage("cv", CONFIG.defaultCV);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", bootHub);

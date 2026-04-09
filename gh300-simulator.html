@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GH-300 Simulator | GitHub Copilot Exam Practice</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles/gh300-simulator.css">
+</head>
+<body>
+  <div class="simulator-container">
+    <!-- HEADER -->
+    <header class="simulator-header">
+      <div class="header-left">
+        <a href="index.html" class="back-btn" title="Back to Resume">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="header-title">
+          <h1>GH-300 Exam Simulator</h1>
+          <p>GitHub Copilot Certification Practice</p>
+        </div>
+      </div>
+      <div class="header-controls">
+        <select class="theme-select" id="themeSelect" title="Change Theme">
+          <option value="light">☀️ Light</option>
+          <option value="dark">🌙 Dark</option>
+        </select>
+        <button class="lang-toggle" id="langToggle" title="Toggle Language">
+          <i class="fas fa-globe"></i> 
+          <span id="langDisplay">EN</span> / <span id="langOther">PT</span>
+        </button>
+        <button class="review-btn" id="reviewBtn" title="Review Mode">
+          <i class="fas fa-eye"></i> <span id="reviewLabel">Review</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-section">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-info">
+        <span id="progressText">Question 1 of 50</span>
+        <span id="scoreText">Score: 0%</span>
+      </div>
+      <div class="mini-dots" id="miniDots"></div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="quiz-content">
+      <div class="question-container">
+        <!-- QUESTION CARD -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number" id="questionNumber">1</span>
+            <div class="difficulty" id="difficultyBadge"></div>
+          </div>
+
+          <div class="question-text-wrapper">
+            <div class="text-main" id="questionTextEN"></div>
+            <div class="text-translation" id="questionTextPT"></div>
+          </div>
+
+          <!-- OPTIONS with Click anywhere support -->
+          <div class="options-container" id="optionsContainer"></div>
+
+          <!-- MEMORY AID / TIPS -->
+          <div class="tips-section">
+            <div class="tips-header">
+              <i class="fas fa-lightbulb"></i>
+              <h4>💡 Tip to Remember</h4>
+            </div>
+            <div class="tips-wrapper">
+              <div class="text-main" id="memoryText"></div>
+              <div class="text-translation" id="memoryTextPT"></div>
+            </div>
+          </div>
+
+          <!-- ACTION BUTTONS -->
+          <div class="action-buttons">
+            <button class="btn btn-secondary" id="showAnswerBtn">
+              <i class="fas fa-lightbulb"></i> <span id="showAnswerLabel">Show Answer</span>
+            </button>
+            <button class="btn btn-secondary" id="showTipsBtn">
+              <i class="fas fa-bookmark"></i> <span id="showTipsLabel">Show Tips</span>
+            </button>
+            <button class="btn btn-filter" id="filterBtn" title="Toggle Answer Dots">
+              <i class="fas fa-eye"></i> <span id="filterLabel">Show Dots</span>
+            </button>
+          </div>
+
+          <!-- ANSWER SECTION -->
+          <div class="answer-section" id="answerSection" style="display: none;">
+            <div class="answer-header">
+              <i class="fas fa-check-circle"></i>
+              <h3 id="correctAnswerTitle">Correct Answer</h3>
+            </div>
+
+            <div class="correct-answer-box">
+              <div class="answer-wrapper">
+                <div class="text-main" id="correctAnswerEN"></div>
+                <div class="text-translation" id="correctAnswerPT"></div>
+              </div>
+            </div>
+
+            <!-- WHY NOT ANALYSIS -->
+            <div class="explanation-section" id="explanationSection" style="display: none;">
+              <div class="explanation-header">
+                <i class="fas fa-info-circle"></i>
+                <h4 id="explanationTitle">Why This is Correct & Why Others Aren't</h4>
+              </div>
+
+              <div class="explanation-text">
+                <div class="explanation-wrapper">
+                  <div class="text-main" id="explanationEN"></div>
+                  <div class="text-translation" id="explanationPT"></div>
+                </div>
+              </div>
+
+              <!-- WRONG OPTIONS ANALYSIS -->
+              <div class="wrong-options-analysis" id="wrongOptionsAnalysis"></div>
+            </div>
+          </div>
+
+          <!-- CARD FOOTER - Navigation & Finish -->
+          <div class="card-footer">
+            <button class="btn btn-outline" id="prevBtn" disabled>
+              <i class="fas fa-chevron-left"></i> <span id="prevLabel">Previous</span>
+            </button>
+
+            <div class="question-nav" id="questionNav"></div>
+
+            <div class="finish-nav">
+              <button class="btn btn-outline" id="nextBtn">
+                <span id="nextLabel">Next</span> <i class="fas fa-chevron-right"></i>
+              </button>
+              <button class="btn btn-primary" id="finishBtn" style="display: none;">
+                <i class="fas fa-check"></i> <span id="finishLabel">Finish Exam</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RESULTS MODAL -->
+    <div class="modal" id="resultsModal" style="display: none;">
+      <div class="modal-content results-modal">
+        <button class="modal-close" id="closeResultsBtn">
+          <i class="fas fa-times"></i>
+        </button>
+
+        <div class="results-header">
+          <h2 id="resultsTitle">Exam Complete!</h2>
+          <div class="final-score">
+            <span class="score-number" id="finalScore">0</span>
+            <span class="score-label">%</span>
+          </div>
+        </div>
+
+        <div class="results-stats">
+          <div class="stat">
+            <span class="stat-label" id="correctLabel">Correct</span>
+            <span class="stat-value" id="correctCount">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label" id="wrongLabel">Wrong</span>
+            <span class="stat-value" id="wrongCount">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label" id="timeLabel">Time</span>
+            <span class="stat-value" id="timeSpent">0m</span>
+          </div>
+        </div>
+
+        <div class="results-feedback" id="resultsFeedback"></div>
+
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="reviewAgainBtn">
+            <i class="fas fa-redo"></i> <span id="reviewAgainLabel">Review Answers</span>
+          </button>
+          <button class="btn btn-secondary" id="viewHistoryBtn" style="display: none;">
+            <i class="fas fa-history"></i> <span id="viewHistoryLabel">View History</span>
+          </button>
+          <button class="btn btn-primary" id="retakeBtn">
+            <i class="fas fa-repeat"></i> <span id="retakeLabel">Retake Exam</span>
+          </button>
+          <button class="btn btn-outline" id="backHomeBtn">
+            <i class="fas fa-home"></i> <span id="backHomeLabel">Back to Resume</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXAM HISTORY MODAL -->
+    <div class="modal" id="historyModal" style="display: none;">
+      <div class="modal-content">
+        <button class="modal-close" id="closeHistoryBtn">
+          <i class="fas fa-times"></i>
+        </button>
+
+        <div class="results-header">
+          <h2 id="historyTitle">Previous Exams</h2>
+          <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;" id="historySubtitle">Click on an exam to review or retake</p>
+        </div>
+
+        <div class="exam-history-list" id="examHistoryList">
+          <!-- Dinâmico: lista de provas anteriores -->
+        </div>
+      </div>
+    </div>
+
+    <!-- RELOAD EXAM MODAL - Confirmação para recarregar prova antiga -->
+    <div class="modal" id="reloadExamModal" style="display: none;">
+      <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <button class="modal-close" id="closeReloadBtn">
+          <i class="fas fa-times"></i>
+        </button>
+
+        <div class="results-header">
+          <h2 id="reloadTitle">Reload Exam?</h2>
+        </div>
+
+        <div style="padding: 20px; text-align: left;">
+          <div style="background: rgba(37, 99, 235, 0.1); padding: 16px; border-radius: 8px; border-left: 3px solid #2563eb; margin-bottom: 20px;">
+            <p id="reloadMessage" style="margin: 0; color: var(--text); line-height: 1.6;"></p>
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: flex-end;">
+            <button class="btn btn-outline" id="cancelReloadBtn">
+              <span id="cancelLabel">Cancel</span>
+            </button>
+            <button class="btn btn-primary" id="confirmReloadBtn">
+              <i class="fas fa-check"></i> <span id="confirmLabel">Reload Exam</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="services/storageService.js" defer></script>
+  <script src="data/gh300-questions.js" defer></script>
+  <script src="data/option-translations.js" defer></script>
+  <script src="scripts/gh300-simulator.js" defer></script>
+</body>
+</html>
+
