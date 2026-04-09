@@ -244,6 +244,17 @@ html, body {
   overflow-y: auto;
 }
 
+.top-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.top-actions .btn {
+  flex: 1 1 180px;
+}
+
 .mini-dot {
   width: 24px;
   height: 24px;
@@ -409,6 +420,21 @@ body.lang-pt .text-translation {
   flex-direction: column;
   gap: 12px;
   margin-bottom: 28px;
+}
+
+.question-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 8px 0 24px;
+}
+
+.question-actions .btn {
+  flex: 1 1 180px;
+}
+
+.question-actions #finishBtn {
+  flex-basis: 100%;
 }
 
 .option {
@@ -951,6 +977,7 @@ body.lang-pt .text-translation {
   .header-controls {
     width: 100%;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .quiz-content {
@@ -973,10 +1000,6 @@ body.lang-pt .text-translation {
     font-size: 13px;
   }
 
-  .action-buttons {
-    flex-direction: column;
-  }
-
   .btn {
     width: 100%;
     justify-content: center;
@@ -988,22 +1011,26 @@ body.lang-pt .text-translation {
     justify-content: center;
   }
 
-  .card-footer {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .finish-nav {
-    width: 100%;
+  .top-actions {
     flex-direction: column;
   }
 
-  .finish-nav .btn {
+  .top-actions .btn {
     width: 100%;
+    justify-content: center;
   }
 
-  .question-nav {
-    width: 100%;
+  .question-actions {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .question-actions .btn {
+    flex: 1 1 0;
+  }
+
+  .question-actions #finishBtn {
+    flex-basis: 100%;
   }
 
   .results-stats {
@@ -1024,6 +1051,18 @@ body.lang-pt .text-translation {
 }
 
 @media (max-width: 640px) {
+  .simulator-header {
+    padding: 12px 16px;
+  }
+
+  .header-title p {
+    display: none;
+  }
+
+  .header-controls {
+    gap: 8px;
+  }
+
   .header-title h1 {
     font-size: 18px;
   }

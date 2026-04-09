@@ -45,6 +45,17 @@
         <span id="scoreText">Score: 0%</span>
       </div>
       <div class="mini-dots" id="miniDots"></div>
+      <div class="top-actions">
+        <button class="btn btn-secondary" id="showAnswerBtn">
+          <i class="fas fa-lightbulb"></i> <span id="showAnswerLabel">Show Answer</span>
+        </button>
+        <button class="btn btn-secondary" id="showTipsBtn">
+          <i class="fas fa-bookmark"></i> <span id="showTipsLabel">Show Tips</span>
+        </button>
+        <button class="btn btn-filter" id="filterBtn" title="Toggle Answer Dots">
+          <i class="fas fa-eye"></i> <span id="filterLabel">Show Dots</span>
+        </button>
+      </div>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -64,6 +75,17 @@
 
           <!-- OPTIONS with Click anywhere support -->
           <div class="options-container" id="optionsContainer"></div>
+          <div class="question-actions">
+            <button class="btn btn-outline" id="prevBtn" disabled>
+              <i class="fas fa-chevron-left"></i> <span id="prevLabel">Previous</span>
+            </button>
+            <button class="btn btn-outline" id="nextBtn">
+              <span id="nextLabel">Next</span> <i class="fas fa-chevron-right"></i>
+            </button>
+            <button class="btn btn-primary" id="finishBtn" style="display: none;">
+              <i class="fas fa-check"></i> <span id="finishLabel">Finish Exam</span>
+            </button>
+          </div>
 
           <!-- MEMORY AID / TIPS -->
           <div class="tips-section">
@@ -77,69 +99,6 @@
             </div>
           </div>
 
-          <!-- ACTION BUTTONS -->
-          <div class="action-buttons">
-            <button class="btn btn-secondary" id="showAnswerBtn">
-              <i class="fas fa-lightbulb"></i> <span id="showAnswerLabel">Show Answer</span>
-            </button>
-            <button class="btn btn-secondary" id="showTipsBtn">
-              <i class="fas fa-bookmark"></i> <span id="showTipsLabel">Show Tips</span>
-            </button>
-            <button class="btn btn-filter" id="filterBtn" title="Toggle Answer Dots">
-              <i class="fas fa-eye"></i> <span id="filterLabel">Show Dots</span>
-            </button>
-          </div>
-
-          <!-- ANSWER SECTION -->
-          <div class="answer-section" id="answerSection" style="display: none;">
-            <div class="answer-header">
-              <i class="fas fa-check-circle"></i>
-              <h3 id="correctAnswerTitle">Correct Answer</h3>
-            </div>
-
-            <div class="correct-answer-box">
-              <div class="answer-wrapper">
-                <div class="text-main" id="correctAnswerEN"></div>
-                <div class="text-translation" id="correctAnswerPT"></div>
-              </div>
-            </div>
-
-            <!-- WHY NOT ANALYSIS -->
-            <div class="explanation-section" id="explanationSection" style="display: none;">
-              <div class="explanation-header">
-                <i class="fas fa-info-circle"></i>
-                <h4 id="explanationTitle">Why This is Correct & Why Others Aren't</h4>
-              </div>
-
-              <div class="explanation-text">
-                <div class="explanation-wrapper">
-                  <div class="text-main" id="explanationEN"></div>
-                  <div class="text-translation" id="explanationPT"></div>
-                </div>
-              </div>
-
-              <!-- WRONG OPTIONS ANALYSIS -->
-              <div class="wrong-options-analysis" id="wrongOptionsAnalysis"></div>
-            </div>
-          </div>
-
-          <!-- CARD FOOTER - Navigation & Finish -->
-          <div class="card-footer">
-            <button class="btn btn-outline" id="prevBtn" disabled>
-              <i class="fas fa-chevron-left"></i> <span id="prevLabel">Previous</span>
-            </button>
-
-            <div class="question-nav" id="questionNav"></div>
-
-            <div class="finish-nav">
-              <button class="btn btn-outline" id="nextBtn">
-                <span id="nextLabel">Next</span> <i class="fas fa-chevron-right"></i>
-              </button>
-              <button class="btn btn-primary" id="finishBtn" style="display: none;">
-                <i class="fas fa-check"></i> <span id="finishLabel">Finish Exam</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </main>
