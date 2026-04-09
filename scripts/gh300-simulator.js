@@ -113,8 +113,13 @@ class GH300Simulator {
   initializeEventListeners() {
     // Botão de trocar idioma (EN ↔ PT)
     const langToggle = document.getElementById('langToggle');
+    const viewHistoryTopBtn = document.getElementById('viewHistoryTopBtn');
     if (langToggle) {
       langToggle.addEventListener('click', () => this.toggleLanguage());
+    }
+
+    if (viewHistoryTopBtn) {
+      viewHistoryTopBtn.addEventListener('click', () => this.showExamHistory());
     }
 
     // Botão de modo revisão
@@ -873,13 +878,13 @@ class GH300Simulator {
     const resultsFeedback = document.getElementById('resultsFeedback');
     if (resultsFeedback) {
       resultsFeedback.textContent = this.getResultMessage(percentage, this.currentLang);
-    }
-
-    // Mostrar botão View History se houver provas anteriores
+    // Mostrar botão View History no modal final se houver provas anteriores
     const history = storageService.getExamHistory();
     const viewHistoryBtn = document.getElementById('viewHistoryBtn');
+
     if (viewHistoryBtn) {
       viewHistoryBtn.style.display = history.length > 0 ? 'inline-flex' : 'none';
+    }
     }
 
     // Mostrar modal
