@@ -263,7 +263,11 @@ class GH300Simulator {
 
     if (backHomeBtn) {
       backHomeBtn.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        if (window.top) {
+          window.top.location.href = 'index.html';
+        } else {
+          window.location.href = 'index.html';
+        }
       });
     }
 
@@ -494,6 +498,8 @@ class GH300Simulator {
         this.answers[question.id] = index; // Salvar resposta em memÃ³ria
         storageService.setAnswer(question.id, index); // Salvar no localStorage
         this.saveExamState(); // Salvar estado completo da prova
+        this.updateMiniDots();
+        this.updateProgress();
       });
     });
 
@@ -764,7 +770,10 @@ class GH300Simulator {
     const isLast = this.currentQuestionIndex === this.questions.length - 1;
 
     if (prevBtn) prevBtn.disabled = isFirst;
-    if (nextBtn) nextBtn.disabled = isLast;
+    if (nextBtn) {
+      nextBtn.disabled = isLast;
+      nextBtn.style.display = isLast ? 'none' : 'inline-flex';
+    }
 
     // Mostrar finish button apenas na Ãºltima questÃ£o
     if (finishBtn) {
