@@ -142,6 +142,23 @@
   ],
   "experience": [
     {
+      "icon": "fas fa-chart-line",
+      "title": "Front End L3 (Expert)",
+      "company": "GFT Consultoria",
+      "period": "Outubro 2025 - Atualmente (6 meses)",
+      "intro": "Consultoria global de tecnologia com forte atuação em serviços financeiros. Atuação em um grande player do setor de investimentos, desenvolvendo experiências front-end modernas para plataformas digitais de investimento.",
+      "highlightsTitle": "Principais conquistas e responsabilidades:",
+      "highlights": [
+        "Arquitetura e desenvolvimento de Micro Frontends (Angular) para jornadas de investimento, com foco em escalabilidade e reutilização.",
+        "Ciclo de vida completo da jornada: discovery, handoff do Figma, definição técnica, desenvolvimento, testes, deploy e monitoramento pós-produção.",
+        "Observabilidade e métricas: uso de Datadog para logs, traces e análise de erros, orientando melhorias com base em indicadores.",
+        "Produtividade com IA: uso de Cursor e GitHub Copilot; criação de commands, rules e skills para acelerar e padronizar entregas.",
+        "Processo e qualidade: pipes, git flow, code review, CI/CD e cerimônias de sprint.",
+        "Colaboração diária com times externos e stakeholders, garantindo alinhamento e dependências entre squads.",
+        "Disseminação de conhecimento: criação e divulgação de conteúdos/aulas para outros times."
+      ]
+    },
+    {
       "icon": "fas fa-laptop-code",
       "title": "Analista de Engenharia TI PL (TM)",
       "company": "Itaú Unibanco",
@@ -257,6 +274,7 @@
     ]
   },
   "companies": [
+    "GFT Consultoria",
     "Itaú Unibanco",
     "Flytour",
     "Duosystem",
