@@ -154,7 +154,6 @@ export function renderProjects(c) {
       cvBtn.href = (item.cvHref || "../../index.html");
       cvBtn.textContent = "Ir pro CV";
       card.appendChild(cvBtn);
-      }
 
       grid.appendChild(card);
     });
