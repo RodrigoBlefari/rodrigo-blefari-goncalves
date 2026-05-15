@@ -193,6 +193,24 @@ body {
   padding: 10px;
 }
 
+/* Botão rápido para ir ao CV a partir do card de projeto */
+.project-card .project-cv-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--muted-bg, rgba(0,0,0,0.06));
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.project-card .project-cv-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
 .download-btn {
   background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
   color: white;

@@ -147,6 +147,15 @@ export function renderProjects(c) {
         card.appendChild(link);
       }
 
+      // Botão adicional: ir para o CV (útil quando o projeto abre fora do CV)
+      const cvBtn = document.createElement("a");
+      cvBtn.className = "project-cv-btn";
+      // Caminho relativo do template para a raiz do currículo
+      cvBtn.href = (item.cvHref || "../../index.html");
+      cvBtn.textContent = "Ir pro CV";
+      card.appendChild(cvBtn);
+      }
+
       grid.appendChild(card);
     });
   } catch (err) {
