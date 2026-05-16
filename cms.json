@@ -286,7 +286,7 @@
           "title": "Mock Dream",
           "slug": "mock-dream",
           "description": "Chrome extension (Manifest V3) para mock de Fetch & XHR direto no popup: editor JSON visual, validador, consola de tráfego e 6 temas. 100% local, sem servidor nem proxy.",
-          "href": "https://mock-dream.lovable.app",
+          "href": "https://mock-dream.net",
           "tags": ["Chrome Extension", "Manifest v3", "Mocking", "JSON Editor"],
           "note": "Download .zip, live demo, import/export JSON, undo/redo, shortcuts, 6 themes."
         }
